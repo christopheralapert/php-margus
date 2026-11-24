@@ -123,7 +123,7 @@ Every P3 task: run `php artisan leaflet:render-samples && scripts/render-pdfs.sh
   title + language metadata set; `render-pdfs.sh` writes `tests/visual/output/*.png` (110 dpi) and supports `--gray`; works on Windows Git Bash and Ubuntu.
 - **Test**: a unit test asserting PDF bytes start with `%PDF`, page size A5 and metadata; visual review of the PNGs.
 
-### [ ] T3.2 Cover + illustrations
+### [x] T3.2 Cover + illustrations
 - **Goal**: the cover page per PDF_DESIGN §8 (Cover) and a consistent placeholder illustration set.
 - **Files**: `resources/views/pdf/a5/cover.blade.php`, CSS, `public/illustrations/**`, `resources/pdf/icons/*.svg`.
 - **Acceptance**: single and multi-procedure covers; name/date only if given; the draft notice; no page number; illustrations follow §6 SVG rules.
