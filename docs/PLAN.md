@@ -252,3 +252,4 @@ post-deploy script (`migrate --force`, caches). Workflows are inactive until the
 | mpdf/mpdf | HTML/CSS → PDF without Chrome or Node (brief) |
 | endroid/qr-code | QR codes for the back page (brief) |
 | spatie/laravel-translatable | et/en JSON columns; keeps schema and admin forms small |
+| anthropic-ai/sdk | official SDK for the default LLM driver (chat, P6); behind the LlmClient interface |
