@@ -31,7 +31,7 @@ PDF tasks also need: `php artisan leaflet:render-samples && scripts/render-pdfs.
   dependencies are cached; the workflow passes on the PR.
 - **Test**: the PR shows a green CI check.
 
-### [ ] T0.3 Deploy workflows (staging working, production ready) — Net
+### [x] T0.3 Deploy workflows (staging working, production ready) — Net
 - **Goal**: deploy `develop` → staging and `main` → production via rsync over SSH, with FTP as the fallback; inactive until configured.
 - **Files**: `.github/workflows/deploy-staging.yml`, `.github/workflows/deploy-production.yml` (or one reusable `_deploy.yml` +
   two callers), `deploy/rsync-exclude.txt`, `deploy/post-deploy.sh`, `docs/DEPLOYMENT.md` (lead only).
