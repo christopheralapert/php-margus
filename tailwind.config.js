@@ -11,6 +11,16 @@ export default {
 
     theme: {
         extend: {
+            colors: {
+                brand: {
+                    primary: '#2E6FD8',
+                    secondary: '#2BB3A3',
+                    accent: '#F5A524',
+                    danger: '#D93B3B',
+                    ink: '#1F2937',
+                    soft: '#F3F7FC',
+                },
+            },
             fontFamily: {
                 sans: [...defaultTheme.fontFamily.sans],
             },

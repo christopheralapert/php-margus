@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WizardController;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,10 @@ Route::prefix('{locale}')
     ->whereIn('locale', config('app.supported_locales'))
     ->middleware(SetLocale::class)
     ->group(function () {
-        Route::view('/', 'home')->name('home');
+        Route::get('/', [WizardController::class, 'home'])->name('home');
+        Route::get('/leaflet', [WizardController::class, 'procedures'])->name('wizard.procedures');
+        Route::post('/leaflet', [WizardController::class, 'store'])->name('wizard.procedures.store');
+        Route::get('/leaflet/details', [WizardController::class, 'details'])->name('wizard.details');
 
         Route::view('/dashboard', 'dashboard')
             ->middleware(['auth', 'verified'])->name('dashboard');
