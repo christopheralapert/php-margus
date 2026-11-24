@@ -50,8 +50,9 @@ class PdfCoverTest extends TestCase
 
         $pdf = app(PdfRenderer::class)->render($doc);
         preg_match('/\/Type \/Pages\s*\/Kids\s*\[[^]]*\]\s*\/Count (\d+)/s', $pdf, $pageCount);
-        // Each fixture has three content pages with cards, topics and follow-up.
-        $this->assertSame(3 * $count + 1, (int) ($pageCount[1] ?? 0));
+        // Three content pages per procedure, plus cover and red flags. The
+        // three-procedure fixture continues its follow-ups onto another page.
+        $this->assertSame(3 * $count + 2 + ($count > 1 ? 1 : 0), (int) ($pageCount[1] ?? 0));
         $process = new Process([$executable, '-f', '1', '-l', '1', '-bbox', '-', '-']);
         $process->setInput($pdf);
         $process->mustRun();

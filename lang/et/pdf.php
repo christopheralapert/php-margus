@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'red_flags' => 'Millal kohe abi otsida',
+    'call_clinic' => 'Helista kliinikule',
+    'after_hours' => 'Õhtuti ja öösiti: :phone',
+    'emergency' => 'HÄDAABI',
     'cards' => ['do' => 'Tee nii', 'dont' => 'Väldi'],
     'everyday_life' => 'Igapäevaelu',
     'medication_advice' => 'Kasuta valuvaigisteid nii, nagu arst on määranud.',

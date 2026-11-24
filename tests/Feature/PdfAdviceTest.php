@@ -156,7 +156,7 @@ class PdfAdviceTest extends TestCase
     }
 
     #[DataProvider('locales')]
-    public function test_cards_topics_and_followup_flow_in_four_pages_with_extractable_text(string $locale): void
+    public function test_cards_topics_and_redflags_flow_in_five_pages_with_extractable_text(string $locale): void
     {
         config(['leaflet.draft_watermark' => false]);
         $textTool = (new ExecutableFinder)->find('pdftotext');
@@ -174,12 +174,12 @@ class PdfAdviceTest extends TestCase
         $normalize = fn (string $value): string => preg_replace('/\s+/u', '', $value);
         $output = $normalize($text->getOutput());
         $pages = array_map($normalize, explode("\f", rtrim($text->getOutput(), "\f\r\n")));
-        $this->assertCount(4, $pages);
+        $this->assertCount(5, $pages);
         $this->assertStringContainsString($normalize(__('pdf.cards.do', [], $locale)), $pages[2]);
         $this->assertStringContainsString($normalize(__('pdf.cards.dont', [], $locale)), $pages[2]);
         $this->assertStringContainsString($normalize(__('pdf.everyday_life', [], $locale)), $pages[2]);
         // Both tiles in every row, including the spanning last tile, stay on
-        // one page. Follow-up fits directly after the final row on page four.
+        // one page. Follow-up moves to the dedicated red-flag page five.
         foreach (array_chunk(app(PdfAdvice::class)->topics($procedure, $locale), 2) as $index => $tiles) {
             foreach ($tiles as $tile) {
                 $page = $pages[$index === 0 ? 2 : 3];
@@ -189,9 +189,10 @@ class PdfAdviceTest extends TestCase
                 }
             }
         }
-        $this->assertStringContainsString($normalize(__('pdf.follow_up', [], $locale)), $pages[3]);
-        $this->assertStringContainsString($normalize($procedure->getTranslation('follow_up', $locale)), $pages[3]);
-        $this->assertStringContainsString($normalize(__('pdf.procedure_date', ['date' => $doc->formattedDate()], $locale)), $pages[3]);
+        $this->assertStringNotContainsString($normalize(__('pdf.follow_up', [], $locale)), $pages[3]);
+        $this->assertStringContainsString($normalize(__('pdf.follow_up', [], $locale)), $pages[4]);
+        $this->assertStringContainsString($normalize($procedure->getTranslation('follow_up', $locale)), $pages[4]);
+        $this->assertStringContainsString($normalize(__('pdf.procedure_date', ['date' => $doc->formattedDate()], $locale)), $pages[4]);
         foreach ($procedure->adviceItems->where('section', '!=', AdviceSection::RedFlag) as $item) {
             $this->assertStringContainsString($normalize($item->getTranslation('text', $locale)), $output);
         }

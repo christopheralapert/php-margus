@@ -40,7 +40,7 @@ class PdfRendererTest extends TestCase
         // mPDF also writes the inherited MediaBox on the /Pages parent.
         $this->assertNotEmpty($boxes);
         preg_match('/\/Type \/Pages\s*\/Kids\s*\[[^]]*\]\s*\/Count (\d+)/s', $pdf, $pageCount);
-        $this->assertSame(4, (int) ($pageCount[1] ?? 0));
+        $this->assertSame(5, (int) ($pageCount[1] ?? 0));
         foreach ($boxes as $box) {
             $this->assertEqualsWithDelta(148 * 72 / 25.4, (float) $box[1], 0.02);
             $this->assertEqualsWithDelta(210 * 72 / 25.4, (float) $box[2], 0.02);

@@ -100,6 +100,15 @@ final class PdfIcons
         return '<img src="data:image/svg+xml;base64,'.base64_encode($svg).'" width="'.$width.'mm" height="3mm" alt="">';
     }
 
+    public function emergencyCap(bool $bottom): string
+    {
+        // Only the rounded decoration is SVG; the label and number stay text.
+        $path = $bottom ? 'M0 0H32A4 4 0 0 1 28 4H4A4 4 0 0 1 0 0Z' : 'M0 4A4 4 0 0 1 4 0H28A4 4 0 0 1 32 4Z';
+        $svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 4"><path d="'.$path.'" fill="#D93B3B"/></svg>';
+
+        return '<img src="data:image/svg+xml;base64,'.base64_encode($svg).'" width="32mm" height="4mm" alt="">';
+    }
+
     public function dot(string $color, float $size = 3.5): string
     {
         $color = (new ThemeColor($color))->base();
