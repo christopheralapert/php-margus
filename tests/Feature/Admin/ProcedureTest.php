@@ -11,6 +11,7 @@ use App\Models\Procedure;
 use App\Models\SavedLeaflet;
 use App\Models\TimelineStep;
 use App\Models\User;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
@@ -37,7 +38,9 @@ class ProcedureTest extends TestCase
 
     protected function tearDown(): void
     {
-        File::deleteDirectory($this->temporaryPublic);
+        // Clean up with a real filesystem: the File facade may be a partial mock in a test,
+        // and on Linux its delete() expectation would also match the cleanup calls.
+        (new Filesystem)->deleteDirectory($this->temporaryPublic);
         parent::tearDown();
     }
 
