@@ -47,3 +47,18 @@ li { margin-bottom: 2mm; }
 .p-s6 { padding: 6mm; }
 .p-s8 { padding: 8mm; }
 .p-s12 { padding: 12mm; }
+
+.cover-logo { position: absolute; height: 9mm; }
+.cover-copy { position: absolute; width: 120mm; }
+.cover-copy .cover-sub { margin-bottom: 0; }
+.cover-art { position: absolute; width: 120mm; text-align: center; }
+.cover-illustrations { border-collapse: collapse; }
+.cover-illustrations td { padding: 0; vertical-align: middle; }
+.cover-procedures { border-collapse: collapse; font-family: nunito; font-size: 16pt; line-height: 20pt; }
+.cover-procedures td { padding: 0 0 2mm; vertical-align: middle; }
+.draft-notice { padding: 2mm 3mm; border-radius: 3mm; font-size: 9pt; line-height: 11pt; }
+.cover-band { position: absolute; color: #FFFFFF; }
+.cover-band table { border-collapse: collapse; font-family: nunito; font-size: 11pt; line-height: 14pt; color: #FFFFFF; }
+.cover-band td { padding: 3.5mm 0 0; color: #FFFFFF; font-family: nunito; font-size: 11pt; }
+.icon-sheet { border-collapse: collapse; }
+.icon-sheet td { padding: 1mm 3mm; vertical-align: middle; border-bottom: 0.2mm solid #DCE3EE; }

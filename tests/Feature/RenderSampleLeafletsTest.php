@@ -45,4 +45,11 @@ class RenderSampleLeafletsTest extends TestCase
         $this->assertSame($connection, DB::getDefaultConnection());
         $this->assertDatabaseCount('procedures', 0);
     }
+
+    public function test_icon_sample_can_be_rendered_on_its_own(): void
+    {
+        $this->artisan('leaflet:render-samples', ['--only' => 'icons'])->assertSuccessful();
+        $this->assertStringStartsWith('%PDF', file_get_contents(base_path('tests/visual/output/icons.pdf')));
+        $this->assertDatabaseCount('procedures', 0);
+    }
 }

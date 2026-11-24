@@ -9,6 +9,7 @@ use Mpdf\Config\FontVariables;
 use Mpdf\HTMLParserMode;
 use Mpdf\Mpdf;
 use Mpdf\Output\Destination;
+use Mpdf\WatermarkText;
 
 final class PdfRenderer
 {
@@ -18,18 +19,7 @@ final class PdfRenderer
 
     public function render(LeafletDocument $doc, bool $printMode = false): string
     {
-        $options = config('leaflet.pdf');
-        $options['fontDir'] = [...(new ConfigVariables)->getDefaults()['fontDir'], config('leaflet.font_directory')];
-        $options['fontdata'] = array_merge((new FontVariables)->getDefaults()['fontdata'], config('leaflet.fonts'));
-
-        if ($printMode) {
-            $options['bleedMargin'] = config('leaflet.print.bleed');
-            $options['mirrorMargins'] = true;
-            $options['margin_left'] = config('leaflet.print.margin_inner');
-            $options['margin_right'] = config('leaflet.print.margin_outer');
-        }
-
-        $mpdf = new Mpdf($options);
+        $mpdf = $this->createMpdf($printMode);
         $names = implode(', ', array_map(fn (array $section): string => $section['procedure']->getTranslation('name', $doc->locale), $doc->sections));
         $mpdf->SetTitle(__('pdf.metadata_title', ['procedures' => $names], $doc->locale));
         $mpdf->SetAuthor($this->settings->localized('clinic.name', $doc->locale) ?? '');
@@ -40,8 +30,11 @@ final class PdfRenderer
         $mpdf->SetDirectionality('ltr');
 
         if (config('leaflet.draft_watermark') && $doc->hasDraft()) {
-            $mpdf->watermark_font = 'nunito';
-            $mpdf->SetWatermarkText(__('pdf.watermark', [], $doc->locale), 0.06);
+            // Keep the specified alpha; muted ink softens the large diagonal text.
+            $mpdf->SetWatermarkText(new WatermarkText(
+                __('pdf.watermark', [], $doc->locale),
+                color: config('leaflet.colors.muted'), alpha: 0.06, font: 'nunito',
+            ));
             $mpdf->showWatermarkText = true;
         }
 
@@ -60,5 +53,32 @@ final class PdfRenderer
         $mpdf->WriteHTML($this->views->make('pdf.a5.document', compact('doc', 'settings', 'printMode'))->render(), HTMLParserMode::HTML_BODY);
 
         return $mpdf->Output('', Destination::STRING_RETURN);
+    }
+
+    public function renderIconSheet(): string
+    {
+        $mpdf = $this->createMpdf();
+        $mpdf->SetTitle(__('pdf.icons_title'));
+        $mpdf->default_lang = app()->getLocale();
+        $mpdf->WriteHTML(file_get_contents(resource_path('pdf/css/a5.css')), HTMLParserMode::HEADER_CSS);
+        $mpdf->WriteHTML($this->views->make('pdf.a5.icons', ['settings' => $this->settings])->render(), HTMLParserMode::HTML_BODY);
+
+        return $mpdf->Output('', Destination::STRING_RETURN);
+    }
+
+    private function createMpdf(bool $printMode = false): Mpdf
+    {
+        $options = config('leaflet.pdf');
+        $options['fontDir'] = [...(new ConfigVariables)->getDefaults()['fontDir'], config('leaflet.font_directory')];
+        $options['fontdata'] = array_merge((new FontVariables)->getDefaults()['fontdata'], config('leaflet.fonts'));
+
+        if ($printMode) {
+            $options['bleedMargin'] = config('leaflet.print.bleed');
+            $options['mirrorMargins'] = true;
+            $options['margin_left'] = config('leaflet.print.margin_inner');
+            $options['margin_right'] = config('leaflet.print.margin_outer');
+        }
+
+        return new Mpdf($options);
     }
 }
