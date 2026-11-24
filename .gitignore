@@ -1,4 +1,5 @@
 # Laravel
+*.log
 /.phpunit.cache
 /bootstrap/ssr
 /node_modules
