@@ -99,7 +99,7 @@ PDF tasks also need: `php artisan leaflet:render-samples && scripts/render-pdfs.
   inactive procedures are hidden; accessible labels.
 - **Test**: feature tests (list, select, validation: at least one procedure); manual check in browser dev-tools mobile view.
 
-### [ ] T2.2 Details, consent, preview, download
+### [x] T2.2 Details, consent, preview, download
 - **Goal**: optional first name + date → consent → HTML preview → PDF download (renders via `PdfRenderer`; until P3 it is a minimal PDF).
 - **Files**: `WizardController`, `LeafletController`, `app/Http/Requests/LeafletRequest.php`, `app/Services/Leaflet/{LeafletBuilder,LeafletDocument,PdfRenderer}.php`
   (skeleton), `app/Models/Consent.php` usage, views, tests.
