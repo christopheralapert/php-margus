@@ -90,7 +90,7 @@ PDF tasks also need: `php artisan leaflet:render-samples && scripts/render-pdfs.
 
 ## P2 — Patient wizard
 
-### [ ] T2.1 Landing + procedure picker
+### [x] T2.1 Landing + procedure picker
 - **Goal**: a mobile-first landing (language choice + start) and a searchable multi-select procedure picker grouped by category, with icons.
 - **Files**: `app/Http/Controllers/WizardController.php`, `resources/views/wizard/{home,procedures}.blade.php`, `resources/js/wizard.js`
   (Alpine filter), `lang/*/wizard.php`, tests.
