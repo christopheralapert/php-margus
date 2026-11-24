@@ -57,7 +57,7 @@ PDF tasks also need: `php artisan leaflet:render-samples && scripts/render-pdfs.
   `Procedure::themeColor()` falls back to the category colour; factories for every model.
 - **Test**: `php artisan migrate:fresh` + model unit tests (relations, casts, fallbacks).
 
-### [ ] T1.2 i18n + locale routing
+### [x] T1.2 i18n + locale routing
 - **Goal**: `/{locale}` prefix on all routes, a `SetLocale` middleware, a language switcher, all strings in `lang/et` and `lang/en`.
 - **Files**: `app/Http/Middleware/SetLocale.php`, `routes/web.php`, `lang/{et,en}/*.php`, `resources/views/components/lang-switcher.blade.php`,
   published Breeze views localised, `tests/Feature/LocaleTest.php`, `tests/Unit/LangParityTest.php`.
