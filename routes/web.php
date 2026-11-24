@@ -70,5 +70,6 @@ Route::prefix('{locale}')
             ->group(function () {
                 Route::get('/', [CategoryController::class, 'dashboard'])->name('dashboard');
                 Route::resource('categories', CategoryController::class)->except('show');
+                require __DIR__.'/admin-settings.php';
             });
     });
