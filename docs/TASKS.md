@@ -147,7 +147,7 @@ Every P3 task: run `php artisan leaflet:render-samples && scripts/render-pdfs.sh
   sections; red flags are deduplicated the same way; each procedure keeps its own coloured section; order follows the user's selection.
 - **Test**: unit tests on `LeafletBuilder` with 1, 2 and 3 procedures; render (c).
 
-### [ ] T3.7 Back page + QR
+### [x] T3.7 Back page + QR
 - **Files**: `back.blade.php`, `app/Services/Leaflet/QrCodeFactory.php`, route stub `online.show` returning content (full page in P6).
 - **Acceptance**: §7.10 and the back page wireframe; the QR encodes `APP_URL/{locale}/l/{combo}` with no personal data and scans correctly
   (decode test with a QR reader library is optional; manual scan otherwise); the generation date is in locale format (et `24.11.2026`, en `24 Nov 2026`).
