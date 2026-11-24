@@ -42,6 +42,9 @@
                         <td class="whitespace-nowrap px-4 py-4 tabular-nums">{{ $procedure->updated_at->format('Y-m-d') }}</td>
                         <td class="px-4 py-4"><div class="flex items-center gap-3">
                             <a href="{{ route('admin.procedures.edit', $procedure) }}" class="inline-flex min-h-11 items-center rounded text-brand-primary underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-brand-primary">{{ __('admin.procedure.edit') }}</a>
+                            <a href="{{ route('admin.procedures.preview', $procedure) }}" target="_blank" rel="noopener" aria-label="{{ __('admin.procedure.preview', ['lang' => app()->getLocale()]) }}" class="inline-flex min-h-11 min-w-11 items-center justify-center rounded text-brand-primary hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-brand-primary">
+                                <svg aria-hidden="true" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>
+                            </a>
                             <form method="POST" action="{{ route('admin.procedures.destroy', $procedure) }}" x-data @submit="if (! window.confirm(@js(__('admin.procedure.delete_confirm')))) $event.preventDefault()">
                                 @csrf @method('DELETE')
                                 <button class="min-h-11 rounded px-2 text-red-700 underline underline-offset-4 hover:bg-red-50 focus-visible:ring-2 focus-visible:ring-red-700">{{ __('admin.procedure.delete') }}</button>

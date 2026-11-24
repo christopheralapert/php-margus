@@ -8,9 +8,10 @@ use Carbon\CarbonImmutable;
 
 final class LeafletBuilder
 {
-    public function build(array $procedureIds, string $locale, ?string $firstName, ?string $date): LeafletDocument
+    public function build(array $procedureIds, string $locale, ?string $firstName, ?string $date, bool $includeInactive = false): LeafletDocument
     {
-        $procedures = Procedure::active()->with(['category', 'timelineSteps', 'adviceItems'])
+        $procedures = Procedure::query()->when(! $includeInactive, fn ($query) => $query->active())
+            ->with(['category', 'timelineSteps', 'adviceItems'])
             ->whereIn('id', $procedureIds)->get()->keyBy('id');
         $sections = [];
 
