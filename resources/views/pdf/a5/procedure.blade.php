@@ -16,5 +16,7 @@
 <p class="mb-s6">{{ $procedure->getTranslation('summary', $doc->locale) }}</p>
 @include('pdf.a5.timeline')
 @unless ($categoryProof ?? false)
-    @include('pdf.a5.content')
+    @include('pdf.a5.cards')
+    @include('pdf.a5.topics')
+    @include('pdf.a5.followup', ['procedures' => [$procedure]])
 @endunless

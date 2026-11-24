@@ -1,6 +1,12 @@
 <?php
 
 return [
+    'cards' => ['do' => 'Do', 'dont' => "Don't"],
+    'everyday_life' => 'Everyday life',
+    'medication_advice' => 'Use pain relief as prescribed by your doctor.',
+    'medication_prescribed_phrase' => 'as prescribed by your doctor',
+    'follow_up' => 'Follow-up visit',
+    'procedure_date' => 'Procedure date: :date',
     'recovery_timeline' => 'Recovery timeline',
     'icons_title' => 'PDF icon proof',
     'icons_comparison' => '6 mm: SVG image and inline SVG.',

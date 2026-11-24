@@ -66,6 +66,18 @@ final class PdfRenderer
         return $mpdf->Output('', Destination::STRING_RETURN);
     }
 
+    public function blockSpansPages(string $html): bool
+    {
+        // Use the actual fonts and mPDF layout rather than guessing from item
+        // counts. Only cards that fit a page keep the whole panel together;
+        // oversized cards keep their header and first two rows instead.
+        $mpdf = $this->createMpdf();
+        $mpdf->WriteHTML(file_get_contents(resource_path('pdf/css/a5.css')), HTMLParserMode::HEADER_CSS);
+        $mpdf->WriteHTML($html, HTMLParserMode::HTML_BODY);
+
+        return $mpdf->page > 1;
+    }
+
     private function createMpdf(bool $printMode = false): Mpdf
     {
         $options = config('leaflet.pdf');
