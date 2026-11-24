@@ -74,7 +74,7 @@ PDF tasks also need: `php artisan leaflet:render-samples && scripts/render-pdfs.
   style; `ThemeColor` derives dark/tint/on with a unit-tested WCAG contrast; category colours from PDF_DESIGN §4.
 - **Test**: unit tests for ThemeColor and Settings; `php artisan db:seed`.
 
-### [ ] T1.4 Procedure seed content (et+en, DRAFT)
+### [x] T1.4 Procedure seed content (et+en, DRAFT)
 - **Goal**: 12–15 example procedures (1–2 per category) with full content blocks.
 - **Files**: `database/seeders/ProcedureSeeder.php`, `database/seeders/content/*.php`, placeholder illustrations `public/illustrations/{category}/*.svg`.
 - **Acceptance**: each procedure has a summary, 4 timeline steps, ≥4 do's, ≥4 don'ts, every topic (pain, eating, hygiene, activity, sleep),

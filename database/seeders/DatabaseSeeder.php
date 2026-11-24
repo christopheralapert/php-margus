@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SettingsSeeder::class,
             CategorySeeder::class,
-            // ProcedureSeeder::class, // T1.4
+            ProcedureSeeder::class,
         ]);
     }
 }
