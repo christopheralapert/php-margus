@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WizardController;
 use App\Http\Middleware\SetLocale;
@@ -42,4 +43,12 @@ Route::prefix('{locale}')
         });
 
         require __DIR__.'/auth.php';
+
+        // Admin catalogue (T4.1).
+        Route::prefix('admin')->name('admin.')
+            ->middleware(['auth', 'verified', 'can:admin'])
+            ->group(function () {
+                Route::get('/', [CategoryController::class, 'dashboard'])->name('dashboard');
+                Route::resource('categories', CategoryController::class)->except('show');
+            });
     });
