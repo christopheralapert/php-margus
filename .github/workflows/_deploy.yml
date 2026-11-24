@@ -1,0 +1,215 @@
+name: Deploy
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ vars.APP_URL }}
+    defaults:
+      run:
+        shell: bash
+    env:
+      DEPLOY_METHOD: ${{ vars.DEPLOY_METHOD || 'rsync' }}
+      PHP_BIN: ${{ vars.PHP_BIN || 'php' }}
+      PUBLIC_DIR_OVERRIDE: ${{ vars.PUBLIC_DIR_OVERRIDE }}
+
+    steps:
+      - name: Validate deployment configuration
+        id: configuration
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          case "$DEPLOY_METHOD" in
+            rsync) required=(SSH_HOST SSH_USER SSH_PRIVATE_KEY SSH_KNOWN_HOSTS DEPLOY_PATH) ;;
+            ftp) required=(FTP_SERVER FTP_USERNAME FTP_PASSWORD DEPLOY_PATH) ;;
+            *) echo '::error::DEPLOY_METHOD must be rsync or ftp.'; exit 1 ;;
+          esac
+          for name in "${required[@]}"; do
+            if [[ -z "${!name}" ]]; then
+              echo "::error::Required secret $name is empty for $DEPLOY_METHOD deployment."
+              exit 1
+            fi
+          done
+          if [[ -n "$PUBLIC_DIR_OVERRIDE" ]]; then
+            if [[ "$DEPLOY_PATH" != /* || "$PUBLIC_DIR_OVERRIDE" != /* ]]; then
+              echo '::error::PUBLIC_DIR_OVERRIDE requires absolute server paths for both directories.'
+              exit 1
+            fi
+            app_root=$(realpath -m -- "$DEPLOY_PATH")
+            public_root=$(realpath -m -- "$PUBLIC_DIR_OVERRIDE")
+            if [[ "$app_root/" == "$public_root/"* || "$public_root/" == "$app_root/"* ]]; then
+              echo '::error::PUBLIC_DIR_OVERRIDE must be separate from the application directory.'
+              exit 1
+            fi
+          fi
+          printf 'server-dir=%s/\n' "${DEPLOY_PATH%/}" >> "$GITHUB_OUTPUT"
+          printf 'public-dir=%s/\n' "${PUBLIC_DIR_OVERRIDE%/}" >> "$GITHUB_OUTPUT"
+
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: pdo_sqlite, sqlite3, gd, intl, mbstring, zip
+          coverage: none
+          tools: composer:v2
+
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Build frontend assets
+        run: npm ci && npm run build
+
+      - name: Remove build dependencies
+        run: rm -rf node_modules
+
+      - name: Prepare separate public directory
+        if: vars.PUBLIC_DIR_OVERRIDE != ''
+        env:
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/deploy-public"
+          cp -a public/. "$RUNNER_TEMP/deploy-public/"
+          rm -rf "$RUNNER_TEMP/deploy-public/storage" "$RUNNER_TEMP/deploy-public/hot"
+          php <<'PHP'
+          <?php
+          $target = getenv('RUNNER_TEMP').'/deploy-public/index.php';
+          $index = file_get_contents($target);
+          $index = str_replace('__DIR__', var_export(rtrim(getenv('DEPLOY_PATH'), '/').'/public', true), $index);
+          $index = str_replace('$app->handleRequest', '$app->usePublicPath(__DIR__);'."\n\n".'$app->handleRequest', $index);
+          file_put_contents($target, $index);
+          PHP
+
+      - name: Configure SSH
+        if: env.DEPLOY_METHOD == 'rsync'
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+        run: |
+          install -d -m 700 "$HOME/.ssh"
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$HOME/.ssh/deploy_key"
+          chmod 600 "$HOME/.ssh/deploy_key"
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/known_hosts"
+
+      - name: Deploy with rsync and run server commands
+        if: env.DEPLOY_METHOD == 'rsync'
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          if [[ ! "$SSH_PORT" =~ ^[0-9]+$ ]]; then
+            echo '::error::SSH_PORT must be a numeric port.'
+            exit 1
+          fi
+          export RSYNC_RSH="ssh -i $HOME/.ssh/deploy_key -p $SSH_PORT -o BatchMode=yes -o StrictHostKeyChecking=yes"
+          rsync -az --delete --protect-args --filter='merge deploy/rsync-exclude.txt' \
+            ./ "$SSH_USER@$SSH_HOST:${DEPLOY_PATH%/}/"
+          if [[ -n "$PUBLIC_DIR_OVERRIDE" ]]; then
+            rsync -az --protect-args --exclude=/storage --exclude=/hot \
+              "$RUNNER_TEMP/deploy-public/" "$SSH_USER@$SSH_HOST:${PUBLIC_DIR_OVERRIDE%/}/"
+          fi
+          # SSH passes commands through the remote shell; quote each argument for it.
+          quote() { printf "'%s'" "$(printf '%s' "$1" | sed "s/'/'\\\\''/g")"; }
+          remote_command="cd -- $(quote "$DEPLOY_PATH") && PHP_BIN=$(quote "$PHP_BIN") bash deploy/post-deploy.sh"
+          ssh -i "$HOME/.ssh/deploy_key" -p "$SSH_PORT" \
+            -o BatchMode=yes -o StrictHostKeyChecking=yes \
+            "$SSH_USER@$SSH_HOST" "$remote_command"
+
+      - name: Deploy with FTP
+        if: env.DEPLOY_METHOD == 'ftp'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ steps.configuration.outputs.server-dir }}
+          exclude: |
+            **/.git*/**
+            **/node_modules/**
+            .env
+            .env.!(example)
+            **/*.sqlite*
+            storage/**
+            tests/**
+            .codex-runs/**
+            docs/**
+            phpunit.xml
+            bootstrap/cache/*.php
+            public/storage
+            public/storage/**
+            public/hot
+
+      - name: Deploy separate public directory with FTP
+        if: env.DEPLOY_METHOD == 'ftp' && vars.PUBLIC_DIR_OVERRIDE != ''
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ${{ runner.temp }}/deploy-public/
+          server-dir: ${{ steps.configuration.outputs.public-dir }}
+          state-name: .ftp-deploy-public-state.json
+          exclude: |
+            **/.git*/**
+            storage
+            storage/**
+            hot
+
+      - name: Report manual FTP server commands
+        if: env.DEPLOY_METHOD == 'ftp'
+        run: |
+          {
+            echo '### FTP upload complete: manual server setup required'
+            echo 'In the application root, create/configure .env if needed (copy .env.example and run PHP_BIN artisan key:generate on first setup).'
+            echo 'Using the configured PHP_BIN (or php), run:'
+            echo '```bash'
+            echo 'mkdir -p storage/app/private storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache'
+            printf 'PHP_BIN=%q\n' "$PHP_BIN"
+            echo '"$PHP_BIN" artisan migrate --force'
+            echo '"$PHP_BIN" artisan config:cache'
+            echo '"$PHP_BIN" artisan route:cache'
+            echo '"$PHP_BIN" artisan view:cache'
+            echo 'chmod -R ug+rwX storage bootstrap/cache'
+            echo '```'
+            echo 'For first-time setup, follow docs/DEPLOYMENT.md section 4 (including seeding and administrator creation when available).'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Summarize deployment
+        env:
+          DEPLOY_ENVIRONMENT: ${{ inputs.environment }}
+          APP_URL: ${{ vars.APP_URL }}
+        run: |
+          {
+            printf '### Deployment: %s\n' "$DEPLOY_ENVIRONMENT"
+            printf 'Commit: `%s`\n\n' "$GITHUB_SHA"
+            printf 'Application URL: %s\n' "${APP_URL:-not configured}"
+          } >> "$GITHUB_STEP_SUMMARY"

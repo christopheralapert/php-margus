@@ -1,0 +1,21 @@
+name: Deploy staging
+
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-staging
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    if: vars.STAGING_ENABLED == 'true'
+    uses: ./.github/workflows/_deploy.yml
+    with:
+      environment: staging
+    secrets: inherit

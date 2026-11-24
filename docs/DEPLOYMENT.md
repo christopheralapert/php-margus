@@ -140,7 +140,7 @@ for private repos on GitHub Free). If the API call during setup failed, set it u
 - Name: `protect-main`; Enforcement: Active; Target: `main`
 - ✔ Restrict deletions
 - ✔ Require a pull request before merging (0 or 1 approvals; dismiss stale approvals)
-- ✔ Require status checks to pass: `CI / test` (after T0.2)
+- ✔ Require status checks to pass: `CI / ci` (the job in `.github/workflows/ci.yml`)
 - ✔ Block force pushes
 
 Optionally apply the same to `develop` (PR required, no force push).
