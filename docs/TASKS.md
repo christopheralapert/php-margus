@@ -177,7 +177,7 @@ Every P3 task: run `php artisan leaflet:render-samples && scripts/render-pdfs.sh
 
 ## P5 — Patient accounts
 
-### [ ] T5.1 Accounts + my leaflets
+### [x] T5.1 Accounts + my leaflets
 - **Acceptance**: localised register/login/verify/reset (Breeze); the account consent checkbox records a `consents` row; "Save to my account"
   on the preview; a "My leaflets" list (procedures, date created); re-download regenerates the PDF (auth + policy); a user can delete one leaflet.
 ### [ ] T5.2 Delete my data + retention + privacy page
