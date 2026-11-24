@@ -84,6 +84,21 @@ class SvgSanitizerTest extends TestCase
         $this->assertSame($expected->C14N(), $actual->C14N());
     }
 
+    public function test_logo_validation_uses_settings_message_and_logo_field(): void
+    {
+        foreach (['et', 'en'] as $locale) {
+            app()->setLocale($locale);
+            foreach (['<svg>', '<svg>'.str_repeat(' ', 200 * 1024).'</svg>'] as $svg) {
+                try {
+                    (new SvgSanitizer)->sanitize($svg, 200 * 1024, 'logo');
+                    $this->fail('Invalid logo was accepted.');
+                } catch (ValidationException $exception) {
+                    $this->assertSame(['logo' => [__('settings.logo_invalid')]], $exception->errors());
+                }
+            }
+        }
+    }
+
     public function test_preserves_all_seed_icons(): void
     {
         foreach (glob(base_path('public/icons/categories/*.svg')) as $path) {

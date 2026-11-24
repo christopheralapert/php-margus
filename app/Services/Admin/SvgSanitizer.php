@@ -16,9 +16,15 @@ final class SvgSanitizer
 
     public function sanitize(string $svg, int $maxBytes = 50 * 1024, string $field = 'icon'): string
     {
+        $message = match ($field) {
+            'icon' => 'admin.svg.invalid',
+            'logo' => 'settings.logo_invalid',
+            default => 'admin.procedure.svg_invalid',
+        };
+
         // Reject alternate encodings too: NUL bytes can hide declarations from a byte scan.
         if ($svg === '' || strlen($svg) > $maxBytes || str_contains($svg, "\0") || preg_match('/<!\s*(DOCTYPE|ENTITY)/i', $svg)) {
-            throw ValidationException::withMessages([$field => __($field === 'icon' ? 'admin.svg.invalid' : 'admin.procedure.svg_invalid')]);
+            throw ValidationException::withMessages([$field => __($message)]);
         }
 
         $previous = libxml_use_internal_errors(true);
@@ -30,7 +36,7 @@ final class SvgSanitizer
             $hasErrors = collect(libxml_get_errors())->contains(fn ($error) => $error->level >= LIBXML_ERR_ERROR);
 
             if (! $loaded || $hasErrors || ! $root || $document->doctype || $root->localName !== 'svg' || ! in_array($root->namespaceURI, [null, self::SVG_NS], true)) {
-                throw ValidationException::withMessages([$field => __($field === 'icon' ? 'admin.svg.invalid' : 'admin.procedure.svg_invalid')]);
+                throw ValidationException::withMessages([$field => __($message)]);
             }
 
             $this->clean($root, $root->namespaceURI);

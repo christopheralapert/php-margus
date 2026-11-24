@@ -236,6 +236,31 @@ class SettingsTest extends TestCase
         $this->assertSame([], File::glob(public_path('brand/backup/*.svg')));
     }
 
+    public function test_valid_logo_larger_than_icon_limit_is_accepted(): void
+    {
+        $svg = '<svg xmlns="http://www.w3.org/2000/svg"><circle r="8"/>'.str_repeat(' ', 120 * 1024).'</svg>';
+
+        $this->actingAs($this->admin())->put('/en/admin/settings', [...$this->validData(), 'logo' => $this->upload($svg)])
+            ->assertSessionHasNoErrors()->assertRedirect('/en/admin/settings');
+
+        $this->assertSame($svg, File::get(public_path('brand/logo.svg')));
+        $this->assertSame('brand/logo.svg', app(Settings::class)->get('brand.logo_path'));
+    }
+
+    public function test_logo_over_200_kb_is_rejected_on_logo_field(): void
+    {
+        $original = File::get(public_path('brand/logo.svg'));
+        $svg = '<svg xmlns="http://www.w3.org/2000/svg">'.str_repeat(' ', 200 * 1024).'</svg>';
+
+        $this->actingAs($this->admin())->from('/en/admin/settings')
+            ->put('/en/admin/settings', [...$this->validData(), 'logo' => $this->upload($svg)])
+            ->assertRedirect('/en/admin/settings')->assertSessionHasErrors('logo');
+
+        $this->assertSame($original, File::get(public_path('brand/logo.svg')));
+        $this->assertDatabaseCount('settings', 0);
+        $this->assertSame([], File::glob(public_path('brand/backup/*.svg')));
+    }
+
     public function test_database_failure_rolls_back_all_values_and_leaves_logo_untouched(): void
     {
         $setting = Setting::factory()->create(['key' => 'clinic.phone', 'value' => '+372 500 0000']);

@@ -7,7 +7,6 @@ return [
     'categories' => 'Categories',
     'procedures' => 'Procedures',
     'settings' => 'Settings',
-    'coming_soon' => 'Coming soon',
     'logout' => 'Log out',
     'skip' => 'Skip to content',
     'navigation' => 'Administration navigation',

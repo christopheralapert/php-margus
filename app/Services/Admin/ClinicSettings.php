@@ -46,7 +46,7 @@ final class ClinicSettings
 
     public function save(array $values, ?UploadedFile $logo = null): void
     {
-        $svg = $logo ? $this->sanitize($logo) : null;
+        $svg = $logo ? $this->sanitizer->sanitize($logo->getContent(), 200 * 1024, 'logo') : null;
         $original = null;
         $backup = null;
         $replaced = false;
@@ -107,15 +107,6 @@ final class ClinicSettings
             foreach ($backups->skip(5) as $old) {
                 File::delete($old);
             }
-        }
-    }
-
-    private function sanitize(UploadedFile $logo): string
-    {
-        try {
-            return $this->sanitizer->sanitize($logo->getContent());
-        } catch (ValidationException) {
-            throw ValidationException::withMessages(['logo' => __('settings.logo_invalid')]);
         }
     }
 }

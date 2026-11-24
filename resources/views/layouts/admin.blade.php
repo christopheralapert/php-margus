@@ -31,9 +31,6 @@
                    @class(['inline-flex min-h-11 items-center border-b-2 text-sm font-semibold focus-visible:ring-2 focus-visible:ring-brand-primary', 'border-brand-primary text-brand-primary' => $active, 'border-transparent hover:border-slate-300' => ! $active])>{{ __('admin.'.$page) }}</a>
             @endforeach
             <a href="{{ route('admin.settings.edit') }}" @if (request()->routeIs('admin.settings.*')) aria-current="page" @endif @class(['inline-flex min-h-11 items-center border-b-2 text-sm font-semibold focus-visible:ring-2 focus-visible:ring-brand-primary', 'border-brand-primary text-brand-primary' => request()->routeIs('admin.settings.*'), 'border-transparent hover:border-slate-300' => ! request()->routeIs('admin.settings.*')])>{{ __('admin.settings') }}</a>
-            @foreach ([] as $page)
-                <span aria-disabled="true" class="inline-flex min-h-11 items-center gap-2 text-sm text-slate-500">{{ __('admin.'.$page) }} <span class="text-xs">{{ __('admin.coming_soon') }}</span></span>
-            @endforeach
         </nav>
     </header>
     <main id="main" class="mx-auto max-w-7xl px-4 py-8 sm:px-8 sm:py-12">
