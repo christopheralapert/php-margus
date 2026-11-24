@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 96">
+  <path fill="#2E6FD8" d="M48 8C39 8 16 36 16 56a32 32 0 0 0 64 0C80 36 57 8 48 8Z"/>
+  <path fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M48 34v38M32 43l32 20M32 63l32-20M42 38l6 5 6-5M42 68l6-5 6 5M32 50l8-2-1-8M57 66l-1-8 8-2M39 66l1-8-8-2M64 50l-8-2 1-8"/>
+  <!-- Original geometric lettering: Lumi Kliinik. -->
+  <g fill="none" stroke="#1F2937" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <!-- L, u, m, i -->
+    <path d="M104 30v36h17M131 44v14q0 8 8 8t8-8V44M159 66V44m0 7q0-7 7-7t7 7v15m0-15q0-7 7-7t7 7v15M198 44v22M198 33v1"/>
+    <!-- K, l, i, i, n, i, k -->
+    <path d="M220 30v36m19-36-19 20 20 16M251 30v36M263 44v22M263 33v1M275 44v22M275 33v1M287 66V44m0 8q0-8 8-8t8 8v14M315 44v22M315 33v1M327 30v36m16-22-16 12 17 10"/>
+  </g>
+</svg>
