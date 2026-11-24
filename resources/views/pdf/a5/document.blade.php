@@ -14,11 +14,13 @@
     @endforeach
     <htmlpagefooter name="running">@include('pdf.a5.footer')</htmlpagefooter>
 
-    @include('pdf.a5.cover')
+    @unless ($categoryProof ?? false)
+        @include('pdf.a5.cover')
+    @endunless
 
     @foreach ($doc->sections as $index => $section)
         <pagebreak page-selector="section-{{ $index }}" />
-        @include('pdf.a5.content', $section)
+        @include('pdf.a5.procedure', $section)
     @endforeach
 </body>
 </html>

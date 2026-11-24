@@ -52,4 +52,13 @@ class RenderSampleLeafletsTest extends TestCase
         $this->assertStringStartsWith('%PDF', file_get_contents(base_path('tests/visual/output/icons.pdf')));
         $this->assertDatabaseCount('procedures', 0);
     }
+
+    public function test_category_proof_has_exactly_one_page_per_category(): void
+    {
+        $this->artisan('leaflet:render-samples', ['--only' => 'categories'])->assertSuccessful();
+        $pdf = file_get_contents(base_path('tests/visual/output/categories.pdf'));
+        preg_match('/\/Type \/Pages\s*\/Kids\s*\[[^]]*\]\s*\/Count (\d+)/s', $pdf, $pageCount);
+        $this->assertSame(9, (int) ($pageCount[1] ?? 0));
+        $this->assertDatabaseCount('procedures', 0);
+    }
 }

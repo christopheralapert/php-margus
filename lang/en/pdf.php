@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'recovery_timeline' => 'Recovery timeline',
     'icons_title' => 'PDF icon proof',
     'icons_comparison' => '6 mm: SVG image and inline SVG.',
     'icons_ink' => 'Ink',

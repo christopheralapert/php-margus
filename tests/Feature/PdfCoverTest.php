@@ -49,7 +49,9 @@ class PdfCoverTest extends TestCase
         $this->assertGreaterThanOrEqual(8, (float) $copy[1] - $artBottom);
 
         $pdf = app(PdfRenderer::class)->render($doc);
-        $this->assertStringContainsString('/Count '.($count + 1), $pdf);
+        preg_match('/\/Type \/Pages\s*\/Kids\s*\[[^]]*\]\s*\/Count (\d+)/s', $pdf, $pageCount);
+        // Each fixture now has two content pages: timeline, then advice.
+        $this->assertSame(2 * $count + 1, (int) ($pageCount[1] ?? 0));
         $process = new Process([$executable, '-f', '1', '-l', '1', '-bbox', '-', '-']);
         $process->setInput($pdf);
         $process->mustRun();

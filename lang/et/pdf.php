@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'recovery_timeline' => 'Paranemise ajajoon',
     'icons_title' => 'PDF-ikoonide proov',
     'icons_comparison' => '6 mm: SVG-pilt ja otse lisatud SVG.',
     'icons_ink' => 'Tume',

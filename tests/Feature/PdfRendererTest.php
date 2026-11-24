@@ -39,7 +39,8 @@ class PdfRendererTest extends TestCase
         preg_match_all('/\/MediaBox\s*\[\s*0\s+0\s+([\d.]+)\s+([\d.]+)\s*\]/', $pdf, $boxes, PREG_SET_ORDER);
         // mPDF also writes the inherited MediaBox on the /Pages parent.
         $this->assertNotEmpty($boxes);
-        $this->assertStringContainsString('/Count 2', $pdf);
+        preg_match('/\/Type \/Pages\s*\/Kids\s*\[[^]]*\]\s*\/Count (\d+)/s', $pdf, $pageCount);
+        $this->assertSame(3, (int) ($pageCount[1] ?? 0));
         foreach ($boxes as $box) {
             $this->assertEqualsWithDelta(148 * 72 / 25.4, (float) $box[1], 0.02);
             $this->assertEqualsWithDelta(210 * 72 / 25.4, (float) $box[2], 0.02);
