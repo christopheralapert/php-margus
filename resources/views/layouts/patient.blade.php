@@ -15,7 +15,12 @@
             <a href="{{ route('home') }}" class="flex min-h-11 min-w-0 items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary">
                 <img src="{{ asset('brand/logo.svg') }}" alt="{{ $settings->localized('clinic.name') }}" class="h-auto max-h-12 w-32 sm:w-40">
             </a>
-            <x-lang-switcher class="shrink-0 gap-1 [&_a]:inline-flex [&_a]:min-h-11 [&_a]:items-center [&_a]:px-3" />
+            <div class="flex flex-wrap items-center justify-end gap-x-4">
+                @auth
+                    <a href="{{ route('account.leaflets') }}" class="inline-flex min-h-11 items-center rounded text-sm font-semibold text-brand-primary underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-brand-primary">{{ __('account.title') }}</a>
+                @endauth
+                <x-lang-switcher class="shrink-0 gap-1 [&_a]:inline-flex [&_a]:min-h-11 [&_a]:items-center [&_a]:px-3" />
+            </div>
         </div>
     </header>
     <main id="main" class="mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:px-8 sm:py-16">
