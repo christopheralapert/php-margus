@@ -2,15 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ConsentPurpose;
+use App\Http\Requests\LeafletRequest;
 use App\Http\Requests\StoreWizardProceduresRequest;
 use App\Models\Category;
-use App\Models\Procedure;
+use App\Models\Consent;
+use App\Services\Leaflet\LeafletBuilder;
+use App\Services\Leaflet\LeafletDocument;
+use App\Services\Leaflet\PdfRenderer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class WizardController extends Controller
 {
+    public function __construct(private readonly LeafletBuilder $builder) {}
+
     public function home(): View
     {
         return view('wizard.home');
@@ -33,12 +41,70 @@ class WizardController extends Controller
         return redirect()->route('wizard.details');
     }
 
-    public function details(Request $request): View
+    public function details(Request $request): View|RedirectResponse
     {
-        $ids = $request->session()->get('wizard.procedures', []);
-        $procedures = Procedure::active()->whereIn('id', $ids)->get()
-            ->sortBy(fn (Procedure $procedure) => array_search($procedure->id, $ids, true));
+        $doc = $this->document($request);
 
-        return view('wizard.details', compact('procedures'));
+        return $doc->sections ? view('wizard.details', compact('doc')) : redirect()->route('wizard.procedures');
+    }
+
+    public function storeDetails(LeafletRequest $request): RedirectResponse
+    {
+        if (! $this->document($request)->sections) {
+            return redirect()->route('wizard.procedures');
+        }
+
+        $firstName = $request->validated('first_name');
+        $date = $request->validated('date');
+        $personal = $firstName !== null || $date !== null;
+
+        if ($personal) {
+            Consent::create([
+                'purpose' => ConsentPurpose::PersonalisedLeaflet,
+                'user_id' => $request->user()?->id,
+                'text_version' => config('leaflet.consent_version'),
+                'locale' => app()->getLocale(),
+                'given_at' => now(),
+            ]);
+        }
+
+        $request->session()->put(['wizard.first_name' => $firstName, 'wizard.date' => $date, 'wizard.consent' => $personal]);
+
+        return redirect()->route('wizard.preview');
+    }
+
+    public function preview(Request $request): View|RedirectResponse
+    {
+        $doc = $this->document($request);
+
+        return $doc->sections ? view('wizard.preview', compact('doc')) : redirect()->route('wizard.procedures');
+    }
+
+    public function pdf(Request $request, PdfRenderer $renderer): Response|RedirectResponse
+    {
+        $doc = $this->document($request);
+
+        if (! $doc->sections) {
+            return redirect()->route('wizard.procedures');
+        }
+
+        $bytes = $renderer->render($doc);
+        $request->session()->forget('wizard');
+
+        return response($bytes, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="'.__('wizard.pdf_filename').'"',
+            'Cache-Control' => 'no-store, private',
+        ]);
+    }
+
+    private function document(Request $request): LeafletDocument
+    {
+        return $this->builder->build(
+            $request->session()->get('wizard.procedures', []),
+            app()->getLocale(),
+            $request->session()->get('wizard.first_name'),
+            $request->session()->get('wizard.date'),
+        );
     }
 }
