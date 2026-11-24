@@ -13,6 +13,9 @@
         </htmlpageheader>
     @endforeach
     <htmlpagefooter name="running">@include('pdf.a5.footer')</htmlpagefooter>
+    <htmlpageheader name="redflags">
+        @include('pdf.a5.strip', ['color' => '#D93B3B'])
+    </htmlpageheader>
 
     @unless ($categoryProof ?? false)
         @include('pdf.a5.cover')
@@ -22,5 +25,8 @@
         <pagebreak page-selector="section-{{ $index }}" />
         @include('pdf.a5.procedure', $section)
     @endforeach
+    @unless ($categoryProof ?? false)
+        @include('pdf.a5.redflag-page')
+    @endunless
 </body>
 </html>

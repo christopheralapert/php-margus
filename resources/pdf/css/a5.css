@@ -96,3 +96,19 @@ li { margin-bottom: 2mm; }
 .followup-box { border-radius: 3mm; padding: 4mm; }
 .followup-box p { margin: 0 0 2mm; }
 .followup-box .box-last { margin-bottom: 0; }
+.redflag-box { border: 0.8mm solid #D93B3B; border-radius: 4mm; background-color: #FDECEC; page-break-inside: avoid; }
+.redflag-band { background-color: #D93B3B; border-radius: 3mm 3mm 0 0; padding: 3mm; }
+.redflag-body { padding: 4mm; }
+.redflag-item { border-collapse: collapse; font-size: 10.5pt; line-height: 15pt; }
+.redflag-item td { padding: 0 0 2mm; vertical-align: top; }
+.redflag-item .redflag-dot { font-size: 0; line-height: 0; padding-top: 1.6mm; padding-left: 1mm; }
+.redflag-item .redflag-group { font-family: sourcesans3sb; font-size: 10pt; line-height: 15pt; padding-top: 3mm; padding-bottom: 1mm; }
+.redflag-contacts { border-collapse: collapse; font-size: 10.5pt; line-height: 15pt; }
+.redflag-contacts td { padding: 0; vertical-align: middle; }
+.redflag-contacts .redflag-clinic { padding-right: 3mm; }
+.redflag-clinic-lines { border-collapse: collapse; font-size: 10.5pt; line-height: 15pt; }
+.redflag-clinic-lines .contact-gap { padding-bottom: 1.5mm; }
+.emergency-pill { border-collapse: collapse; text-align: center; color: #FFFFFF; }
+.emergency-pill .emergency-cap { padding: 0; font-size: 0; line-height: 0; }
+.emergency-pill .emergency-body { background-color: #D93B3B; padding: 1mm 2mm; color: #FFFFFF; }
+.emergency-pill .label { color: #FFFFFF; }

@@ -3,10 +3,40 @@
 namespace App\Services\Leaflet;
 
 use App\Enums\AdviceSection;
+use App\Models\AdviceItem;
 use App\Models\Procedure;
 
 final class PdfAdvice
 {
+    /** @return list<array{item: AdviceItem, procedure: ?Procedure, theme: ?ThemeColor}> */
+    public function redFlags(LeafletDocument $doc): array
+    {
+        $general = [];
+        $specific = [];
+        $seen = [];
+        foreach ($doc->sections as ['procedure' => $procedure, 'theme' => $theme]) {
+            foreach ($procedure->adviceItems->where('section', AdviceSection::RedFlag) as $item) {
+                if (trim($item->getTranslation('text', $doc->locale)) === '') {
+                    continue;
+                }
+                $key = $item->merge_key;
+                if ($key !== null && $key !== '') {
+                    if (isset($seen[$key])) {
+                        continue;
+                    }
+                    $seen[$key] = true;
+                }
+                if (str_starts_with($key ?? '', 'general.')) {
+                    $general[] = ['item' => $item, 'procedure' => null, 'theme' => null];
+                } else {
+                    $specific[] = compact('item', 'procedure', 'theme');
+                }
+            }
+        }
+
+        return [...$general, ...$specific];
+    }
+
     /** @return list<array{section: string, icon: string, paragraphs: list<string>}> */
     public function topics(Procedure $procedure, string $locale): array
     {

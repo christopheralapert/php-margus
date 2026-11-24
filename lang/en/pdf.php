@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'red_flags' => 'When to get help right away',
+    'call_clinic' => 'Call the clinic',
+    'after_hours' => 'Evenings and nights: :phone',
+    'emergency' => 'EMERGENCY',
     'cards' => ['do' => 'Do', 'dont' => "Don't"],
     'everyday_life' => 'Everyday life',
     'medication_advice' => 'Use pain relief as prescribed by your doctor.',

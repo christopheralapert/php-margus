@@ -132,12 +132,20 @@ class PdfProcedureTest extends TestCase
         $text->mustRun();
         $pages = explode("\f", trim($text->getOutput(), "\f\r\n "));
         $color = null;
+        $redflagSection = false;
         $counts = ['#2BB3A3' => 0, '#F08A24' => 0];
         foreach (array_slice($pages, 1, null, true) as $index => $page) {
             foreach ($procedures as $procedure) {
                 if (str_contains($page, $procedure->getTranslation('name', 'en'))) {
                     $color = $procedure->color;
                 }
+            }
+            $redflagSection = $redflagSection || str_contains(
+                preg_replace('/\s+/u', '', $page),
+                preg_replace('/\s+/u', '', mb_strtoupper(__('pdf.red_flags', [], 'en'), 'UTF-8')),
+            );
+            if ($redflagSection) {
+                $color = '#D93B3B';
             }
             $this->assertNotNull($color);
             $image = new Process([$imageTool, '-f', (string) ($index + 1), '-l', (string) ($index + 1), '-singlefile', '-r', '30', '-png', '-']);
@@ -146,7 +154,9 @@ class PdfProcedureTest extends TestCase
             $png = imagecreatefromstring($image->getOutput());
             $this->assertSame(hexdec(substr($color, 1)), imagecolorat($png, 10, 1) & 0xFFFFFF);
             imagedestroy($png);
-            $counts[$color]++;
+            if (isset($counts[$color])) {
+                $counts[$color]++;
+            }
         }
         foreach ($counts as $count) {
             $this->assertGreaterThan(1, $count);

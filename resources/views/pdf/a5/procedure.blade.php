@@ -18,5 +18,4 @@
 @unless ($categoryProof ?? false)
     @include('pdf.a5.cards')
     @include('pdf.a5.topics')
-    @include('pdf.a5.followup', ['procedures' => [$procedure]])
 @endunless
