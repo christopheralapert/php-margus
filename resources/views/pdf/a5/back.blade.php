@@ -31,11 +31,11 @@
         <td width="32mm"><img src="{{ $qrCodes->dataUri($onlineUrl) }}" width="32mm" height="32mm" alt="{{ __('pdf.qr_caption', [], $doc->locale) }}"></td>
         <td class="back-qr-caption">
             <p>{{ __('pdf.qr_caption', [], $doc->locale) }}</p>
-            <div class="back-small">{{ $displayUrl }}</div>
+            <div class="back-small">{!! implode('&#8203;', array_map(e(...), mb_str_split($displayUrl))) !!}</div>
         </td>
     </tr>
 </table>
-<div class="back-emergency mb-s6">{{ __('pdf.back_emergency', [], $doc->locale) }}</div>
+<div class="back-emergency mb-s6">{!! str_replace('112', '<b>112</b>', e(__('pdf.back_emergency', [], $doc->locale))) !!}</div>
 <div class="back-disclaimer mb-s6">{{ $settings->localized('leaflet.disclaimer', $doc->locale) }} {{ __('pdf.back_contact', [], $doc->locale) }}</div>
 <p class="back-small">{{ __('pdf.created', ['date' => now()->format($doc->locale === 'et' ? 'd.m.Y' : 'j M Y'), 'version' => config('leaflet.content_version', 'v1')], $doc->locale) }}</p>
 <div style="position: absolute; top: {{ $offsetY + 198 }}mm; left: {{ $offsetX - $bleed }}mm; width: {{ 148 + 2 * $bleed }}mm; height: {{ 12 + $bleed }}mm; background-color: #F3F7FC;"></div>

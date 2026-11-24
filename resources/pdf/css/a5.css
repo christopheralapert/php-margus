@@ -93,6 +93,7 @@ li { margin-bottom: 2mm; }
 .topic-body .box-heading td { vertical-align: top; }
 .topic-body .box-heading .heading-icon { padding-top: 0.5mm; }
 .topic-copy { margin: 0 0 2mm; }
+.notes-line { height: 8mm; border-bottom: 0.2mm solid #DCE3EE; }
 .general-section .mb-s6 { margin-bottom: 1mm; }
 .general-chip { margin: 0; }
 .general-topics { border-radius: 3mm; background-color: #F3F7FC; padding: 4mm; }
@@ -129,4 +130,5 @@ li { margin-bottom: 2mm; }
 .back-qr .back-qr-caption { padding-left: 6mm; }
 .back-small { font-size: 7.5pt; line-height: 10pt; color: #6B7280; }
 .back-emergency { width: 76mm; padding: 3mm 4mm; border-radius: 4mm; background-color: #D93B3B; color: #FFFFFF; }
+.back-emergency b { font-family: nunito; font-weight: bold; }
 .back-disclaimer { padding: 4mm; border-radius: 3mm; background-color: #F3F7FC; }
