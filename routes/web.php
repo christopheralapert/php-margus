@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WizardController;
+use App\Http\Middleware\EnsureChatEnabled;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +33,11 @@ Route::prefix('{locale}')
         Route::post('/leaflet/details', [WizardController::class, 'storeDetails'])->name('wizard.details.store');
         Route::get('/leaflet/preview', [WizardController::class, 'preview'])->name('wizard.preview');
         Route::post('/leaflet/pdf', [WizardController::class, 'pdf'])->name('leaflet.pdf');
+
+        // Chat backend (T6.1): session CSRF protection remains in the web group.
+        Route::post('/chat', ChatController::class)
+            ->middleware([EnsureChatEnabled::class, 'throttle:chat'])
+            ->name('chat.send');
 
         Route::view('/dashboard', 'dashboard')
             ->middleware(['auth', 'verified'])->name('dashboard');
