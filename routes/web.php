@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountLeafletController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProcedureController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\OnlineLeafletController;
 use App\Http\Controllers\ProfileController;
@@ -69,5 +70,6 @@ Route::prefix('{locale}')
             ->group(function () {
                 Route::get('/', [CategoryController::class, 'dashboard'])->name('dashboard');
                 Route::resource('categories', CategoryController::class)->except('show');
+                Route::resource('procedures', ProcedureController::class)->except('show');
             });
     });
