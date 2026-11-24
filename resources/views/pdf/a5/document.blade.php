@@ -31,6 +31,8 @@
     @endforeach
     @unless ($categoryProof ?? false)
         @include('pdf.a5.redflag-page')
+        <pagebreak page-selector="back" />
+        @include('pdf.a5.back')
     @endunless
 </body>
 </html>

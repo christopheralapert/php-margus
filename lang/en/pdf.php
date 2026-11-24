@@ -3,6 +3,12 @@
 return [
     'general_advice' => 'General advice',
     'general_label' => 'For all procedures',
+    'back_after_hours' => 'After-hours line :phone',
+    'qr_caption' => 'Scan: this guide online and ask questions',
+    'back_emergency' => 'In an emergency call 112',
+    'back_contact' => 'If in doubt, contact the clinic.',
+    'created' => 'Created :date · :version',
+    'online_soon' => 'The full online guide and chat for your questions are coming soon.',
     'red_flags' => 'When to get help right away',
     'call_clinic' => 'Call the clinic',
     'after_hours' => 'Evenings and nights: :phone',
