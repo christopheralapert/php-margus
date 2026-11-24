@@ -162,7 +162,7 @@ Every P3 task: run `php artisan leaflet:render-samples && scripts/render-pdfs.sh
 
 ## P4 — Admin panel
 
-### [ ] T4.1 Admin shell + categories CRUD
+### [x] T4.1 Admin shell + categories CRUD
 - **Acceptance**: `is_admin` gate; `php artisan app:make-admin {email}` command; a simple Tailwind layout; categories CRUD with et+en fields,
   colour picker (hex validation), icon SVG upload (sanitised: no scripts or external refs), sort, active toggle.
 ### [ ] T4.2 Procedures CRUD
