@@ -49,7 +49,7 @@ PDF tasks also need: `php artisan leaflet:render-samples && scripts/render-pdfs.
 
 ## P1 — Schema, seeds, i18n
 
-### [ ] T1.1 Schema + models — Net (spatie/laravel-translatable)
+### [x] T1.1 Schema + models — Net (spatie/laravel-translatable)
 - **Goal**: migrations and Eloquent models from PLAN §5.
 - **Files**: `database/migrations/*`, `app/Models/*`, `database/factories/*`, `tests/Unit/Models/*`.
 - **Acceptance**: all tables/columns from PLAN §5; translatable attributes via spatie; casts (`encrypted` for saved leaflet
