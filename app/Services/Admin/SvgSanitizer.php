@@ -14,11 +14,11 @@ final class SvgSanitizer
 
     private const ATTRIBUTES = ['id', 'viewBox', 'width', 'height', 'x', 'y', 'x1', 'x2', 'y1', 'y2', 'cx', 'cy', 'r', 'rx', 'ry', 'd', 'points', 'fill', 'fill-rule', 'fill-opacity', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'stroke-miterlimit', 'stroke-dasharray', 'stroke-dashoffset', 'stroke-opacity', 'opacity', 'transform', 'preserveAspectRatio', 'clip-path', 'clip-rule', 'mask', 'maskUnits', 'maskContentUnits', 'clipPathUnits', 'gradientUnits', 'gradientTransform', 'spreadMethod', 'offset', 'stop-color', 'stop-opacity', 'fx', 'fy', 'fr', 'href', 'color', 'vector-effect'];
 
-    public function sanitize(string $svg): string
+    public function sanitize(string $svg, int $maxBytes = 50 * 1024, string $field = 'icon'): string
     {
         // Reject alternate encodings too: NUL bytes can hide declarations from a byte scan.
-        if ($svg === '' || strlen($svg) > 50 * 1024 || str_contains($svg, "\0") || preg_match('/<!\s*(DOCTYPE|ENTITY)/i', $svg)) {
-            throw ValidationException::withMessages(['icon' => __('admin.svg.invalid')]);
+        if ($svg === '' || strlen($svg) > $maxBytes || str_contains($svg, "\0") || preg_match('/<!\s*(DOCTYPE|ENTITY)/i', $svg)) {
+            throw ValidationException::withMessages([$field => __($field === 'icon' ? 'admin.svg.invalid' : 'admin.procedure.svg_invalid')]);
         }
 
         $previous = libxml_use_internal_errors(true);
@@ -30,7 +30,7 @@ final class SvgSanitizer
             $hasErrors = collect(libxml_get_errors())->contains(fn ($error) => $error->level >= LIBXML_ERR_ERROR);
 
             if (! $loaded || $hasErrors || ! $root || $document->doctype || $root->localName !== 'svg' || ! in_array($root->namespaceURI, [null, self::SVG_NS], true)) {
-                throw ValidationException::withMessages(['icon' => __('admin.svg.invalid')]);
+                throw ValidationException::withMessages([$field => __($field === 'icon' ? 'admin.svg.invalid' : 'admin.procedure.svg_invalid')]);
             }
 
             $this->clean($root, $root->namespaceURI);
