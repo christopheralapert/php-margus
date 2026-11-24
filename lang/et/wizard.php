@@ -34,6 +34,7 @@ return [
     'recipient' => 'Sinu voldik, :name',
     'procedure_date' => 'Protseduuri kuupäev: :date',
     'download' => 'Laadi PDF alla',
+    'make_pdf' => 'Koosta endale PDF',
     'edit' => 'Muuda üksikasju',
     'draft' => 'MUSTAND — kliiniku meditsiinitöötajad peavad selle sisu üle vaatama.',
     'timeline' => 'Taastumise etapid',

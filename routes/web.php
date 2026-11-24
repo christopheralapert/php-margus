@@ -32,6 +32,7 @@ Route::prefix('{locale}')
     ->group(function () {
         Route::get('/', [WizardController::class, 'home'])->name('home');
         Route::get('/l/{combo}', OnlineLeafletController::class)->name('online.show');
+        Route::get('/l/{combo}/personalize', [OnlineLeafletController::class, 'personalize'])->name('online.personalize');
         Route::get('/leaflet', [WizardController::class, 'procedures'])->name('wizard.procedures');
         Route::post('/leaflet', [WizardController::class, 'store'])->name('wizard.procedures.store');
         Route::get('/leaflet/details', [WizardController::class, 'details'])->name('wizard.details');

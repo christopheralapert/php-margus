@@ -1,3 +1,3 @@
-<p class="mt-4">{{ __('wizard.phone', [], $doc->locale) }}: {{ $settings->get('clinic.phone') }}</p>
-<p>{{ __('wizard.after_hours', [], $doc->locale) }}: {{ $settings->get('clinic.after_hours_phone') }}</p>
-<p>{{ __('wizard.emergency', [], $doc->locale) }}: {{ $settings->get('clinic.emergency') }}</p>
+<p class="mt-4"><a href="tel:{{ str_replace(' ', '', $settings->get('clinic.phone')) }}" class="inline-flex min-h-11 items-center rounded underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-red-900">{{ __('wizard.phone', [], $doc->locale) }}: {{ $settings->get('clinic.phone') }}</a></p>
+<p><a href="tel:{{ str_replace(' ', '', $settings->get('clinic.after_hours_phone')) }}" class="inline-flex min-h-11 items-center rounded underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-red-900">{{ __('wizard.after_hours', [], $doc->locale) }}: {{ $settings->get('clinic.after_hours_phone') }}</a></p>
+<p><a href="tel:{{ $settings->get('clinic.emergency') }}" class="inline-flex min-h-11 items-center rounded underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-red-900">{{ __('wizard.emergency', [], $doc->locale) }}: {{ $settings->get('clinic.emergency') }}</a></p>

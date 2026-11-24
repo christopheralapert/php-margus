@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ __('app.title') }} · {{ $settings->localized('clinic.name') }}</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @yield('meta')
+    <title>@yield('title', __('app.title')) · {{ $settings->localized('clinic.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>[x-cloak] { display: none !important; }</style>
 </head>
