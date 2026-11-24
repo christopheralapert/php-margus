@@ -7,6 +7,7 @@ use App\Services\Leaflet\LeafletBuilder;
 use App\Services\Leaflet\PdfIcons;
 use App\Services\Leaflet\PdfRenderer;
 use App\Services\Leaflet\ThemeColor;
+use App\Support\Settings;
 use Database\Seeders\DatabaseSeeder;
 use DOMDocument;
 use DOMXPath;
@@ -146,6 +147,9 @@ class PdfProcedureTest extends TestCase
             );
             if ($redflagSection) {
                 $color = '#D93B3B';
+            }
+            if ($index === count($pages) - 1) {
+                $color = app(Settings::class)->get('brand.colors')['primary'];
             }
             $this->assertNotNull($color);
             $image = new Process([$imageTool, '-f', (string) ($index + 1), '-l', (string) ($index + 1), '-singlefile', '-r', '30', '-png', '-']);

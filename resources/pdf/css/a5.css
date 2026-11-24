@@ -112,3 +112,13 @@ li { margin-bottom: 2mm; }
 .emergency-pill .emergency-cap { padding: 0; font-size: 0; line-height: 0; }
 .emergency-pill .emergency-body { background-color: #D93B3B; padding: 1mm 2mm; color: #FFFFFF; }
 .emergency-pill .label { color: #FFFFFF; }
+.back-logo { line-height: 0; }
+.back-name { color: #1F2937; }
+.back-contacts { border-collapse: collapse; font-size: 10.5pt; line-height: 15pt; }
+.back-contacts td { padding: 0 0 3mm; vertical-align: middle; }
+.back-qr { border-collapse: collapse; page-break-inside: avoid; font-size: 10.5pt; line-height: 15pt; }
+.back-qr td { padding: 0; vertical-align: middle; }
+.back-qr .back-qr-caption { padding-left: 6mm; }
+.back-small { font-size: 7.5pt; line-height: 10pt; color: #6B7280; }
+.back-emergency { width: 76mm; padding: 3mm 4mm; border-radius: 4mm; background-color: #D93B3B; color: #FFFFFF; }
+.back-disclaimer { padding: 4mm; border-radius: 3mm; background-color: #F3F7FC; }

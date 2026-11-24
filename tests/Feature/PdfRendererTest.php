@@ -40,7 +40,7 @@ class PdfRendererTest extends TestCase
         // mPDF also writes the inherited MediaBox on the /Pages parent.
         $this->assertNotEmpty($boxes);
         preg_match('/\/Type \/Pages\s*\/Kids\s*\[[^]]*\]\s*\/Count (\d+)/s', $pdf, $pageCount);
-        $this->assertSame(5, (int) ($pageCount[1] ?? 0));
+        $this->assertSame(6, (int) ($pageCount[1] ?? 0));
         foreach ($boxes as $box) {
             $this->assertEqualsWithDelta(148 * 72 / 25.4, (float) $box[1], 0.02);
             $this->assertEqualsWithDelta(210 * 72 / 25.4, (float) $box[2], 0.02);
@@ -102,7 +102,8 @@ class PdfRendererTest extends TestCase
         $disclaimer = app(Settings::class)->localized('leaflet.disclaimer', 'et');
         $this->assertStringNotContainsString($disclaimer, $pages[0]);
         $this->assertDoesNotMatchRegularExpression('/1\s*\/\s*'.count($pages).'\b/', $pages[0]);
-        foreach (array_slice($pages, 1, null, true) as $index => $page) {
+        $this->assertDoesNotMatchRegularExpression('/\d+\s*\/\s*'.count($pages).'\b/', end($pages));
+        foreach (array_slice($pages, 1, -1, true) as $index => $page) {
             $this->assertStringContainsString($disclaimer, $page);
             $this->assertMatchesRegularExpression('/'.($index + 1).'\s*\/\s*'.count($pages).'\b/', $page);
         }

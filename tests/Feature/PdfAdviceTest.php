@@ -156,7 +156,7 @@ class PdfAdviceTest extends TestCase
     }
 
     #[DataProvider('locales')]
-    public function test_cards_topics_and_redflags_flow_in_five_pages_with_extractable_text(string $locale): void
+    public function test_cards_topics_and_redflags_flow_before_the_back_page_with_extractable_text(string $locale): void
     {
         config(['leaflet.draft_watermark' => false]);
         $textTool = (new ExecutableFinder)->find('pdftotext');
@@ -174,7 +174,7 @@ class PdfAdviceTest extends TestCase
         $normalize = fn (string $value): string => preg_replace('/\s+/u', '', $value);
         $output = $normalize($text->getOutput());
         $pages = array_map($normalize, explode("\f", rtrim($text->getOutput(), "\f\r\n")));
-        $this->assertCount(5, $pages);
+        $this->assertCount(6, $pages);
         $this->assertStringContainsString($normalize(__('pdf.cards.do', [], $locale)), $pages[2]);
         $this->assertStringContainsString($normalize(__('pdf.cards.dont', [], $locale)), $pages[2]);
         $this->assertStringContainsString($normalize(__('pdf.everyday_life', [], $locale)), $pages[2]);

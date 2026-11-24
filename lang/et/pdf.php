@@ -1,6 +1,12 @@
 <?php
 
 return [
+    'back_after_hours' => 'Valveliin :phone',
+    'qr_caption' => 'Skaneeri: juhend veebis ja küsi küsimusi',
+    'back_emergency' => 'Hädaolukorras helista 112',
+    'back_contact' => 'Kahtluse korral võta ühendust kliinikuga.',
+    'created' => 'Koostatud :date · :version',
+    'online_soon' => 'Täielik veebijuhend ja vestlus küsimuste esitamiseks on peagi tulekul.',
     'red_flags' => 'Millal kohe abi otsida',
     'call_clinic' => 'Helista kliinikule',
     'after_hours' => 'Õhtuti ja öösiti: :phone',
