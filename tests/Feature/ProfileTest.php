@@ -2,8 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Models\Consent;
+use App\Models\SavedLeaflet;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class ProfileTest extends TestCase
@@ -64,6 +67,11 @@ class ProfileTest extends TestCase
     public function test_user_can_delete_their_account(): void
     {
         $user = User::factory()->create();
+        $leaflet = SavedLeaflet::factory()->for($user)->create();
+        $consent = Consent::factory()->for($user)->create();
+        $other = SavedLeaflet::factory()->create();
+        DB::table('sessions')->insert(['id' => 'other-session', 'user_id' => $user->id, 'payload' => '', 'last_activity' => now()->timestamp]);
+        DB::table('password_reset_tokens')->insert(['email' => $user->email, 'token' => 'token', 'created_at' => now()]);
 
         $response = $this
             ->actingAs($user)
@@ -73,15 +81,23 @@ class ProfileTest extends TestCase
 
         $response
             ->assertSessionHasNoErrors()
+            ->assertSessionHas('status', __('privacy.deleted', [], 'en'))
             ->assertRedirect('/en');
 
         $this->assertGuest();
         $this->assertNull($user->fresh());
+        $this->assertNull($leaflet->fresh());
+        $this->assertNull($consent->fresh());
+        $this->assertNotNull($other->fresh());
+        $this->assertDatabaseMissing('sessions', ['id' => 'other-session']);
+        $this->assertDatabaseMissing('password_reset_tokens', ['email' => $user->email]);
     }
 
     public function test_correct_password_must_be_provided_to_delete_account(): void
     {
         $user = User::factory()->create();
+        $leaflet = SavedLeaflet::factory()->for($user)->create();
+        $consent = Consent::factory()->for($user)->create();
 
         $response = $this
             ->actingAs($user)
@@ -95,5 +111,21 @@ class ProfileTest extends TestCase
             ->assertRedirect('/en/profile');
 
         $this->assertNotNull($user->fresh());
+        $this->assertNotNull($leaflet->fresh());
+        $this->assertNotNull($consent->fresh());
+        $this->assertAuthenticatedAs($user);
+    }
+
+    public function test_estonian_deletion_clears_session_and_flashes_localised_message(): void
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user)->withSession(['wizard.first_name' => 'Private', '_token' => 'old-token'])
+            ->delete('/et/profile', ['password' => 'password'])
+            ->assertRedirect('/et')
+            ->assertSessionMissing('wizard.first_name')
+            ->assertSessionHas('status', __('privacy.deleted', [], 'et'));
+        $this->assertNotSame('old-token', session()->token());
+        $this->assertGuest();
+        $this->get('/et')->assertSee(__('privacy.deleted', [], 'et'));
     }
 }

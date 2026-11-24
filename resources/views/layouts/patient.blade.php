@@ -24,11 +24,15 @@
         </div>
     </header>
     <main id="main" class="mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:px-8 sm:py-16">
+        @if (session('status'))
+            <p role="status" class="mb-6 rounded-xl bg-brand-soft p-4">{{ session('status') }}</p>
+        @endif
         @yield('content')
     </main>
     <footer class="border-t border-slate-200 bg-brand-soft">
         <div class="mx-auto max-w-5xl px-4 py-8 sm:px-8">
             <div class="flex flex-wrap gap-x-8 gap-y-2 text-sm font-semibold">
+                <a href="{{ route('privacy') }}" class="inline-flex min-h-11 items-center rounded underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-brand-primary">{{ __('privacy.title') }}</a>
                 <a href="tel:{{ str_replace(' ', '', $settings->get('clinic.phone')) }}" class="inline-flex min-h-11 items-center gap-2 rounded underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-brand-primary">
                     {{ __('wizard.phone') }} <span>{{ $settings->get('clinic.phone') }}</span>
                 </a>

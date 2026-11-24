@@ -44,11 +44,7 @@
                 <input id="consent" name="consent" type="checkbox" value="1" required class="mt-1 rounded border-gray-300 text-brand-primary focus:ring-brand-primary" aria-describedby="consent-error">
                 <label for="consent" class="text-sm leading-relaxed text-gray-700">
                     {{ __('account.consent') }}
-                    @if (\Illuminate\Support\Facades\Route::has('privacy'))
-                        <a href="{{ route('privacy') }}" class="rounded underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-brand-primary">{{ __('account.privacy_notice') }}</a>
-                    @else
-                        {{ __('account.privacy_notice') }}
-                    @endif
+                    <a href="{{ route('privacy') }}" class="rounded underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-brand-primary">{{ __('privacy.title') }}</a>
                 </label>
             </div>
             <div id="consent-error"><x-input-error :messages="$errors->get('consent')" class="mt-2" /></div>
