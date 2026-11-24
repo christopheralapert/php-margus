@@ -152,7 +152,7 @@ Every P3 task: run `php artisan leaflet:render-samples && scripts/render-pdfs.sh
 - **Acceptance**: §7.10 and the back page wireframe; the QR encodes `APP_URL/{locale}/l/{combo}` with no personal data and scans correctly
   (decode test with a QR reader library is optional; manual scan otherwise); the generation date is in locale format (et `24.11.2026`, en `24 Nov 2026`).
 
-### [ ] T3.8 Visual QA, print mode, reference renders
+### [x] T3.8 Visual QA, print mode, reference renders
 - **Files**: `scripts/render-pdfs.sh`, `tests/visual/reference/*.png`, `tests/visual/README.md`, `PdfRenderer` print mode.
 - **Acceptance**: the full sample matrix (PLAN §7) incl. print mode with bleed + crop marks and the notes-page padding to a multiple of 4;
   reference PNGs committed; `scripts/render-pdfs.sh --compare` reports changed pages (pixel diff via ImageMagick `compare` if installed, otherwise
