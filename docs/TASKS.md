@@ -190,7 +190,7 @@ Every P3 task: run `php artisan leaflet:render-samples && scripts/render-pdfs.sh
 - **Acceptance**: PLAN §8 fully: `LlmClient` interface + one HTTP driver (provider via `.env`: `LLM_PROVIDER`, `LLM_API_KEY`, `LLM_MODEL`,
   `LLM_BASE_URL`, `CHAT_ENABLED`, `CHAT_DAILY_CAP`), a fake driver for tests, RedFlagDetector before any call, PiiScrubber, output SafetyFilter,
   rate limits, no message logging. Tests cover: a red-flag message never reaches the LLM; emails/phones/ID codes are scrubbed; out-of-scope answers fall back.
-### [ ] T6.2 Online version page + chat UI
+### [x] T6.2 Online version page + chat UI
 - **Acceptance**: `/{locale}/l/{combo}` shows the leaflet content in HTML (same merge logic) + the chat box with disclaimer, the "Call clinic"
   button and the 112 reminder; works without JS (chat hidden); mobile-first.
 
