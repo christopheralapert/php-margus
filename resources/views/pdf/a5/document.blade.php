@@ -19,6 +19,10 @@
 
     @unless ($categoryProof ?? false)
         @include('pdf.a5.cover')
+        @if ($doc->general() !== [])
+            <pagebreak page-selector="general" />
+            @include('pdf.a5.general', ['isGeneral' => true])
+        @endif
     @endunless
 
     @foreach ($doc->sections as $index => $section)

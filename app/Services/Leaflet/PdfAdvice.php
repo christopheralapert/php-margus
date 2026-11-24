@@ -14,6 +14,7 @@ final class PdfAdvice
         $general = [];
         $specific = [];
         $seen = [];
+        $sharedKeys = SharedAdvice::keys($doc->sections, true);
         foreach ($doc->sections as ['procedure' => $procedure, 'theme' => $theme]) {
             foreach ($procedure->adviceItems->where('section', AdviceSection::RedFlag) as $item) {
                 if (trim($item->getTranslation('text', $doc->locale)) === '') {
@@ -26,7 +27,7 @@ final class PdfAdvice
                     }
                     $seen[$key] = true;
                 }
-                if (str_starts_with($key ?? '', 'general.')) {
+                if (in_array($key, $sharedKeys, true) || str_starts_with($key ?? '', 'general.')) {
                     $general[] = ['item' => $item, 'procedure' => null, 'theme' => null];
                 } else {
                     $specific[] = compact('item', 'procedure', 'theme');
@@ -38,17 +39,20 @@ final class PdfAdvice
     }
 
     /** @return list<array{section: string, icon: string, paragraphs: list<string>}> */
-    public function topics(Procedure $procedure, string $locale): array
+    public function topics(?Procedure $procedure, string $locale, ?LeafletDocument $doc = null): array
     {
         $topics = [];
         foreach (['pain' => 'pill', 'eating' => 'cup', 'hygiene' => 'droplet', 'activity' => 'run', 'sleep' => 'moon'] as $section => $icon) {
-            $paragraphs = $procedure->adviceItems->where('section', AdviceSection::from($section))
+            $items = $doc
+                ? ($procedure ? $doc->advice($procedure, AdviceSection::from($section)) : ($doc->general()[$section] ?? collect()))
+                : $procedure->adviceItems->where('section', AdviceSection::from($section));
+            $paragraphs = $items
                 ->map(fn ($item): string => trim($item->getTranslation('text', $locale)))
                 ->filter(fn (string $text): bool => $text !== '')->values()->all();
             if ($paragraphs === []) {
                 continue;
             }
-            if ($section === 'pain') {
+            if ($section === 'pain' && (! $procedure || ! isset($doc?->general()['pain']))) {
                 $phrase = $this->normalize(__('pdf.medication_prescribed_phrase', [], $locale));
                 $alreadyPrescribed = collect($paragraphs)->contains(fn (string $text): bool => str_contains($this->normalize($text), $phrase));
                 if (! $alreadyPrescribed) {

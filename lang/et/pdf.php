@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'general_advice' => 'Üldised soovitused',
+    'general_label' => 'Kõigile protseduuridele',
     'red_flags' => 'Millal kohe abi otsida',
     'call_clinic' => 'Helista kliinikule',
     'after_hours' => 'Õhtuti ja öösiti: :phone',
