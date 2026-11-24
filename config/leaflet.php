@@ -44,6 +44,10 @@ return [
     'print' => [
         'sheet' => [168, 230],
         'bleed' => 3,
+        // Keep marks outside the bleed, within the 10 mm sheet surround.
+        'crop_mark_margin' => 4,
+        'crop_mark_length' => 5,
+        'non_print_margin' => 1,
         'margin_inner' => 16,
         'margin_outer' => 12,
     ],

@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'notes' => 'Notes',
     'general_advice' => 'General advice',
     'general_label' => 'For all procedures',
     'back_after_hours' => 'After-hours line :phone',

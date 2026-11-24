@@ -19,6 +19,20 @@ final class PdfRenderer
 
     public function render(LeafletDocument $doc, bool $printMode = false, bool $categoryProof = false): string
     {
+        $mpdf = $this->layout($doc, $printMode, $categoryProof);
+        // Count real layout pages before serializing. Only print booklets needing
+        // padding incur a second layout; the final back page stays last.
+        $notesPages = $printMode && ! $categoryProof ? (4 - $mpdf->page % 4) % 4 : 0;
+        if ($notesPages > 0) {
+            unset($mpdf);
+            $mpdf = $this->layout($doc, $printMode, $categoryProof, $notesPages);
+        }
+
+        return $mpdf->Output('', Destination::STRING_RETURN);
+    }
+
+    private function layout(LeafletDocument $doc, bool $printMode, bool $categoryProof, int $notesPages = 0): Mpdf
+    {
         $mpdf = $this->createMpdf($printMode);
         $names = implode(', ', array_map(fn (array $section): string => $section['procedure']->getTranslation('name', $doc->locale), $doc->sections));
         $mpdf->SetTitle(__('pdf.metadata_title', ['procedures' => $names], $doc->locale));
@@ -50,9 +64,9 @@ final class PdfRenderer
         }
 
         $mpdf->WriteHTML($css, HTMLParserMode::HEADER_CSS);
-        $mpdf->WriteHTML($this->views->make('pdf.a5.document', compact('doc', 'settings', 'printMode', 'categoryProof'))->render(), HTMLParserMode::HTML_BODY);
+        $mpdf->WriteHTML($this->views->make('pdf.a5.document', compact('doc', 'settings', 'printMode', 'categoryProof', 'notesPages'))->render(), HTMLParserMode::HTML_BODY);
 
-        return $mpdf->Output('', Destination::STRING_RETURN);
+        return $mpdf;
     }
 
     public function renderIconSheet(): string
@@ -86,6 +100,9 @@ final class PdfRenderer
 
         if ($printMode) {
             $options['bleedMargin'] = config('leaflet.print.bleed');
+            $options['cropMarkMargin'] = config('leaflet.print.crop_mark_margin');
+            $options['cropMarkLength'] = config('leaflet.print.crop_mark_length');
+            $options['nonPrintMargin'] = config('leaflet.print.non_print_margin');
             $options['mirrorMargins'] = true;
             $options['margin_left'] = config('leaflet.print.margin_inner');
             $options['margin_right'] = config('leaflet.print.margin_outer');

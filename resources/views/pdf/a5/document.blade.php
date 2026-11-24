@@ -31,6 +31,10 @@
     @endforeach
     @unless ($categoryProof ?? false)
         @include('pdf.a5.redflag-page')
+        @for ($note = 0; $note < ($notesPages ?? 0); $note++)
+            <pagebreak page-selector="notes" />
+            @include('pdf.a5.notes')
+        @endfor
         <pagebreak page-selector="back" />
         @include('pdf.a5.back')
     @endunless

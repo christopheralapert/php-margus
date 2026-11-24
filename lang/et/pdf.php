@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'notes' => 'Märkmed',
     'general_advice' => 'Üldised soovitused',
     'general_label' => 'Kõigile protseduuridele',
     'back_after_hours' => 'Valveliin :phone',

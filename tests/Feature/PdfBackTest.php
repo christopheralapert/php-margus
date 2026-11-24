@@ -51,7 +51,8 @@ class PdfBackTest extends TestCase
         $this->assertStringNotContainsString('?', $url);
         $this->assertStringContainsString('src="'.app(QrCodeFactory::class)->dataUri($url).'"', $html);
         $this->assertStringContainsString(e(__('pdf.created', ['date' => $date, 'version' => 'v7'], $locale)), $html);
-        $this->assertStringContainsString(e(__('pdf.back_emergency', [], $locale)), $html);
+        $this->assertStringContainsString(e(__('pdf.back_emergency', [], $locale)), strip_tags($html));
+        $this->assertStringContainsString('<b>112</b>', $html);
         $this->assertStringContainsString(e(__('pdf.back_contact', [], $locale)), $html);
         $this->assertStringNotContainsString('PrivatePatient', $html);
         $this->assertStringNotContainsString('2025-01-13', $html);
