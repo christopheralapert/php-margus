@@ -12,7 +12,7 @@ PDF tasks also need: `php artisan leaflet:render-samples && scripts/render-pdfs.
 
 ## P0 — Skeleton, CI, deploy
 
-### [ ] T0.1 Laravel skeleton + Breeze + SQLite config — Net
+### [x] T0.1 Laravel skeleton + Breeze + SQLite config — Net
 - **Goal**: a working Laravel 13 app in the repo root with Breeze (Blade), SQLite with WAL, a minimal locale-prefixed home page.
 - **Files**: whole Laravel skeleton, `composer.json` (`"php": "^8.3"`), `config/database.php`, `app/Providers/AppServiceProvider.php`
   (SQLite pragmas), `.env.example`, `routes/web.php`, `lang/{et,en}/` (published Laravel lang files + `app.php`), `tests/Feature/SmokeTest.php`.
