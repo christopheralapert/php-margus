@@ -165,7 +165,7 @@ Every P3 task: run `php artisan leaflet:render-samples && scripts/render-pdfs.sh
 ### [x] T4.1 Admin shell + categories CRUD
 - **Acceptance**: `is_admin` gate; `php artisan app:make-admin {email}` command; a simple Tailwind layout; categories CRUD with et+en fields,
   colour picker (hex validation), icon SVG upload (sanitised: no scripts or external refs), sort, active toggle.
-### [ ] T4.2 Procedures CRUD
+### [x] T4.2 Procedures CRUD
 - **Acceptance**: et/en tabs for every text field; timeline steps and advice items editable with add/remove/reorder; `merge_key` field;
   illustration upload (SVG sanitised or PNG ≥ 200 dpi check); status workflow (draft → reviewed requires the reviewer name; published);
   validation errors in the right locale.
@@ -180,7 +180,7 @@ Every P3 task: run `php artisan leaflet:render-samples && scripts/render-pdfs.sh
 ### [x] T5.1 Accounts + my leaflets
 - **Acceptance**: localised register/login/verify/reset (Breeze); the account consent checkbox records a `consents` row; "Save to my account"
   on the preview; a "My leaflets" list (procedures, date created); re-download regenerates the PDF (auth + policy); a user can delete one leaflet.
-### [ ] T5.2 Delete my data + retention + privacy page
+### [x] T5.2 Delete my data + retention + privacy page
 - **Acceptance**: "Delete my data" (password confirm) removes the user, leaflets and consents; `leaflets:purge` runs daily and applies PLAN §9 retention;
   `db:backup` command (`VACUUM INTO`, gzip, 14-day rotation, chmod 600); a privacy page (et+en placeholder text marked for clinic review).
 

@@ -1,0 +1,37 @@
+<?php
+
+return [
+    'title' => 'Privaatsusteade',
+    'draft' => 'MUSTAND — kliinik täpsustab',
+    'controller_title' => 'Vastutav töötleja',
+    'data_title' => 'Milliseid andmeid töötleme',
+    'data' => 'Sinu eesnimi ja protseduuri kuupäev on vabatahtlikud ning neid kasutatakse ainult sinu voldikus. Konto jaoks töötleme sinu e-posti aadressi, parooli ja soovi korral eesnime, salvestatud voldikute parameetreid ning nõusolekukirjeid. Anonüümsed PDF-id saadetakse otse sulle ja neid ei salvestata. IP-aadresse ei salvestata, välja arvatud päringupiirangu räsitud võtmed vahemälus. Vestlussõnumeid ei salvestata. Ainult siis, kui vestlus on lubatud, saadetakse sõnumid ilma isikuandmeteta tehisintellekti teenusepakkujale.',
+    'basis_title' => 'Eesmärgid ja õiguslik alus',
+    'basis' => 'Kasutame andmeid sinu isikustatud järelravivoldiku koostamiseks, konto ja salvestatud voldikute haldamiseks ning nõusoleku dokumenteerimiseks. Töötlemine põhineb sinu nõusolekul, sealhulgas terviseandmete puhul selgesõnalisel nõusolekul isikuandmete kaitse üldmääruse artikli 9 lõike 2 punkti a alusel (GDPR Art. 9(2)(a)).',
+    'retention_title' => 'Kui kaua andmeid säilitame',
+    'retention' => 'Salvestatud voldikud kustutatakse, kui sa pole kontot kasutanud :months kuud. Kinnitamata kontod ja nende andmed kustutatakse :days päeva möödumisel. Nõusoleku tagasivõtmisel kustutatakse seotud andmed või eemaldatakse voldikute isikustamine ning kustutatakse tagasivõetud nõusoleku kirje. Aegunud seansid kustutatakse iga päev. Privaatselt hoitavatest andmebaasi varukoopiatest säilitatakse 14 viimast öist koopiat; kustutatud andmed võivad neis alles olla kuni koopiate vahetumiseni. Kliinik peab täpsustama, kuidas tagatakse kustutamine pärast varukoopiast taastamist.',
+    'rights_title' => 'Sinu õigused',
+    'rights' => 'Sul on õigus küsida oma andmeid, nõuda nende parandamist või kustutamist ning võtta nõusolek igal ajal tagasi. Profiilil saad valikuga „Kustuta minu andmed” kustutada oma konto, salvestatud voldikud ja nõusolekukirjed. Voldiku isikustamise nõusoleku tagasivõtmiseks või muude õiguste kasutamiseks võta kliinikuga ühendust. Samuti saad esitada kaebuse Andmekaitse Inspektsioonile.',
+    'contact_title' => 'Võta ühendust',
+    'contact' => 'Kui sul on küsimusi oma andmete kohta või soovid kasutada oma õigusi, kirjuta kliinikule ülal toodud e-posti või postiaadressil. Kliinik täiendab seda mustandit lõplike kontaktandmete ja privaatsustingimustega.',
+    'delete_title' => 'Kustuta minu andmed',
+    'delete_intro' => 'See kustutab jäädavalt sinu konto, kõik salvestatud voldikud ja nõusolekukirjed. Enne jätkamist laadi alla voldikud, mida soovid alles hoida.',
+    'delete_confirm' => 'Kas kustutad oma konto, salvestatud voldikud ja nõusolekud?',
+    'delete_password' => 'Konto, salvestatud voldikute ja nõusolekukirjete jäädava kustutamise kinnitamiseks sisesta oma parool.',
+    'deleted' => 'Sinu andmed on kustutatud.',
+    'purge' => [
+        'inactive_leaflets' => 'Mitteaktiivsete kasutajate salvestatud voldikud',
+        'unverified_accounts' => 'Aegunud kinnitamata kontod',
+        'withdrawn_accounts' => 'Tagasivõetud nõusolekuga kontod',
+        'anonymised_leaflets' => 'Eemaldatud isikustamisega voldikud',
+        'withdrawn_consents' => 'Tagasivõetud nõusolekukirjed',
+        'expired_sessions' => 'Aegunud seansid',
+    ],
+    'backup' => [
+        'sqlite_only' => 'Andmebaasi varundamine nõuab SQLite-ühendust.',
+        'invalid_options' => 'Vali varukoopiate kaust ja säilitatavate koopiate positiivne täisarv.',
+        'public_path' => 'Varukoopiate kaust peab asuma väljaspool public/ kausta.',
+        'failed' => 'Andmebaasi varundamine ebaõnnestus. Kontrolli kausta õigusi, vaba kettaruumi ja SQLite tuge.',
+        'created' => 'Varukoopia loodud: :filename (:size baiti).',
+    ],
+];

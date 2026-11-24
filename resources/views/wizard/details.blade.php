@@ -29,6 +29,7 @@
         </div>
         <div x-show="firstName || date" class="rounded-xl bg-brand-soft p-5">
             <p id="consent-help" class="text-sm leading-relaxed">{{ __('wizard.consent_help') }}</p>
+            <a href="{{ route('privacy') }}" class="inline-flex min-h-11 items-center rounded underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-brand-primary">{{ __('privacy.title') }}</a>
             <label for="consent" class="mt-4 flex min-h-11 items-start gap-3">
                 <input id="consent" name="consent" type="checkbox" value="1" @checked(old('consent', session('wizard.consent')))
                        aria-describedby="consent-help consent-error" @error('consent') aria-invalid="true" @enderror
