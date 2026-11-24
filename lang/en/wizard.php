@@ -34,6 +34,7 @@ return [
     'recipient' => 'Your leaflet, :name',
     'procedure_date' => 'Procedure date: :date',
     'download' => 'Download PDF',
+    'make_pdf' => 'Make your own PDF',
     'edit' => 'Edit details',
     'draft' => 'DRAFT — this content must be reviewed by clinic medical staff.',
     'timeline' => 'Recovery timeline',

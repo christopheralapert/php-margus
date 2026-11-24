@@ -1,6 +1,19 @@
 <?php
 
 return [
+    'title' => 'Küsi selle juhendi kohta',
+    'disclaimer' => 'See tehisintellektil põhinev abiline vastab ainult selle juhendi põhjal. See ei pane diagnoose ega muuda ravi. Võta ravimeid nii, nagu arst on määranud. Hädaolukorras helista :emergency. Muul juhul helista kliinikusse: :phone.',
+    'emergency_reminder' => 'Hädaolukorras helista :emergency.',
+    'memory_note' => 'Palun ära sisesta isikuandmeid. Koos küsimusega saadetakse ainult kuus viimast sõnumit. Vestlus püsib ainult sellel avatud lehel ning kaob lehe uuesti laadimisel või sellelt lahkumisel.',
+    'needs_javascript' => 'Vestluse kasutamiseks on vaja JavaScripti. Juhendit saad endiselt lugeda ja kliinikusse helistada.',
+    'messages' => 'Vestlus',
+    'you' => 'Sina',
+    'assistant' => 'Tehisintellektil põhinev abiline',
+    'loading' => 'Ootan vastust…',
+    'message' => 'Sinu küsimus selle juhendi kohta',
+    'character_count' => ':count / :max tähemärki',
+    'send' => 'Saada küsimus',
+    'network_error' => 'Küsimust ei õnnestunud saata. Proovi uuesti või helista kliinikusse.',
     'red_flag' => 'Otsi kohe abi. Helista kliinikusse: :phone; väljaspool tööaega: :after_hours. Hädaolukorras helista :emergency.',
     'fallback' => 'Ma ei leia sellest juhendist vastust. Palun helista kliinikusse: :phone. Hädaolukorras helista :emergency.',
     'busy' => 'Vestlus on hetkel hõivatud. Palun helista kliinikusse: :phone. Hädaolukorras helista :emergency.',
