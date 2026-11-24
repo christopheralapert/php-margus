@@ -137,7 +137,7 @@ Every P3 task: run `php artisan leaflet:render-samples && scripts/render-pdfs.sh
 - **Files**: `cards.blade.php`, `topics.blade.php`, `followup.blade.php`, CSS.
 - **Acceptance**: §7.5, §7.6, §7.8; the fixed medication line is always present; grayscale-safe.
 
-### [ ] T3.5 Red-flag box
+### [x] T3.5 Red-flag box
 - **Files**: `redflag.blade.php`, CSS.
 - **Acceptance**: §7.7; never splits; the phone and 112 are the largest text on the page; clinic and after-hours numbers come from settings.
 
