@@ -1,6 +1,12 @@
 <?php
 
 return [
+    'cards' => ['do' => 'Tee nii', 'dont' => 'Väldi'],
+    'everyday_life' => 'Igapäevaelu',
+    'medication_advice' => 'Kasuta valuvaigisteid nii, nagu arst on määranud.',
+    'medication_prescribed_phrase' => 'nii, nagu arst on määranud',
+    'follow_up' => 'Järelkontroll',
+    'procedure_date' => 'Protseduur tehti: :date',
     'recovery_timeline' => 'Paranemise ajajoon',
     'icons_title' => 'PDF-ikoonide proov',
     'icons_comparison' => '6 mm: SVG-pilt ja otse lisatud SVG.',

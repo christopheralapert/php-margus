@@ -78,6 +78,28 @@ final class PdfIcons
         return '<img src="data:image/svg+xml;base64,'.base64_encode($this->svg($name, $color)).'" width="'.$size.'mm" height="'.$size.'mm" alt="">';
     }
 
+    public function badge(string $name, string $color): string
+    {
+        $color = (new ThemeColor($color))->base();
+        $mark = preg_replace('/<\/?svg\b[^>]*>/', '', $this->svg($name, '#FFFFFF'));
+        $svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="'.$color.'"/><g transform="translate(4 4)">'.$mark.'</g></svg>';
+
+        return '<img src="data:image/svg+xml;base64,'.base64_encode($svg).'" width="6mm" height="6mm" alt="">';
+    }
+
+    public function tileCap(bool $bottom, float $width): string
+    {
+        // mPDF ignores block backgrounds/radii inside table cells. These purely
+        // decorative caps preserve 3mm corners without putting radii on cells.
+        $right = $width - 3;
+        $path = $bottom
+            ? 'M0 0H'.$width.'A3 3 0 0 1 '.$right.' 3H3A3 3 0 0 1 0 0Z'
+            : 'M0 3A3 3 0 0 1 3 0H'.$right.'A3 3 0 0 1 '.$width.' 3Z';
+        $svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '.$width.' 3"><path d="'.$path.'" fill="#F3F7FC"/></svg>';
+
+        return '<img src="data:image/svg+xml;base64,'.base64_encode($svg).'" width="'.$width.'mm" height="3mm" alt="">';
+    }
+
     public function dot(string $color, float $size = 3.5): string
     {
         $color = (new ThemeColor($color))->base();
