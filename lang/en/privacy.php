@@ -1,0 +1,37 @@
+<?php
+
+return [
+    'title' => 'Privacy notice',
+    'draft' => 'DRAFT — to be completed by the clinic',
+    'controller_title' => 'Data controller',
+    'data_title' => 'What we process',
+    'data' => 'Your first name and procedure date are optional and used only for your leaflet. For an account, we process your email, password and optional first name, saved leaflet parameters and consent records. Anonymous PDFs are streamed and are not stored. We do not store IP addresses, except hashed rate-limit keys in the cache. Chat messages are not stored. Only when chat is enabled, messages are sent without personal data to the AI provider.',
+    'basis_title' => 'Purposes and legal basis',
+    'basis' => 'We use these data to create your personalised aftercare leaflet, manage your account and saved leaflets, and record your consent. Processing is based on your consent, including explicit consent under GDPR Art. 9(2)(a) for health data.',
+    'retention_title' => 'How long we keep your data',
+    'retention' => 'Saved leaflets are deleted after :months months of account inactivity. Unverified accounts and their data are deleted after :days days. When consent is withdrawn, related data are deleted or leaflet personalisation is removed, and the withdrawn consent record is deleted. Expired sessions are pruned daily. Private database backups retain the newest 14 nightly copies; deleted data may remain in these copies until rotation. The clinic must define how erasure is maintained after a restore.',
+    'rights_title' => 'Your rights',
+    'rights' => 'You can request access to your data, correction or erasure, and withdraw your consent at any time. Use “Delete my data” on your profile to delete your account, saved leaflets and consent records. Contact the clinic to withdraw consent for leaflet personalisation or exercise other rights. You can also complain to the Estonian Data Protection Inspectorate.',
+    'contact_title' => 'Contact',
+    'contact' => 'For questions about your data or to exercise your rights, contact the clinic using the email or address above. The clinic will complete this draft with its final contact details and privacy terms.',
+    'delete_title' => 'Delete my data',
+    'delete_intro' => 'This permanently deletes your account, all your saved leaflets and consent records. Download any leaflets you wish to keep before continuing.',
+    'delete_confirm' => 'Delete your account, saved leaflets and consents?',
+    'delete_password' => 'Enter your password to confirm permanent deletion of your account, saved leaflets and consent records.',
+    'deleted' => 'Your data has been deleted.',
+    'purge' => [
+        'inactive_leaflets' => 'Inactive users’ saved leaflets',
+        'unverified_accounts' => 'Expired unverified accounts',
+        'withdrawn_accounts' => 'Accounts with withdrawn consent',
+        'anonymised_leaflets' => 'Leaflets with personalisation removed',
+        'withdrawn_consents' => 'Withdrawn consent records',
+        'expired_sessions' => 'Expired sessions',
+    ],
+    'backup' => [
+        'sqlite_only' => 'Database backup requires a SQLite connection.',
+        'invalid_options' => 'Choose a backup directory and a positive integer retention count.',
+        'public_path' => 'The backup directory must be outside public/.',
+        'failed' => 'Database backup failed. Check directory permissions, available space and SQLite support.',
+        'created' => 'Backup created: :filename (:size bytes).',
+    ],
+];

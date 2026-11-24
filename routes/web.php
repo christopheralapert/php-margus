@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountLeafletController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\OnlineLeafletController;
+use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WizardController;
 use App\Http\Middleware\EnsureChatEnabled;
@@ -31,6 +32,7 @@ Route::prefix('{locale}')
     ->middleware(SetLocale::class)
     ->group(function () {
         Route::get('/', [WizardController::class, 'home'])->name('home');
+        Route::get('/privacy', PrivacyController::class)->name('privacy');
         Route::get('/l/{combo}', OnlineLeafletController::class)->name('online.show');
         Route::get('/l/{combo}/personalize', [OnlineLeafletController::class, 'personalize'])->name('online.personalize');
         Route::get('/leaflet', [WizardController::class, 'procedures'])->name('wizard.procedures');
