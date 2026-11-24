@@ -68,15 +68,20 @@ final class RenderSampleLeaflets extends Command
                 'd-long-et' => [[$longest], 'et', null, null, false],
                 'e-anon-et' => [['cataract-surgery'], 'et', null, null, false],
                 'f-print-et' => [['tooth-extraction'], 'et', 'Mari', '2026-11-24', true],
+                'g-ent-et' => [['tonsillectomy'], 'et', null, null, false],
             ];
             $only = $this->option('only');
-            if ($only !== null && ! array_key_exists($only, $samples)) {
+            if ($only !== null && $only !== 'icons' && ! array_key_exists($only, $samples)) {
                 $this->error(__('pdf.samples_unknown', ['name' => $only]));
 
                 return self::INVALID;
             }
 
             File::ensureDirectoryExists(base_path('tests/visual/output'));
+            if ($only === null || $only === 'icons') {
+                File::put(base_path('tests/visual/output/icons.pdf'), app(PdfRenderer::class)->renderIconSheet());
+                $this->line(__('pdf.samples_written', ['name' => 'icons', 'procedure' => __('pdf.icons_title')]));
+            }
             foreach ($samples as $name => [$slugs, $locale, $firstName, $date, $print]) {
                 if ($only !== null && $only !== $name) {
                     continue;

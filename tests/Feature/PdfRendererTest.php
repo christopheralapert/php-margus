@@ -49,6 +49,7 @@ class PdfRendererTest extends TestCase
         $this->assertStringContainsString(mb_convert_encoding(app(Settings::class)->localized('clinic.name', $locale), 'UTF-16BE', 'UTF-8'), $pdf);
         $this->assertStringContainsString('/Lang ('.$locale.')', $pdf);
         $this->assertMatchesRegularExpression('/\/ca 0\.06\b/', $pdf);
+        $this->assertDoesNotMatchRegularExpression('/\/ca 0\.(?:15|2)\b/', $pdf);
         $this->assertMatchesRegularExpression('/\/BaseFont \/[A-Z]+\+Nunito-ExtraBold/', $pdf);
 
         $procedure->update(['status' => ProcedureStatus::Published]);
