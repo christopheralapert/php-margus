@@ -65,7 +65,7 @@ PDF tasks also need: `php artisan leaflet:render-samples && scripts/render-pdfs.
   `/et/login` etc.; `LangParityTest` fails if a key exists in one locale but not the other.
 - **Test**: feature tests for `/et/...`, `/en/...`, `/xx/...`.
 
-### [ ] T1.3 Settings, categories, brand assets
+### [x] T1.3 Settings, categories, brand assets
 - **Goal**: the settings store + seeders for clinic settings and 9 categories; logo and category icons.
 - **Files**: `app/Models/Setting.php`, `app/Support/Settings.php` (cached accessor), `database/seeders/{SettingsSeeder,CategorySeeder}.php`,
   `public/brand/logo.svg`, `public/icons/categories/*.svg`, `app/Services/Leaflet/ThemeColor.php`, tests.
