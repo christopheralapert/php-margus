@@ -14,8 +14,12 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      */
-    public function create(): View
+    public function create(Request $request): View
     {
+        if ($request->query('save_leaflet') === '1' && $request->session()->has('wizard.procedures')) {
+            $request->session()->put('url.intended', route('wizard.preview'));
+        }
+
         return view('auth.login');
     }
 
@@ -25,6 +29,7 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
+        $request->user()->forceFill(['last_active_at' => now()])->save();
 
         $request->session()->regenerate();
 

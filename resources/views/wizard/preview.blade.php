@@ -15,6 +15,18 @@
             <button type="submit" class="min-h-14 rounded-xl bg-brand-primary px-8 py-4 text-lg font-semibold text-white hover:bg-blue-800 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">{{ __('wizard.download') }}</button>
         </form>
         <a href="{{ route('wizard.details') }}" class="inline-flex min-h-11 items-center rounded font-semibold text-brand-primary underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-brand-primary">{{ __('wizard.edit') }}</a>
+        @auth
+            @if (auth()->user()->hasVerifiedEmail())
+                <form method="POST" action="{{ route('account.leaflets.store') }}">
+                    @csrf
+                    <button type="submit" class="min-h-11 rounded-xl border border-brand-primary px-5 py-3 font-semibold text-brand-primary hover:bg-brand-soft focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2">{{ __('account.save') }}</button>
+                </form>
+            @else
+                <a href="{{ route('verification.notice') }}" class="inline-flex min-h-11 items-center rounded text-sm text-brand-primary underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-brand-primary">{{ __('account.verify_to_save') }}</a>
+            @endif
+        @else
+            <a href="{{ route('login', ['save_leaflet' => '1']) }}" class="inline-flex min-h-11 items-center rounded text-sm text-brand-primary underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-brand-primary">{{ __('account.login_to_save') }}</a>
+        @endauth
     </div>
     <div class="mt-10 space-y-10">
         @if ($doc->general() !== [])

@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'title' => 'Minu voldikud',
+    'first_name' => 'Eesnimi (valikuline)',
+    'name_invalid' => 'Sisesta ainult oma eesnimi, kuni 40 tähte, vajadusel sidekriipsu või ülakomaga.',
+    'consent' => 'Nõustun, et minu e-posti aadressi ja salvestatud voldikuid hoitakse minu konto jaoks, vaata',
+    'privacy_notice' => 'privaatsusteavet',
+    'consent_required' => 'Konto loomiseks anna palun nõusolek oma kontoandmete säilitamiseks.',
+    'save' => 'Salvesta minu kontole',
+    'login_to_save' => 'Voldiku salvestamiseks logi sisse',
+    'verify_to_save' => 'Voldiku salvestamiseks kinnita oma e-posti aadress',
+    'saved' => 'Sinu voldik on salvestatud.',
+    'deleted' => 'Sinu voldik on kustutatud.',
+    'empty' => 'Sul ei ole veel salvestatud voldikuid.',
+    'start' => 'Koosta uus voldik',
+    'removed' => 'Eemaldatud protseduur',
+    'locale' => 'Voldiku keel',
+    'languages' => ['et' => 'Eesti keel', 'en' => 'Inglise keel'],
+    'created' => 'Salvestatud',
+    'last_downloaded' => 'Viimati alla laaditud',
+    'never' => 'Pole veel alla laaditud',
+    'download' => 'Laadi PDF alla',
+    'delete' => 'Kustuta voldik',
+    'confirm' => 'Kinnitan, et soovin selle voldiku kustutada.',
+    'confirm_required' => 'Voldiku kustutamiseks märgi kinnituse ruut.',
+    'unavailable' => 'Selle voldiku protseduurid pole enam saadaval. Võid voldiku kustutada või koostada uue.',
+];

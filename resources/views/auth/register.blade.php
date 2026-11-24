@@ -4,8 +4,8 @@
 
         <!-- Name -->
         <div>
-            <x-input-label for="name" :value="__('app.name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            <x-input-label for="name" :value="__('account.first_name')" />
+            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" maxlength="40" autofocus autocomplete="given-name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
@@ -37,6 +37,21 @@
                             name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        <div class="mt-6">
+            <div class="flex items-start gap-3">
+                <input id="consent" name="consent" type="checkbox" value="1" required class="mt-1 rounded border-gray-300 text-brand-primary focus:ring-brand-primary" aria-describedby="consent-error">
+                <label for="consent" class="text-sm leading-relaxed text-gray-700">
+                    {{ __('account.consent') }}
+                    @if (\Illuminate\Support\Facades\Route::has('privacy'))
+                        <a href="{{ route('privacy') }}" class="rounded underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-brand-primary">{{ __('account.privacy_notice') }}</a>
+                    @else
+                        {{ __('account.privacy_notice') }}
+                    @endif
+                </label>
+            </div>
+            <div id="consent-error"><x-input-error :messages="$errors->get('consent')" class="mt-2" /></div>
         </div>
 
         <div class="flex items-center justify-end mt-4">
