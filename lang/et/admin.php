@@ -7,7 +7,6 @@ return [
     'categories' => 'Kategooriad',
     'procedures' => 'Protseduurid',
     'settings' => 'Seaded',
-    'coming_soon' => 'Tulekul',
     'logout' => 'Logi välja',
     'skip' => 'Liigu sisu juurde',
     'navigation' => 'Halduse menüü',

@@ -76,5 +76,6 @@ Route::prefix('{locale}')
                 Route::resource('categories', CategoryController::class)->except('show');
                 Route::resource('procedures', ProcedureController::class)->except('show');
                 Route::get('procedures/{procedure}/preview.pdf', PreviewController::class)->name('procedures.preview');
+                require __DIR__.'/admin-settings.php';
             });
     });
