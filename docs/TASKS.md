@@ -172,7 +172,7 @@ Every P3 task: run `php artisan leaflet:render-samples && scripts/render-pdfs.sh
 ### [ ] T4.3 Clinic settings
 - **Acceptance**: edit all `settings` keys (contacts, hours et/en, brand colours, disclaimer); logo upload replaces `public/brand/logo.svg`
   (the previous one is kept as a backup); the settings cache is cleared on save.
-### [ ] T4.4 PDF preview of any procedure
+### [x] T4.4 PDF preview of any procedure
 - **Acceptance**: "Preview PDF (et/en)" buttons on procedure edit; inline PDF; draft watermark shown.
 
 ## P5 — Patient accounts
