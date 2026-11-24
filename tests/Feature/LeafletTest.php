@@ -155,8 +155,8 @@ class LeafletTest extends TestCase
         $this->assertStringContainsString('private', $response->headers->get('Cache-Control'));
         Storage::disk('local')->assertDirectoryEmpty('/');
         $this->assertSame($pathsBefore, array_map(fn ($file) => $file->getPathname(), File::allFiles(storage_path('app'))));
-        $this->assertSame('dejavusans', PdfRenderer::DEFAULT_FONT);
-        $this->assertTrue((bool) preg_match('/\/BaseFont \/[A-Z]+\+DejaVuSans/', $response->getContent()));
+        $this->assertSame('sourcesans3', PdfRenderer::DEFAULT_FONT);
+        $this->assertMatchesRegularExpression('/\/BaseFont \/[A-Z]+\+SourceSans3-Regular/', $response->getContent());
         $this->assertTrue(str_contains($response->getContent(), '/Lang ('.$locale.')'));
     }
 }

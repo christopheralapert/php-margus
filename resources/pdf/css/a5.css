@@ -1,0 +1,49 @@
+@page cover { odd-footer-name: _blank; even-footer-name: _blank; }
+.cover { page: cover; }
+body { font-family: sourcesans3; font-size: 10.5pt; line-height: 15pt; color: #1F2937; }
+p { margin: 0 0 3mm; }
+.cover-title { font-family: nunito; font-size: 30pt; line-height: 34pt; font-weight: bold; }
+.cover-sub { font-family: sourcesans3; font-size: 13pt; line-height: 17pt; color: #6B7280; }
+h1 { font-family: nunito; font-size: 20pt; line-height: 24pt; font-weight: bold; margin: 0; }
+h2 { font-family: nunito; font-size: 16pt; line-height: 20pt; font-weight: normal; margin: 0 0 3mm; }
+.strong { font-family: sourcesans3sb; font-weight: normal; font-size: 10.5pt; line-height: 15pt; }
+.label { font-family: sourcesans3; font-size: 9pt; line-height: 11pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3pt; }
+.phone-xl { font-family: nunito; font-size: 22pt; line-height: 26pt; font-weight: bold; color: #B42323; }
+.emergency-xxl { font-family: nunito; font-size: 32pt; line-height: 34pt; font-weight: bold; color: #FFFFFF; background-color: #D93B3B; }
+.footer { font-family: sourcesans3; font-size: 7.5pt; line-height: 10pt; color: #6B7280; border-top: 0.2mm solid #DCE3EE; padding-top: 2mm; }
+.footer p { margin: 0; }
+.footer-details { border-collapse: collapse; font-family: sourcesans3; font-size: 7.5pt; line-height: 10pt; color: #6B7280; }
+.footer-details td { padding: 0; }
+.section-band { padding: 4mm; border-radius: 4mm; }
+.draft-notice { padding: 3mm; color: #8A5A00; background-color: #FFF6E5; }
+.keep { page-break-inside: avoid; }
+ul { margin: 0; padding-left: 5mm; }
+li { margin-bottom: 2mm; }
+.text-do { color: #1E7A43; }
+.text-dont { color: #B42323; }
+.text-warn { color: #8A5A00; }
+.text-muted { color: #6B7280; }
+.bg-do { background-color: #EAF6EF; }
+.bg-dont { background-color: #FDECEC; }
+.bg-warn { background-color: #FFF6E5; }
+.mt-s1 { margin-top: 1mm; }
+.mt-s2 { margin-top: 2mm; }
+.mt-s3 { margin-top: 3mm; }
+.mt-s4 { margin-top: 4mm; }
+.mt-s6 { margin-top: 6mm; }
+.mt-s8 { margin-top: 8mm; }
+.mt-s12 { margin-top: 12mm; }
+.mb-s1 { margin-bottom: 1mm; }
+.mb-s2 { margin-bottom: 2mm; }
+.mb-s3 { margin-bottom: 3mm; }
+.mb-s4 { margin-bottom: 4mm; }
+.mb-s6 { margin-bottom: 6mm; }
+.mb-s8 { margin-bottom: 8mm; }
+.mb-s12 { margin-bottom: 12mm; }
+.p-s1 { padding: 1mm; }
+.p-s2 { padding: 2mm; }
+.p-s3 { padding: 3mm; }
+.p-s4 { padding: 4mm; }
+.p-s6 { padding: 6mm; }
+.p-s8 { padding: 8mm; }
+.p-s12 { padding: 12mm; }
