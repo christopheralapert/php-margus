@@ -186,7 +186,7 @@ Every P3 task: run `php artisan leaflet:render-samples && scripts/render-pdfs.sh
 
 ## P6 — AI chat
 
-### [ ] T6.1 Chat backend
+### [x] T6.1 Chat backend
 - **Acceptance**: PLAN §8 fully: `LlmClient` interface + one HTTP driver (provider via `.env`: `LLM_PROVIDER`, `LLM_API_KEY`, `LLM_MODEL`,
   `LLM_BASE_URL`, `CHAT_ENABLED`, `CHAT_DAILY_CAP`), a fake driver for tests, RedFlagDetector before any call, PiiScrubber, output SafetyFilter,
   rate limits, no message logging. Tests cover: a red-flag message never reaches the LLM; emails/phones/ID codes are scrubbed; out-of-scope answers fall back.
