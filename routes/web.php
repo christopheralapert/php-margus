@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountLeafletController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\PreviewController;
 use App\Http\Controllers\Admin\ProcedureController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\OnlineLeafletController;
@@ -74,5 +75,6 @@ Route::prefix('{locale}')
                 Route::get('/', [CategoryController::class, 'dashboard'])->name('dashboard');
                 Route::resource('categories', CategoryController::class)->except('show');
                 Route::resource('procedures', ProcedureController::class)->except('show');
+                Route::get('procedures/{procedure}/preview.pdf', PreviewController::class)->name('procedures.preview');
             });
     });

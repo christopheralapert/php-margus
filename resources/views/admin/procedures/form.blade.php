@@ -8,6 +8,14 @@
     @endphp
     <h1 class="text-3xl font-bold tracking-tight">{{ __($procedure->exists ? 'admin.procedure.edit' : 'admin.procedure.new') }}</h1>
     <p class="mt-2 max-w-3xl text-slate-600">{{ __('admin.procedure.form_help') }}</p>
+    @if ($procedure->exists)
+        <div class="mt-4 flex flex-wrap gap-3">
+            @foreach (['et', 'en'] as $previewLocale)
+                <a href="{{ route('admin.procedures.preview', ['procedure' => $procedure, 'lang' => $previewLocale]) }}" target="_blank" rel="noopener" class="inline-flex min-h-11 items-center rounded-md border border-slate-300 bg-white px-4 font-semibold text-brand-primary hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-brand-primary">{{ __('admin.procedure.preview', ['lang' => $previewLocale]) }}</a>
+                <a href="{{ route('admin.procedures.preview', ['procedure' => $procedure, 'lang' => $previewLocale, 'print' => 1]) }}" target="_blank" rel="noopener" class="inline-flex min-h-11 items-center rounded px-2 text-brand-primary underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-brand-primary">{{ __('admin.procedure.preview_print', ['lang' => $previewLocale]) }}</a>
+            @endforeach
+        </div>
+    @endif
     @if ($errors->any())
         <ul role="alert" class="mt-6 list-disc space-y-2 rounded-lg bg-red-50 p-6 text-red-900">
             @foreach ($errors->all() as $message)<li>{{ $message }}</li>@endforeach

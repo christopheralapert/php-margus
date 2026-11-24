@@ -55,6 +55,9 @@ return [
         'revoked' => 'Administrator access revoked.',
     ],
     'procedure' => [
+        'preview' => 'Preview PDF (:lang)',
+        'preview_print' => 'Print version (:lang)',
+        'preview_first_name' => 'Mary',
         'new' => 'Add procedure',
         'edit' => 'Edit procedure',
         'delete' => 'Delete procedure',

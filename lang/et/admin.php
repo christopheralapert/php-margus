@@ -55,6 +55,9 @@ return [
         'revoked' => 'Haldusõigus eemaldatud.',
     ],
     'procedure' => [
+        'preview' => 'Eelvaade PDF (:lang)',
+        'preview_print' => 'Trükiversioon (:lang)',
+        'preview_first_name' => 'Mari',
         'new' => 'Lisa protseduur',
         'edit' => 'Muuda protseduuri',
         'delete' => 'Kustuta protseduur',
