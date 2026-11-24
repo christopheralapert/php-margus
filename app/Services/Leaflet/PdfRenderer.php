@@ -17,7 +17,7 @@ final class PdfRenderer
 
     public function __construct(private readonly Factory $views, private readonly Settings $settings) {}
 
-    public function render(LeafletDocument $doc, bool $printMode = false): string
+    public function render(LeafletDocument $doc, bool $printMode = false, bool $categoryProof = false): string
     {
         $mpdf = $this->createMpdf($printMode);
         $names = implode(', ', array_map(fn (array $section): string => $section['procedure']->getTranslation('name', $doc->locale), $doc->sections));
@@ -50,7 +50,7 @@ final class PdfRenderer
         }
 
         $mpdf->WriteHTML($css, HTMLParserMode::HEADER_CSS);
-        $mpdf->WriteHTML($this->views->make('pdf.a5.document', compact('doc', 'settings', 'printMode'))->render(), HTMLParserMode::HTML_BODY);
+        $mpdf->WriteHTML($this->views->make('pdf.a5.document', compact('doc', 'settings', 'printMode', 'categoryProof'))->render(), HTMLParserMode::HTML_BODY);
 
         return $mpdf->Output('', Destination::STRING_RETURN);
     }

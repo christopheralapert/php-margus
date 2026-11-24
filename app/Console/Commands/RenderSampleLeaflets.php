@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Category;
 use App\Models\Procedure;
 use App\Services\Leaflet\LeafletBuilder;
 use App\Services\Leaflet\PdfRenderer;
@@ -71,13 +72,19 @@ final class RenderSampleLeaflets extends Command
                 'g-ent-et' => [['tonsillectomy'], 'et', null, null, false],
             ];
             $only = $this->option('only');
-            if ($only !== null && $only !== 'icons' && ! array_key_exists($only, $samples)) {
+            if ($only !== null && ! in_array($only, ['icons', 'categories'], true) && ! array_key_exists($only, $samples)) {
                 $this->error(__('pdf.samples_unknown', ['name' => $only]));
 
                 return self::INVALID;
             }
 
             File::ensureDirectoryExists(base_path('tests/visual/output'));
+            if ($only === null || $only === 'categories') {
+                $ids = Category::orderBy('sort')->get()->map(fn (Category $category): int => $category->procedures()->orderBy('sort')->firstOrFail()->id)->all();
+                $doc = app(LeafletBuilder::class)->build($ids, 'et', null, null);
+                File::put(base_path('tests/visual/output/categories.pdf'), app(PdfRenderer::class)->render($doc, $this->option('print'), categoryProof: true));
+                $this->line(__('pdf.samples_written', ['name' => 'categories', 'procedure' => implode(', ', array_map(fn (array $section): string => $section['procedure']->slug, $doc->sections))]));
+            }
             if ($only === null || $only === 'icons') {
                 File::put(base_path('tests/visual/output/icons.pdf'), app(PdfRenderer::class)->renderIconSheet());
                 $this->line(__('pdf.samples_written', ['name' => 'icons', 'procedure' => __('pdf.icons_title')]));
