@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use App\Services\Chat\AnthropicLlmClient;
 use App\Services\Chat\ChatUnavailable;
 use App\Services\Chat\FakeLlmClient;
@@ -9,6 +10,7 @@ use App\Services\Chat\LlmClient;
 use App\Support\Settings;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
@@ -32,6 +34,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Gate::define('admin', fn (User $u) => $u->is_admin);
+
         // SQLite pragmas are applied to every connection by config/database.php.
         RateLimiter::for('chat', function (Request $request): array {
             if (! config('chat.enabled')) {
