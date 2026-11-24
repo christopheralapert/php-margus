@@ -115,7 +115,7 @@ PDF tasks also need: `php artisan leaflet:render-samples && scripts/render-pdfs.
 
 Every P3 task: run `php artisan leaflet:render-samples && scripts/render-pdfs.sh` and attach the PNGs to the PR.
 
-### [ ] T3.1 Fonts, base layout, render tooling — Net (fonts)
+### [x] T3.1 Fonts, base layout, render tooling — Net (fonts)
 - **Goal**: mPDF configured with embedded Nunito + Source Sans 3, A5 pages, footer, page numbers, metadata, the base CSS, and the render scripts.
 - **Files**: `config/leaflet.php`, `resources/pdf/fonts/*` (+ `OFL.txt`), `resources/pdf/css/a5.css`, `resources/views/pdf/a5/{document,footer}.blade.php`,
   `app/Services/Leaflet/PdfRenderer.php`, `app/Console/Commands/RenderSampleLeaflets.php`, `scripts/render-pdfs.sh`, tests.
