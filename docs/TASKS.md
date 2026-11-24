@@ -129,7 +129,7 @@ Every P3 task: run `php artisan leaflet:render-samples && scripts/render-pdfs.sh
 - **Acceptance**: single and multi-procedure covers; name/date only if given; the draft notice; no page number; illustrations follow §6 SVG rules.
 - **Test**: renders (a), (c), (e).
 
-### [ ] T3.3 Procedure header band + timeline
+### [x] T3.3 Procedure header band + timeline
 - **Files**: `procedure.blade.php`, `timeline.blade.php`, CSS, icon helpers.
 - **Acceptance**: §7.2–7.4; the theme colour is used everywhere it should be; steps never split across pages.
 
