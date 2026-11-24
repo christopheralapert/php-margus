@@ -13,6 +13,7 @@
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
+            <x-lang-switcher class="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8" />
 
             <!-- Page Heading -->
             @isset($header)

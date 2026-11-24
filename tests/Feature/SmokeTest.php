@@ -8,7 +8,7 @@ class SmokeTest extends TestCase
 {
     public function test_root_redirects_to_estonian_home(): void
     {
-        $this->get('/')->assertStatus(302)->assertRedirect('/et');
+        $this->withHeader('Accept-Language', '')->get('/')->assertStatus(302)->assertRedirect('/et');
     }
 
     public function test_estonian_home_is_translated(): void
