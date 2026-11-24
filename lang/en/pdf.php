@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'general_advice' => 'General advice',
+    'general_label' => 'For all procedures',
     'red_flags' => 'When to get help right away',
     'call_clinic' => 'Call the clinic',
     'after_hours' => 'Evenings and nights: :phone',

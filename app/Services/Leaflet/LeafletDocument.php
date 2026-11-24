@@ -2,15 +2,18 @@
 
 namespace App\Services\Leaflet;
 
+use App\Enums\AdviceSection;
 use App\Enums\ProcedureStatus;
 use App\Models\AdviceItem;
 use App\Models\Procedure;
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Collection;
 
 final readonly class LeafletDocument
 {
     /** @param list<array{procedure: Procedure, theme: ThemeColor}> $sections
-     * @param  list<AdviceItem>  $general  Shared advice can be supplied here independently of procedure sections.
+     * @param  list<AdviceItem>  $general
+     * @param  list<string>  $sharedKeys
      */
     public function __construct(
         public string $locale,
@@ -18,7 +21,29 @@ final readonly class LeafletDocument
         public ?CarbonImmutable $date,
         public array $sections,
         public array $general = [],
+        private array $sharedKeys = [],
     ) {}
+
+    /** @return array<string, Collection<int, AdviceItem>> */
+    public function general(): array
+    {
+        $groups = [];
+        foreach (AdviceSection::cases() as $section) {
+            $items = collect($this->general)->where('section', $section)->values();
+            if ($section !== AdviceSection::RedFlag && $items->isNotEmpty()) {
+                $groups[$section->value] = $items;
+            }
+        }
+
+        return $groups;
+    }
+
+    /** @return Collection<int, AdviceItem> */
+    public function advice(Procedure $procedure, AdviceSection $section): Collection
+    {
+        return $procedure->adviceItems->where('section', $section)
+            ->reject(fn (AdviceItem $item): bool => $section !== AdviceSection::RedFlag && in_array($item->merge_key, $this->sharedKeys, true))->values();
+    }
 
     public function hasDraft(): bool
     {

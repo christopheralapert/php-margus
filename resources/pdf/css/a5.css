@@ -93,6 +93,14 @@ li { margin-bottom: 2mm; }
 .topic-body .box-heading td { vertical-align: top; }
 .topic-body .box-heading .heading-icon { padding-top: 0.5mm; }
 .topic-copy { margin: 0 0 2mm; }
+.general-section .mb-s6 { margin-bottom: 1mm; }
+.general-chip { margin: 0; }
+.general-topics { border-radius: 3mm; background-color: #F3F7FC; padding: 4mm; }
+.general-topic-row { border-collapse: collapse; page-break-inside: avoid; font-size: 10.5pt; line-height: 15pt; }
+.general-topic-row td { vertical-align: top; border-top: 0.2mm solid #DCE3EE; padding: 2mm 0; }
+.general-topic-first td { border-top: 0; padding-top: 0; }
+.general-topic-row .general-topic-icon { padding-top: 2.5mm; }
+.general-topic-first .general-topic-icon { padding-top: 0.5mm; }
 .followup-box { border-radius: 3mm; padding: 4mm; }
 .followup-box p { margin: 0 0 2mm; }
 .followup-box .box-last { margin-bottom: 0; }

@@ -71,7 +71,7 @@ class PdfRedFlagTest extends TestCase
         }
         $doc = app(LeafletBuilder::class)->build($procedures->modelKeys(), 'et', null, null);
         $flags = app(PdfAdvice::class)->redFlags($doc);
-        $this->assertSame(['general.fever', 'general.emergency', null, 'shared.specific', '', null, ''], array_map(fn ($flag) => $flag['item']->merge_key, $flags));
+        $this->assertSame(['shared.specific', 'general.fever', 'general.emergency', null, '', null, ''], array_map(fn ($flag) => $flag['item']->merge_key, $flags));
         $this->assertNull($flags[0]['procedure']);
         $html = view('pdf.a5.redflag', compact('doc'))->render();
         $this->assertSame(1, substr_count($html, 'Flag 0-2'));

@@ -1,6 +1,6 @@
 @inject('icons', 'App\Services\Leaflet\PdfIcons')
 @inject('advice', 'App\Services\Leaflet\PdfAdvice')
-@php($topics = $advice->topics($procedure, $doc->locale))
+@php($topics = $advice->topics(($isGeneral ?? false) ? null : $procedure, $doc->locale, $doc))
 @if ($topics !== [])
     @foreach (array_chunk($topics, 2) as $tiles)
         <div class="topic-group keep mb-s6">

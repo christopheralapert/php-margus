@@ -1,7 +1,7 @@
 @inject('renderer', 'App\Services\Leaflet\PdfRenderer')
 @foreach ([\App\Enums\AdviceSection::Do, \App\Enums\AdviceSection::Dont] as $section)
     @php
-        $items = $procedure->adviceItems->where('section', $section)->filter(fn ($item) => trim($item->getTranslation('text', $doc->locale)) !== '')->values();
+        $items = ($isGeneral ?? false ? ($doc->general()[$section->value] ?? collect()) : $doc->advice($procedure, $section))->filter(fn ($item) => trim($item->getTranslation('text', $doc->locale)) !== '')->values();
         $colors = config('leaflet.colors.'.$section->value);
         $icon = $section === \App\Enums\AdviceSection::Do ? 'check' : 'cross';
         $columns = $items->count() >= 6 ? 2 : 1;
