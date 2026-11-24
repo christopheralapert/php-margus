@@ -7,6 +7,7 @@ use App\Models\Setting;
 use App\Models\User;
 use App\Services\Leaflet\LeafletBuilder;
 use App\Support\Settings;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
@@ -38,7 +39,9 @@ class SettingsTest extends TestCase
     protected function tearDown(): void
     {
         $this->app->usePublicPath($this->originalPublic);
-        File::deleteDirectory($this->temporaryPublic);
+        // Clean up with a real filesystem: the File facade may be a partial mock in a test,
+        // and on Linux its delete() expectation would also match the cleanup calls.
+        (new Filesystem)->deleteDirectory($this->temporaryPublic);
         parent::tearDown();
     }
 
