@@ -24,7 +24,7 @@ PDF tasks also need: `php artisan leaflet:render-samples && scripts/render-pdfs.
   - Breeze is installed (Blade stack), and `npm run build` produces `public/build`.
 - **Test**: `php artisan test`; `php artisan serve` and open `/`, `/et`, `/en`.
 
-### [ ] T0.2 CI workflow
+### [x] T0.2 CI workflow
 - **Goal**: a GitHub Actions CI workflow on PRs and pushes to `develop`/`main`.
 - **Files**: `.github/workflows/ci.yml`, `phpunit.xml` (sqlite `:memory:`), `pint.json`.
 - **Acceptance**: the jobs run PHP 8.3 setup → composer install → pint --test → `php artisan test` → `npm ci && npm run build`;
