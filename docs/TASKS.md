@@ -169,7 +169,7 @@ Every P3 task: run `php artisan leaflet:render-samples && scripts/render-pdfs.sh
 - **Acceptance**: et/en tabs for every text field; timeline steps and advice items editable with add/remove/reorder; `merge_key` field;
   illustration upload (SVG sanitised or PNG ≥ 200 dpi check); status workflow (draft → reviewed requires the reviewer name; published);
   validation errors in the right locale.
-### [ ] T4.3 Clinic settings
+### [x] T4.3 Clinic settings
 - **Acceptance**: edit all `settings` keys (contacts, hours et/en, brand colours, disclaimer); logo upload replaces `public/brand/logo.svg`
   (the previous one is kept as a backup); the settings cache is cleared on save.
 ### [x] T4.4 PDF preview of any procedure
