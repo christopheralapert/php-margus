@@ -133,7 +133,7 @@ Every P3 task: run `php artisan leaflet:render-samples && scripts/render-pdfs.sh
 - **Files**: `procedure.blade.php`, `timeline.blade.php`, CSS, icon helpers.
 - **Acceptance**: §7.2–7.4; the theme colour is used everywhere it should be; steps never split across pages.
 
-### [ ] T3.4 Do/Don't cards + topic tiles + follow-up
+### [x] T3.4 Do/Don't cards + topic tiles + follow-up
 - **Files**: `cards.blade.php`, `topics.blade.php`, `followup.blade.php`, CSS.
 - **Acceptance**: §7.5, §7.6, §7.8; the fixed medication line is always present; grayscale-safe.
 
