@@ -141,7 +141,7 @@ Every P3 task: run `php artisan leaflet:render-samples && scripts/render-pdfs.sh
 - **Files**: `redflag.blade.php`, CSS.
 - **Acceptance**: §7.7; never splits; the phone and 112 are the largest text on the page; clinic and after-hours numbers come from settings.
 
-### [ ] T3.6 Multi-procedure merge
+### [x] T3.6 Multi-procedure merge
 - **Files**: `LeafletBuilder.php`, `general.blade.php`, tests.
 - **Acceptance**: items with a `merge_key` shared by ≥2 selected procedures appear once in "General advice" and are removed from the procedure
   sections; red flags are deduplicated the same way; each procedure keeps its own coloured section; order follows the user's selection.
