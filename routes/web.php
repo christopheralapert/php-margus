@@ -28,6 +28,9 @@ Route::prefix('{locale}')
         Route::get('/leaflet', [WizardController::class, 'procedures'])->name('wizard.procedures');
         Route::post('/leaflet', [WizardController::class, 'store'])->name('wizard.procedures.store');
         Route::get('/leaflet/details', [WizardController::class, 'details'])->name('wizard.details');
+        Route::post('/leaflet/details', [WizardController::class, 'storeDetails'])->name('wizard.details.store');
+        Route::get('/leaflet/preview', [WizardController::class, 'preview'])->name('wizard.preview');
+        Route::post('/leaflet/pdf', [WizardController::class, 'pdf'])->name('leaflet.pdf');
 
         Route::view('/dashboard', 'dashboard')
             ->middleware(['auth', 'verified'])->name('dashboard');

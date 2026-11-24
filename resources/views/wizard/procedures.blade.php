@@ -1,6 +1,7 @@
 @extends('layouts.patient')
 
 @section('content')
+    <x-wizard-progress :step="1" />
     @php
         $selected = old('procedures', session('wizard.procedures', []));
         $selected = is_array($selected) ? array_values(array_filter($selected, 'is_scalar')) : [];
