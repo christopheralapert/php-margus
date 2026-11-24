@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'language' => 'Language',
+    'languages' => [
+        'et' => 'Eesti',
+        'en' => 'English',
+    ],
     'title' => 'Aftercare leaflet',
     'dashboard' => 'Dashboard',
     'logged_in' => 'You\'re logged in!',

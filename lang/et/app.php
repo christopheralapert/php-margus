@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'language' => 'Keel',
+    'languages' => [
+        'et' => 'Eesti',
+        'en' => 'English',
+    ],
     'title' => 'Järelravi voldik',
     'dashboard' => 'Töölaud',
     'logged_in' => 'Oled sisse logitud!',
