@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'full_guide' => 'Full guide:',
     'notes' => 'Notes',
     'general_advice' => 'General advice',
     'general_label' => 'For all procedures',

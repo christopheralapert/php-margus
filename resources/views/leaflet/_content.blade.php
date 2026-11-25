@@ -29,7 +29,7 @@
             <section class="overflow-hidden rounded-xl border border-slate-200">
                 <header class="p-6 sm:p-8" style="background-color: {{ $theme->tint() }}; color: {{ $theme->dark() }}">
                     <h2 class="break-words text-2xl font-semibold">{{ $procedure->getTranslation('name', $doc->locale) }}</h2>
-                    <p class="mt-3 leading-relaxed">{{ $procedure->getTranslation('summary', $doc->locale) }}</p>
+                    <p class="mt-3 leading-relaxed text-brand-ink">{{ $procedure->getTranslation('summary', $doc->locale) }}</p>
                 </header>
                 <div class="space-y-8 p-6 sm:p-8">
                     @if ($procedure->timelineSteps->isNotEmpty())

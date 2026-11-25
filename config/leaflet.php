@@ -51,5 +51,15 @@ return [
         'margin_inner' => 16,
         'margin_outer' => 12,
     ],
+    'show_draft_marks' => env('LEAFLET_DRAFT_MARKS', true),
     'draft_watermark' => true,
+    'trifold' => [
+        // Outside: red flags / back / cover. Inside mirrors these physical
+        // columns for duplex printing: timeline / do-don't / topics.
+        // The 97 mm panel is on the right outside, on the left inside.
+        'outside' => [100, 100, 97],
+        'inside' => [97, 100, 100],
+        'padding' => 10,
+        'debug_folds' => false,
+    ],
 ];

@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'full_guide' => 'Täielik juhend:',
     'notes' => 'Märkmed',
     'general_advice' => 'Üldised soovitused',
     'general_label' => 'Kõigile protseduuridele',

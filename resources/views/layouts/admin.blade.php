@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-brand-soft font-sans text-brand-ink antialiased selection:bg-brand-primary selection:text-white">
-    <a href="#main" class="sr-only focus:not-sr-only focus:inline-block focus:p-4">{{ __('admin.skip') }}</a>
+    <a href="#main" class="skip-link">{{ __('admin.skip') }}</a>
     <header class="border-b border-slate-200 bg-white">
         <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-8">
             <a href="{{ route('admin.dashboard') }}" class="flex min-h-11 items-center gap-4 rounded focus-visible:ring-2 focus-visible:ring-brand-primary">
@@ -33,7 +33,7 @@
             <a href="{{ route('admin.settings.edit') }}" @if (request()->routeIs('admin.settings.*')) aria-current="page" @endif @class(['inline-flex min-h-11 items-center border-b-2 text-sm font-semibold focus-visible:ring-2 focus-visible:ring-brand-primary', 'border-brand-primary text-brand-primary' => request()->routeIs('admin.settings.*'), 'border-transparent hover:border-slate-300' => ! request()->routeIs('admin.settings.*')])>{{ __('admin.settings') }}</a>
         </nav>
     </header>
-    <main id="main" class="mx-auto max-w-7xl px-4 py-8 sm:px-8 sm:py-12">
+    <main id="main" tabindex="-1" class="mx-auto max-w-7xl px-4 py-8 sm:px-8 sm:py-12">
         @if (session('warning'))
             <p role="status" class="mb-6 rounded-lg bg-amber-100 p-4 text-amber-900">{{ session('warning') }}</p>
         @endif
@@ -48,5 +48,6 @@
         @endif
         @yield('content')
     </main>
+    <footer class="mx-auto w-full max-w-7xl px-4 py-6 sm:px-8"><a href="{{ route('home') }}" class="inline-flex min-h-11 items-center underline">{{ __('app.title') }}</a></footer>
 </body>
 </html>

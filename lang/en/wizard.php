@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'download_trifold' => 'Download A4 tri-fold',
+    'save_trifold' => 'Save A4 tri-fold',
+    'trifold_filename' => 'aftercare-guide-trifold.pdf',
+    'trifold_suffix' => 'trifold',
+    'session_expired' => 'Your selection has expired. Please choose your procedures again.',
     'headline' => 'Feel confident about your recovery',
     'intro' => 'Create a personal aftercare leaflet with clear guidance for your procedure. Download the PDF and keep it close when you need it.',
     'start' => 'Start',
@@ -27,6 +32,8 @@ return [
     'details_intro' => 'Your leaflet works without personal details. If you wish, add your first name and procedure date.',
     'first_name' => 'First name (optional)',
     'date' => 'Procedure date (optional)',
+    'date_placeholder' => 'dd/mm/yyyy',
+    'date_hint' => 'dd/mm/yyyy, for example 24/11/2026',
     'consent_help' => 'Your first name and date are only used to personalise this leaflet. They are not retained after download unless you save the leaflet to an account. Consent is voluntary: you can create the leaflet without these details. If you enter a name or date, tick the consent box.',
     'consent' => 'I consent to my first name and date being used to personalise this leaflet.',
     'show_preview' => 'Preview your leaflet',
@@ -46,7 +53,7 @@ return [
     'validation' => [
         'name' => 'Use only letters, spaces, hyphens and apostrophes in your first name.',
         'name_max' => 'Your first name must be no longer than 40 characters.',
-        'date' => 'Enter a valid date in YYYY-MM-DD format.',
+        'date' => 'Enter a date in dd/mm/yyyy format, for example 24/11/2026.',
         'date_range' => 'Choose a date between one year ago and tomorrow.',
         'consent' => 'Give consent to add a first name or date, or leave these fields empty.',
         'required' => 'Choose at least one procedure.',

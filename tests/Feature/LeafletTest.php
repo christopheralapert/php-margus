@@ -46,11 +46,11 @@ class LeafletTest extends TestCase
             [['first_name' => 'Mari2', 'consent' => 1], 'first_name'],
             [['first_name' => '<script>', 'consent' => 1], 'first_name'],
             [['first_name' => ['Mari'], 'consent' => 1], 'first_name'],
-            [['date' => '2026-11-26', 'consent' => 1], 'date'],
-            [['date' => '2025-11-23', 'consent' => 1], 'date'],
-            [['date' => '2026-02-30', 'consent' => 1], 'date'],
+            [['date' => '26.11.2026', 'consent' => 1], 'date'],
+            [['date' => '23.11.2025', 'consent' => 1], 'date'],
+            [['date' => '30.02.2026', 'consent' => 1], 'date'],
             [['first_name' => 'Mari'], 'consent'],
-            [['date' => '2026-11-24'], 'consent'],
+            [['date' => '24.11.2026'], 'consent'],
         ];
     }
 
@@ -107,7 +107,7 @@ class LeafletTest extends TestCase
         $this->travelTo(now()->setDate(2026, 11, 24));
         $user = User::factory()->create();
         $procedure = Procedure::factory()->create();
-        foreach (['2025-11-24', '2026-11-25'] as $date) {
+        foreach (['24/11/2025', '25/11/2026'] as $date) {
             $this->actingAs($user)->withSession(['wizard.procedures' => [$procedure->id]])
                 ->post('/en/leaflet/details', ['date' => $date, 'consent' => 1])
                 ->assertRedirect('/en/leaflet/preview')->assertSessionHasNoErrors();

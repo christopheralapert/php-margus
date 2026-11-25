@@ -19,7 +19,7 @@
             @csrf
             @method('delete')
 
-            <h2 class="text-lg font-medium text-gray-900">
+            <h2 id="confirm-user-deletion-title" class="text-lg font-medium text-gray-900">
                 {{ __('privacy.delete_confirm') }}
             </h2>
 
@@ -36,9 +36,11 @@
                     type="password"
                     class="mt-1 block w-3/4"
                     placeholder="{{ __('app.password') }}"
+                    aria-describedby="password-error"
+                    :aria-invalid="$errors->userDeletion->has('password') ? 'true' : 'false'"
                 />
 
-                <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
+                <x-input-error id="password-error" :messages="$errors->userDeletion->get('password')" class="mt-2" />
             </div>
 
             <div class="mt-6 flex justify-end">

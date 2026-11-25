@@ -6,6 +6,7 @@ use App\Enums\AdviceSection;
 use App\Enums\ProcedureStatus;
 use App\Models\AdviceItem;
 use App\Models\Procedure;
+use App\Support\DateFormat;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 
@@ -22,6 +23,7 @@ final readonly class LeafletDocument
         public array $sections,
         public array $general = [],
         private array $sharedKeys = [],
+        public bool $forceDraftMarks = false,
     ) {}
 
     /** @return array<string, Collection<int, AdviceItem>> */
@@ -56,6 +58,11 @@ final readonly class LeafletDocument
         return false;
     }
 
+    public function showDraftMarks(): bool
+    {
+        return $this->hasDraft() && ($this->forceDraftMarks || config('leaflet.show_draft_marks'));
+    }
+
     public function title(): string
     {
         return __('wizard.leaflet_title', [], $this->locale);
@@ -63,6 +70,6 @@ final readonly class LeafletDocument
 
     public function formattedDate(): ?string
     {
-        return $this->date?->locale($this->locale)->isoFormat($this->locale === 'et' ? 'DD.MM.YYYY' : 'D MMM YYYY');
+        return DateFormat::date($this->date, $this->locale);
     }
 }

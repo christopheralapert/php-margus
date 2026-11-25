@@ -2,23 +2,28 @@
 
 namespace App\Services\Leaflet;
 
+use App\Enums\LeafletFormat;
 use App\Support\Settings;
 use Illuminate\Contracts\View\Factory;
 use Mpdf\Config\ConfigVariables;
 use Mpdf\Config\FontVariables;
+use Mpdf\Container\SimpleContainer;
 use Mpdf\HTMLParserMode;
 use Mpdf\Mpdf;
 use Mpdf\Output\Destination;
 use Mpdf\WatermarkText;
 
-final class PdfRenderer
+final class PdfRenderer implements RendersPdf
 {
     public const DEFAULT_FONT = 'sourcesans3';
 
     public function __construct(private readonly Factory $views, private readonly Settings $settings) {}
 
-    public function render(LeafletDocument $doc, bool $printMode = false, bool $categoryProof = false): string
+    public function render(LeafletDocument $doc, bool $printMode = false, bool $categoryProof = false, LeafletFormat $format = LeafletFormat::A5): string
     {
+        if ($format === LeafletFormat::Trifold) {
+            return app(TrifoldRenderer::class)->render($doc, $printMode);
+        }
         $mpdf = $this->layout($doc, $printMode, $categoryProof);
         // Count real layout pages before serializing. Only print booklets needing
         // padding incur a second layout; the final back page stays last.
@@ -43,7 +48,7 @@ final class PdfRenderer
         $mpdf->default_lang = $doc->locale;
         $mpdf->SetDirectionality('ltr');
 
-        if (config('leaflet.draft_watermark') && $doc->hasDraft()) {
+        if ((config('leaflet.draft_watermark') || $doc->forceDraftMarks) && $doc->showDraftMarks()) {
             // Keep the specified alpha; muted ink softens the large diagonal text.
             $mpdf->SetWatermarkText(new WatermarkText(
                 __('pdf.watermark', [], $doc->locale),
@@ -92,9 +97,11 @@ final class PdfRenderer
         return $mpdf->page > 1;
     }
 
-    private function createMpdf(bool $printMode = false): Mpdf
+    public function createMpdf(bool $printMode = false, array $overrides = []): Mpdf
     {
         $options = config('leaflet.pdf');
+        $options['curlAllowUnsafeSslRequests'] = false;
+        $options['showImageErrors'] = ! app()->environment('production');
         $options['fontDir'] = [...(new ConfigVariables)->getDefaults()['fontDir'], config('leaflet.font_directory')];
         $options['fontdata'] = array_merge((new FontVariables)->getDefaults()['fontdata'], config('leaflet.fonts'));
 
@@ -108,6 +115,9 @@ final class PdfRenderer
             $options['margin_right'] = config('leaflet.print.margin_outer');
         }
 
-        return new Mpdf($options);
+        return new Mpdf(array_replace($options, $overrides), new SimpleContainer([
+            'httpClient' => new OfflinePdfHttpClient,
+            'localContentLoader' => new PdfAssetLoader,
+        ]));
     }
 }

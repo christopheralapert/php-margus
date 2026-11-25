@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\LeafletFormat;
 use App\Models\Category;
 use App\Models\Procedure;
 use App\Services\Leaflet\LeafletBuilder;
@@ -70,6 +71,9 @@ final class RenderSampleLeaflets extends Command
                 'e-anon-et' => [['cataract-surgery'], 'et', null, null, false],
                 'f-print-et' => [['tooth-extraction'], 'et', 'Mari', '2026-11-24', true],
                 'g-ent-et' => [['tonsillectomy'], 'et', null, null, false],
+                'h-trifold-et' => [['tooth-extraction'], 'et', 'Mari', '2026-11-24', false],
+                'i-trifold-en' => [['tooth-extraction'], 'en', 'Mary', '2026-11-24', false],
+                'j-trifold-multi-et' => [['tooth-extraction', 'mole-removal', 'knee-arthroscopy'], 'et', null, null, false],
             ];
             $only = $this->option('only');
             if ($only !== null && ! in_array($only, ['icons', 'categories'], true) && ! array_key_exists($only, $samples)) {
@@ -95,7 +99,7 @@ final class RenderSampleLeaflets extends Command
                 }
                 $ids = array_map(fn (string $slug): int => Procedure::where('slug', $slug)->firstOrFail()->id, $slugs);
                 $doc = app(LeafletBuilder::class)->build($ids, $locale, $firstName, $date);
-                $pdf = app(PdfRenderer::class)->render($doc, $print || $this->option('print'));
+                $pdf = app(PdfRenderer::class)->render($doc, $print || $this->option('print'), format: str_contains($name, 'trifold') ? LeafletFormat::Trifold : LeafletFormat::A5);
                 File::put(base_path('tests/visual/output/'.$name.'.pdf'), $pdf);
                 $this->line(__('pdf.samples_written', ['name' => $name, 'procedure' => implode(', ', $slugs)]));
             }
