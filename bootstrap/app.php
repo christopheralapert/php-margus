@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Middleware\SecurityHeaders;
 use App\Http\Middleware\SetLocale;
+use App\Http\Middleware\ValidateIntendedUrl;
 use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use Illuminate\Contracts\Auth\Middleware\AuthenticatesRequests;
 use Illuminate\Foundation\Application;
@@ -18,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->trustProxies(at: env('TRUSTED_PROXIES'));
 
+        $middleware->web(prepend: [SecurityHeaders::class], append: [ValidateIntendedUrl::class]);
         $middleware->prependToPriorityList(
             before: [AuthenticatesRequests::class, RedirectIfAuthenticated::class, SubstituteBindings::class],
             prepend: SetLocale::class,

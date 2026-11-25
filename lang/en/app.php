@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'account_navigation' => 'Open account navigation',
     'language' => 'Language',
     'languages' => [
         'et' => 'Eesti',

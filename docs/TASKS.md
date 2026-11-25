@@ -196,9 +196,9 @@ Every P3 task: run `php artisan leaflet:render-samples && scripts/render-pdfs.sh
 
 ## P7 — After release
 
-### [ ] T7.1 A4 landscape tri-fold PDF (PDF_DESIGN §2, §8)
-### [ ] T7.2 Polish: accessibility audit (WCAG AA), empty/error states, 404/500 pages in et+en, performance (render < 3 s for 3 procedures)
-### [ ] T7.3 Security review: headers/CSP, upload sanitising, authz tests, dependency audit (`composer audit`, `npm audit`), rate limits
+### [x] T7.1 A4 landscape tri-fold PDF (PDF_DESIGN §2, §8)
+### [x] T7.2 Polish: accessibility audit (WCAG AA), empty/error states, 404/500 pages in et+en, performance (render < 3 s for 3 procedures)
+### [x] T7.3 Security review: headers/CSP, upload sanitising, authz tests, dependency audit (`composer audit`, `npm audit`), rate limits
 ### [ ] T7.4 Release v1.1
 
 ## Release

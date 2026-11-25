@@ -1,4 +1,5 @@
 @extends('layouts.patient')
+@inject('settings', 'App\Support\Settings')
 
 @section('content')
     <x-wizard-progress :step="1" />
@@ -47,7 +48,7 @@
                                    style="border-left-color: {{ $procedure->themeColor() }}">
                                 <input id="procedure-{{ $procedure->id }}" type="checkbox" name="procedures[]" value="{{ $procedure->id }}"
                                        x-model="selected" @checked(in_array($procedure->id, $selected))
-                                       @if ($errors->any()) aria-describedby="selection-errors" @endif
+                                       @if ($errors->any()) aria-describedby="selection-errors" aria-invalid="true" @endif
                                        class="mt-1 h-5 w-5 shrink-0 rounded border-slate-400 text-brand-primary focus:ring-brand-primary">
                                 <span class="min-w-0 break-words">
                                     <span class="block font-semibold" style="color: {{ (new \App\Services\Leaflet\ThemeColor($procedure->themeColor()))->dark() }}">{{ $procedure->name }}</span>
@@ -58,7 +59,10 @@
                     </div>
                 </section>
             @empty
-                <p class="rounded-xl bg-brand-soft p-6">{{ __('wizard.empty') }}</p>
+                <div class="rounded-xl bg-brand-soft p-6">
+                    <p>{{ __('wizard.empty') }}</p>
+                    <a href="tel:{{ str_replace(' ', '', $settings->get('clinic.phone')) }}" class="mt-3 inline-flex min-h-11 items-center underline">{{ __('wizard.phone') }}: {{ $settings->get('clinic.phone') }}</a>
+                </div>
             @endforelse
         </div>
 
@@ -69,9 +73,11 @@
             </div>
         @endif
 
+        @if ($categories->isNotEmpty())
         <div class="sticky bottom-0 z-10 mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 bg-white py-4">
             <p class="font-semibold" aria-live="polite" aria-atomic="true" x-text="{{ Js::from(__('wizard.selected')) }}.replace(':count', selected.length)">{{ __('wizard.selected', ['count' => count($selected)]) }}</p>
             <button type="submit" :disabled="selected.length === 0" class="min-h-12 rounded-xl bg-brand-primary px-7 py-3 font-semibold text-white hover:bg-blue-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-600">{{ __('wizard.continue') }}</button>
         </div>
+        @endif
     </form>
 @endsection

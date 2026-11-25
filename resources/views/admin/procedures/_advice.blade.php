@@ -5,7 +5,7 @@
     $adviceRows = old('advice_items.'.$sectionKey, [...$existing, $blankRow, $blankRow]);
     $adviceRows = is_array($adviceRows) ? array_values($adviceRows) : [$blankRow, $blankRow];
 @endphp
-<section class="space-y-4 border-b border-slate-200 pb-8 last:border-0" x-data="{ ready: false, tab: 'et', nextId: {{ count($adviceRows) }}, rows: @js(array_map(fn ($row, $id) => [...$row, 'id' => $id], $adviceRows, array_keys($adviceRows))), move(index, delta) { const target = index + delta; if (target >= 0 && target < this.rows.length) { const row = this.rows.splice(index, 1)[0]; this.rows.splice(target, 0, row); } } }" x-init="ready = true">
+<section class="space-y-4 border-b border-slate-200 pb-8 last:border-0" x-data="{ ready: false, tab: @js($errors->any() ? null : app()->getLocale()), errors: @js(array_keys($errors->getMessages())), nextId: {{ count($adviceRows) }}, rows: @js(array_map(fn ($row, $id) => [...$row, 'id' => $id], $adviceRows, array_keys($adviceRows))), move(index, delta) { const target = index + delta; if (target >= 0 && target < this.rows.length) { const row = this.rows.splice(index, 1)[0]; this.rows.splice(target, 0, row); } } }" x-init="ready = true">
     <h2 class="text-lg font-bold">{{ $section->label() }}</h2>
     <fieldset x-show="!ready" :disabled="ready" class="space-y-6">
         <legend class="sr-only">{{ $section->label() }}</legend>
@@ -13,11 +13,11 @@
             <div class="space-y-3">
                 @foreach (['et', 'en'] as $language)
                     <label class="block text-sm font-semibold">{{ __('admin.procedure.text') }} — {{ __('admin.procedure.'.$language) }}
-                        <textarea name="advice_items[{{ $sectionKey }}][{{ $index }}][text][{{ $language }}]" lang="{{ $language }}" rows="3" maxlength="10000" class="mt-2 w-full rounded-md border-slate-300 focus:ring-brand-primary">{{ $row['text'][$language] ?? '' }}</textarea>
+                        <textarea aria-describedby="procedure-errors" aria-invalid="{{ $errors->has('advice_items.'.($sectionKey).'.'.($index).'.text.'.($language).'') ? 'true' : 'false' }}" name="advice_items[{{ $sectionKey }}][{{ $index }}][text][{{ $language }}]" lang="{{ $language }}" rows="3" maxlength="10000" class="mt-2 w-full rounded-md border-slate-300 focus:ring-brand-primary">{{ $row['text'][$language] ?? '' }}</textarea>
                     </label>
                 @endforeach
                 <label class="block text-sm font-semibold">{{ __('admin.procedure.merge_key') }}
-                    <input name="advice_items[{{ $sectionKey }}][{{ $index }}][merge_key]" value="{{ $row['merge_key'] ?? '' }}" list="merge_keys" pattern="[a-z0-9_.]+" maxlength="255" class="mt-2 w-full rounded-md border-slate-300 focus:ring-brand-primary">
+                    <input aria-describedby="procedure-errors" aria-invalid="{{ $errors->has('advice_items.'.($sectionKey).'.'.($index).'.merge_key') ? 'true' : 'false' }}" name="advice_items[{{ $sectionKey }}][{{ $index }}][merge_key]" value="{{ $row['merge_key'] ?? '' }}" list="merge_keys" pattern="[a-z0-9_.]+" maxlength="255" class="mt-2 w-full rounded-md border-slate-300 focus:ring-brand-primary">
                 </label>
             </div>
         @endforeach
@@ -31,12 +31,12 @@
         <template x-for="(row, index) in rows" :key="row.id">
             <div class="space-y-3 border-b border-slate-100 pb-5">
                 @foreach (['et', 'en'] as $language)
-                    <label x-show="tab === '{{ $language }}'" class="block text-sm font-semibold">{{ __('admin.procedure.text') }} — {{ __('admin.procedure.'.$language) }}
-                        <textarea :name="'advice_items[{{ $sectionKey }}][' + index + '][text][{{ $language }}]'" x-model="row.text.{{ $language }}" lang="{{ $language }}" rows="3" maxlength="10000" class="mt-2 w-full rounded-md border-slate-300 focus:ring-brand-primary"></textarea>
+                    <label x-show="tab === null || tab === '{{ $language }}'" class="block text-sm font-semibold">{{ __('admin.procedure.text') }} — {{ __('admin.procedure.'.$language) }}
+                        <textarea :name="'advice_items[{{ $sectionKey }}][' + index + '][text][{{ $language }}]'" aria-describedby="procedure-errors" :aria-invalid="errors.includes('advice_items.{{ $sectionKey }}.' + index + '.text.{{ $language }}') ? 'true' : 'false'" x-model="row.text.{{ $language }}" lang="{{ $language }}" rows="3" maxlength="10000" class="mt-2 w-full rounded-md border-slate-300 focus:ring-brand-primary"></textarea>
                     </label>
                 @endforeach
                 <label class="block text-sm font-semibold">{{ __('admin.procedure.merge_key') }}
-                    <input :name="'advice_items[{{ $sectionKey }}][' + index + '][merge_key]'" x-model="row.merge_key" list="merge_keys" pattern="[a-z0-9_.]+" maxlength="255" class="mt-2 w-full rounded-md border-slate-300 focus:ring-brand-primary">
+                    <input :name="'advice_items[{{ $sectionKey }}][' + index + '][merge_key]'" aria-describedby="procedure-errors" :aria-invalid="errors.includes('advice_items.{{ $sectionKey }}.' + index + '.merge_key') ? 'true' : 'false'" x-model="row.merge_key" list="merge_keys" pattern="[a-z0-9_.]+" maxlength="255" class="mt-2 w-full rounded-md border-slate-300 focus:ring-brand-primary">
                 </label>
                 <div class="flex flex-wrap gap-3">
                     <button type="button" @click="move(index, -1)" :disabled="index === 0" class="min-h-11 rounded px-3 text-sm font-semibold text-brand-primary hover:bg-blue-50 focus-visible:ring-2 focus-visible:ring-brand-primary disabled:opacity-50">{{ __('admin.procedure.up') }}</button>

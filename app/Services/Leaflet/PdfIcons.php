@@ -6,6 +6,8 @@ use InvalidArgumentException;
 
 final class PdfIcons
 {
+    private array $sources = [];
+
     public const NAMES = ['check', 'cross', 'warning-triangle', 'phone', 'clock', 'pin', 'mail', 'calendar', 'pill', 'cup', 'droplet', 'run', 'moon', 'stethoscope', 'info'];
 
     public function category(string $slug, string $color): string
@@ -14,7 +16,8 @@ final class PdfIcons
             return '';
         }
         $color = (new ThemeColor($color))->base();
-        $source = str_replace('currentColor', $color, file_get_contents(public_path('icons/categories/'.$slug.'.svg')));
+        $path = public_path('icons/categories/'.$slug.'.svg');
+        $source = str_replace('currentColor', $color, $this->sources[$path] ??= file_get_contents($path));
         // mPDF does not preserve nested SVG viewports. Move the source root's
         // presentation attributes to a group in the disc's coordinate system.
         $source = preg_replace('/<svg\b[^>]*>/', '<g transform="translate(12 12)" fill="none" stroke="'.$color.'" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">', $source);
@@ -66,7 +69,9 @@ final class PdfIcons
 
         $color = (new ThemeColor($color))->base();
 
-        return str_replace('currentColor', $color, file_get_contents(resource_path('pdf/icons/'.$name.'.svg')));
+        $path = resource_path('pdf/icons/'.$name.'.svg');
+
+        return str_replace('currentColor', $color, $this->sources[$path] ??= file_get_contents($path));
     }
 
     public function image(string $name, string $color, float $size = 6): string
