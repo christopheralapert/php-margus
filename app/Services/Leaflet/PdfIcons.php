@@ -17,7 +17,7 @@ final class PdfIcons
         }
         $color = (new ThemeColor($color))->base();
         $path = public_path('icons/categories/'.$slug.'.svg');
-        $source = str_replace('currentColor', $color, $this->sources[$path] ??= file_get_contents($path));
+        $source = str_replace('currentColor', $color, $this->sources[$path] ??= (new PdfAssetLoader)->load($path));
         // mPDF does not preserve nested SVG viewports. Move the source root's
         // presentation attributes to a group in the disc's coordinate system.
         $source = preg_replace('/<svg\b[^>]*>/', '<g transform="translate(12 12)" fill="none" stroke="'.$color.'" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">', $source);

@@ -19,7 +19,12 @@ class PdfSecurityTest extends TestCase
 
     public function test_remote_transport_denies_requests_and_production_disables_image_errors(): void
     {
-        $this->assertSame(403, (new OfflinePdfHttpClient)->sendRequest(new Request('GET', 'https://example.invalid/image.png'))->getStatusCode());
+        try {
+            (new OfflinePdfHttpClient)->sendRequest(new Request('GET', 'https://example.invalid/image.png'));
+            $this->fail('The offline client must reject resource requests.');
+        } catch (\InvalidArgumentException $exception) {
+            $this->assertSame('PDF network resources are disabled.', $exception->getMessage());
+        }
         $this->app->instance('env', 'production');
         $mpdf = (new ReflectionMethod(PdfRenderer::class, 'createMpdf'))->invoke(app(PdfRenderer::class));
         $this->assertFalse($mpdf->curlAllowUnsafeSslRequests);
