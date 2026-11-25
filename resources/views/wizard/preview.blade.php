@@ -4,7 +4,7 @@
     <x-wizard-progress :step="3" />
     <h1 class="text-3xl font-semibold sm:text-4xl">{{ $doc->title() }}</h1>
     @include('wizard.personal-details')
-    @if ($doc->hasDraft())
+    @if ($doc->showDraftMarks())
         <p class="mt-6 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">{{ __('wizard.draft') }}</p>
     @endif
     <div class="mt-8 flex flex-wrap items-center gap-5">

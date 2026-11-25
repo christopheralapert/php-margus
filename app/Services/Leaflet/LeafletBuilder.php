@@ -8,7 +8,7 @@ use Carbon\CarbonImmutable;
 
 final class LeafletBuilder
 {
-    public function build(array $procedureIds, string $locale, ?string $firstName, ?string $date, bool $includeInactive = false): LeafletDocument
+    public function build(array $procedureIds, string $locale, ?string $firstName, ?string $date, bool $includeInactive = false, bool $forceDraftMarks = false): LeafletDocument
     {
         $procedures = Procedure::query()->when(! $includeInactive, fn ($query) => $query->active())
             ->with(['category', 'timelineSteps', 'adviceItems'])
@@ -33,6 +33,6 @@ final class LeafletBuilder
             }
         }
 
-        return new LeafletDocument($locale, $firstName, $date ? CarbonImmutable::createFromFormat('!Y-m-d', $date) : null, $sections, $general, $sharedKeys);
+        return new LeafletDocument($locale, $firstName, $date ? CarbonImmutable::createFromFormat('!Y-m-d', $date) : null, $sections, $general, $sharedKeys, $forceDraftMarks);
     }
 }

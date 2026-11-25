@@ -9,7 +9,7 @@
 <body>
     <h1>{{ $doc->title() }}</h1>
     @include('wizard.personal-details')
-    @if ($doc->hasDraft())<p>{{ __('wizard.draft', [], $doc->locale) }}</p>@endif
+    @if ($doc->showDraftMarks())<p>{{ __('wizard.draft', [], $doc->locale) }}</p>@endif
     @foreach ($doc->sections as ['procedure' => $procedure])
         <h2>{{ $procedure->getTranslation('name', $doc->locale) }}</h2>
         @foreach ([\App\Enums\AdviceSection::Do, \App\Enums\AdviceSection::Dont, \App\Enums\AdviceSection::RedFlag] as $section)

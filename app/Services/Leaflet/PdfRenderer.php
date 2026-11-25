@@ -48,7 +48,7 @@ final class PdfRenderer implements RendersPdf
         $mpdf->default_lang = $doc->locale;
         $mpdf->SetDirectionality('ltr');
 
-        if (config('leaflet.draft_watermark') && $doc->hasDraft()) {
+        if ((config('leaflet.draft_watermark') || $doc->forceDraftMarks) && $doc->showDraftMarks()) {
             // Keep the specified alpha; muted ink softens the large diagonal text.
             $mpdf->SetWatermarkText(new WatermarkText(
                 __('pdf.watermark', [], $doc->locale),

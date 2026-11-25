@@ -51,6 +51,7 @@ return [
         'margin_inner' => 16,
         'margin_outer' => 12,
     ],
+    'show_draft_marks' => env('LEAFLET_DRAFT_MARKS', true),
     'draft_watermark' => true,
     'trifold' => [
         // Outside: red flags / back / cover. Inside mirrors these physical
