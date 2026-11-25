@@ -10,7 +10,7 @@ final class PdfIllustrations
     public function circleDataUri(string $path, ThemeColor $theme): string
     {
         $source = new DOMDocument;
-        $source->load(public_path($path), LIBXML_NONET);
+        $source->loadXML((new PdfAssetLoader)->load(public_path($path)), LIBXML_NONET);
         $svg = new DOMDocument;
         $svg->loadXML('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160"><circle cx="80" cy="80" r="80" fill="'.$theme->tint(0.06).'"/><g transform="translate(0 20)"/></svg>');
         $group = $svg->getElementsByTagName('g')->item(0);

@@ -115,6 +115,9 @@ final class PdfRenderer implements RendersPdf
             $options['margin_right'] = config('leaflet.print.margin_outer');
         }
 
-        return new Mpdf(array_replace($options, $overrides), new SimpleContainer(['httpClient' => new OfflinePdfHttpClient]));
+        return new Mpdf(array_replace($options, $overrides), new SimpleContainer([
+            'httpClient' => new OfflinePdfHttpClient,
+            'localContentLoader' => new PdfAssetLoader,
+        ]));
     }
 }
