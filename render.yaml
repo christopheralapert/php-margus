@@ -37,6 +37,10 @@ services:
         value: "*"
       - key: DEMO_MODE
         value: "true"
+      - key: DEMO_BANNER
+        value: "false"
+      - key: LEAFLET_DRAFT_MARKS
+        value: "false"
       - key: DEMO_ADMIN_EMAIL
         sync: false
       - key: DEMO_ADMIN_PASSWORD

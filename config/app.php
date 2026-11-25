@@ -44,6 +44,9 @@ return [
     // Demo registrations skip email verification because demo mail is logged only.
     'demo_mode' => (bool) env('DEMO_MODE', false),
 
+    // The on-page "demo" banner; separate from demo_mode so a demo can run without it.
+    'demo_banner' => (bool) env('DEMO_BANNER', true),
+
     /*
     |--------------------------------------------------------------------------
     | Application URL
