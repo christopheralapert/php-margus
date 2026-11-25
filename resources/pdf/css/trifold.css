@@ -1,0 +1,45 @@
+body { font-family: sourcesans3; font-size: 10.5pt; line-height: 15pt; color: #1F2937; }
+p { margin: 0; }
+h1 { font-family: nunito; font-weight: bold; font-size: 20pt; line-height: 24pt; margin: 0 0 6mm; }
+h2 { font-family: nunito; font-size: 16pt; line-height: 20pt; margin: 0 0 3mm; }
+table { border-collapse: collapse; }
+td { padding: 0; vertical-align: top; font-size: 10.5pt; line-height: 15pt; }
+.heading td { vertical-align: middle; padding-bottom: 3mm; }
+.block { margin-bottom: 6mm; }
+.copy { margin-bottom: 2mm; }
+.strong { font-family: sourcesans3sb; }
+.chip { background-color: #F3F7FC; padding: 2mm; margin-bottom: 2mm; }
+.cover-logo { margin-bottom: 12mm; }
+.cover-art { background-color: #F3F7FC; border-radius: 4mm; text-align: center; padding: 4mm 0; margin-bottom: 8mm; }
+.cover-details { margin-top: 6mm; margin-bottom: 6mm; }
+.cover-sub { color: #6B7280; }
+.notice { background-color: #FFF6E5; color: #8A5A00; border-radius: 3mm; padding: 3mm; }
+.card { border-radius: 3mm; padding: 4mm; margin-bottom: 6mm; }
+.item td { padding-bottom: 2mm; }
+.icon { width: 6mm; }
+.topic { background-color: #F3F7FC; border-radius: 3mm; padding: 1mm 4mm; margin-bottom: 6mm; }
+.topic p { margin-bottom: 2mm; }
+.timeline-step { margin-bottom: 6mm; border-left: 0.8mm solid; padding-left: 3mm; }
+.marker { font-weight: bold; padding: 2mm; margin-bottom: 3mm; }
+.redflag { background-color: #FDECEC; border: 0.8mm solid #D93B3B; border-radius: 4mm; }
+.danger { background-color: #D93B3B; color: #FFFFFF; padding: 4mm; }
+.danger h2 { color: #FFFFFF; font-weight: bold; margin: 0; }
+.danger td { vertical-align: middle; }
+.redflag-body { padding: 4mm; }
+.contacts { margin-top: 6mm; }
+.contacts p { margin-bottom: 3mm; }
+.phone { font-family: nunito; font-weight: bold; font-size: 22pt; line-height: 26pt; color: #B42323; }
+.emergency { background-color: #D93B3B; color: #FFFFFF; padding: 3mm; border-radius: 4mm; text-align: center; margin-top: 6mm; }
+.number { font-family: nunito; font-weight: bold; font-size: 32pt; line-height: 34pt; }
+.followup { border-radius: 3mm; padding: 4mm; margin-top: 6mm; }
+.followup p { margin-bottom: 2mm; }
+.back-contacts td { padding-bottom: 3mm; }
+.back-logo { margin-bottom: 6mm; }
+.qr { margin-top: 6mm; margin-bottom: 6mm; }
+.qr td { vertical-align: middle; }
+.qr-caption { padding-left: 4mm; }
+.back-emergency { background-color: #D93B3B; color: #FFFFFF; border-radius: 3mm; padding: 3mm; margin-bottom: 6mm; }
+.disclaimer { background-color: #F3F7FC; border-radius: 3mm; padding: 4mm; margin-bottom: 6mm; }
+.url, .url a, .small, .full-guide, .full-guide a { font-size: 7.5pt; line-height: 10pt; color: #6B7280; text-decoration: none; }
+a { color: #6B7280; text-decoration: none; hyphens: none; }
+.full-guide { margin-top: 6mm; border-top: 0.2mm solid #DCE3EE; padding-top: 3mm; }

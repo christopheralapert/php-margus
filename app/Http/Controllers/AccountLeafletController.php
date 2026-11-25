@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DeleteSavedLeafletRequest;
+use App\Http\Requests\LeafletFormatRequest;
 use App\Models\Procedure;
 use App\Models\SavedLeaflet;
 use App\Services\Leaflet\LeafletBuilder;
@@ -24,9 +25,9 @@ class AccountLeafletController extends Controller
         return view('account.leaflets', compact('leaflets', 'procedures'));
     }
 
-    public function store(Request $request, SaveAccountLeaflet $saver): RedirectResponse
+    public function store(LeafletFormatRequest $request, SaveAccountLeaflet $saver): RedirectResponse
     {
-        if (! $saver->save($request->user(), $request->session()->get('wizard', []), app()->getLocale())) {
+        if (! $saver->save($request->user(), $request->session()->get('wizard', []), app()->getLocale(), $request->selectedFormat())) {
             return redirect()->route('wizard.procedures');
         }
 
@@ -42,12 +43,12 @@ class AccountLeafletController extends Controller
             return redirect()->route('account.leaflets')->with('status', __('account.unavailable'));
         }
 
-        $bytes = $renderer->render($doc);
+        $bytes = $renderer->render($doc, format: $leaflet->format);
         $leaflet->update(['last_downloaded_at' => now()]);
 
         return response()->streamDownload(function () use ($bytes): void {
             echo $bytes;
-        }, __('wizard.pdf_filename', [], $leaflet->locale), [
+        }, $leaflet->format->filename($leaflet->locale), [
             'Content-Type' => 'application/pdf',
             'Cache-Control' => 'no-store, private',
         ]);

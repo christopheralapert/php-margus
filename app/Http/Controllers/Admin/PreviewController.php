@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LeafletFormatRequest;
 use App\Models\Procedure;
 use App\Services\Leaflet\LeafletBuilder;
 use App\Services\Leaflet\PdfRenderer;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class PreviewController extends Controller
 {
     public function __construct(private readonly LeafletBuilder $builder, private readonly PdfRenderer $renderer) {}
 
-    public function __invoke(Request $request, Procedure $procedure): Response
+    public function __invoke(LeafletFormatRequest $request, Procedure $procedure): Response
     {
         $locale = $request->query('lang');
         $locale = in_array($locale, ['et', 'en'], true) ? $locale : app()->getLocale();
@@ -22,9 +22,9 @@ class PreviewController extends Controller
             now()->toDateString(), includeInactive: true,
         );
 
-        return response($this->renderer->render($doc, $request->query('print') === '1'), 200, [
+        return response($this->renderer->render($doc, $request->query('print') === '1', format: $request->selectedFormat()), 200, [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="preview-'.$procedure->slug.'-'.$locale.'.pdf"',
+            'Content-Disposition' => 'inline; filename="'.$request->selectedFormat()->filename($locale, 'preview-'.$procedure->slug.'-'.$locale).'"',
             'Cache-Control' => 'no-store, private',
         ]);
     }

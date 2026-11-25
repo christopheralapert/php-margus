@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ConsentPurpose;
+use App\Http\Requests\LeafletFormatRequest;
 use App\Http\Requests\LeafletRequest;
 use App\Http\Requests\StoreWizardProceduresRequest;
 use App\Models\Category;
@@ -80,7 +81,7 @@ class WizardController extends Controller
         return $doc->sections ? view('wizard.preview', compact('doc')) : redirect()->route('wizard.procedures');
     }
 
-    public function pdf(Request $request, PdfRenderer $renderer): Response|RedirectResponse
+    public function pdf(LeafletFormatRequest $request, PdfRenderer $renderer): Response|RedirectResponse
     {
         $doc = $this->document($request);
 
@@ -88,12 +89,12 @@ class WizardController extends Controller
             return redirect()->route('wizard.procedures');
         }
 
-        $bytes = $renderer->render($doc);
+        $bytes = $renderer->render($doc, format: $request->selectedFormat());
         $request->session()->forget('wizard');
 
         return response($bytes, 200, [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="'.__('wizard.pdf_filename').'"',
+            'Content-Disposition' => 'attachment; filename="'.$request->selectedFormat()->filename($doc->locale).'"',
             'Cache-Control' => 'no-store, private',
         ]);
     }
