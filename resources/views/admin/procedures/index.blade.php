@@ -39,7 +39,7 @@
                         <td class="px-4 py-4">{{ $procedure->category->name }}</td>
                         <td class="px-4 py-4"><span @class(['whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-semibold', 'bg-amber-100 text-amber-900' => $procedure->status->value === 'draft', 'bg-blue-100 text-blue-900' => $procedure->status->value === 'reviewed', 'bg-emerald-100 text-emerald-900' => $procedure->status->value === 'published'])>{{ $procedure->status->label() }}</span></td>
                         <td class="px-4 py-4">{{ __($procedure->is_active ? 'admin.active' : 'admin.inactive') }}</td>
-                        <td class="whitespace-nowrap px-4 py-4 tabular-nums">{{ $procedure->updated_at->format('Y-m-d') }}</td>
+                        <td class="whitespace-nowrap px-4 py-4 tabular-nums">{{ \App\Support\DateFormat::date($procedure->updated_at) }}</td>
                         <td class="px-4 py-4"><div class="flex items-center gap-3">
                             <a href="{{ route('admin.procedures.edit', $procedure) }}" class="inline-flex min-h-11 items-center rounded text-brand-primary underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-brand-primary">{{ __('admin.procedure.edit') }}</a>
                             <a href="{{ route('admin.procedures.preview', $procedure) }}" target="_blank" rel="noopener" aria-label="{{ __('admin.procedure.preview', ['lang' => app()->getLocale()]) }}" class="inline-flex min-h-11 min-w-11 items-center justify-center rounded text-brand-primary hover:bg-slate-50 focus-visible:ring-2 focus-visible:ring-brand-primary">
