@@ -28,7 +28,7 @@
         @if ($doc->firstName)<p>{{ $t('pdf.recipient', ['name' => $doc->firstName]) }}</p>@endif
         @if ($doc->date)<p>{{ $doc->formattedDate() }}</p>@endif
     </div>
-    @if ($doc->hasDraft())<div class="notice">{{ $t('pdf.draft_notice') }}</div>@endif
+    @if ($doc->showDraftMarks())<div class="notice">{{ $t('pdf.draft_notice') }}</div>@endif
 @elseif ($kind === 'back')
     <div class="back-logo">
         @if (is_file(public_path($settings->get('brand.logo_path'))))

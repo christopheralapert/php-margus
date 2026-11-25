@@ -21,7 +21,7 @@ class PreviewController extends Controller
         $locale = in_array($locale, ['et', 'en'], true) ? $locale : app()->getLocale();
         $doc = $this->builder->build(
             [$procedure->id], $locale, __('admin.procedure.preview_first_name', [], $locale),
-            now()->toDateString(), includeInactive: true,
+            now()->toDateString(), includeInactive: true, forceDraftMarks: true,
         );
 
         return $this->pdfFailure->download(

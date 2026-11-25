@@ -8,7 +8,7 @@
 
 @section('content')
     <h1 class="break-words text-3xl font-semibold leading-tight sm:text-4xl">{{ $title }}</h1>
-    @if ($doc->hasDraft())
+    @if ($doc->showDraftMarks())
         <p class="mt-6 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">{{ __('wizard.draft') }}</p>
     @endif
     <a href="{{ route('online.personalize', ['combo' => request()->route('combo')]) }}" class="mt-6 inline-flex min-h-11 items-center rounded font-semibold text-brand-primary underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-brand-primary">{{ __('wizard.make_pdf') }}</a>
