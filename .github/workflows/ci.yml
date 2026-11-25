@@ -39,7 +39,7 @@ jobs:
           set -euo pipefail
           trap 'docker logs demo; docker stop demo' EXIT
           docker run -d --name demo -e APP_KEY=test-key -e PORT=8080 -e APP_ENV=production -e APP_DEBUG=false -e DEMO_MODE=true -e LOG_CHANNEL=stderr -p 8080:8080 php-margus-demo:ci
-          status=$(curl --fail --retry 30 --retry-delay 2 --retry-connrefused --output /tmp/demo-health --write-out '%{http_code}' http://localhost:8080/up)
+          status=$(curl --fail --retry 30 --retry-delay 2 --retry-all-errors --output /tmp/demo-health --write-out '%{http_code}' http://localhost:8080/up)
           test "$status" = 200
           for path in /et /et/leaflet; do
             status=$(curl --silent --show-error --output /tmp/demo-response --write-out '%{http_code}' "http://localhost:8080$path")
