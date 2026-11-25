@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [develop, main]
   push:
-    branches: [develop, main]
+    branches: [develop, main, feature/demo-render]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -14,6 +14,38 @@ permissions:
   contents: read
 
 jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build demo image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          push: false
+          tags: php-margus-demo:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Smoke-test demo container
+        shell: bash
+        run: |
+          set -euo pipefail
+          trap 'docker logs demo; docker stop demo' EXIT
+          docker run -d --name demo -e APP_KEY=test-key -e PORT=8080 -e APP_ENV=production -e APP_DEBUG=false -e DEMO_MODE=true -e LOG_CHANNEL=stderr -p 8080:8080 php-margus-demo:ci
+          status=$(curl --fail --retry 30 --retry-delay 2 --retry-connrefused --output /tmp/demo-health --write-out '%{http_code}' http://localhost:8080/up)
+          test "$status" = 200
+          for path in /et /et/leaflet; do
+            status=$(curl --silent --show-error --output /tmp/demo-response --write-out '%{http_code}' "http://localhost:8080$path")
+            test "$status" = 200
+          done
+
   ci:
     runs-on: ubuntu-latest
 

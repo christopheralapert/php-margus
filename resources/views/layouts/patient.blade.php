@@ -11,6 +11,7 @@
     <style>[x-cloak] { display: none !important; }</style>
 </head>
 <body class="flex min-h-screen flex-col bg-white font-sans text-brand-ink antialiased selection:bg-brand-primary selection:text-white">
+    <x-demo-banner />
     <a href="#main" class="sr-only focus:not-sr-only focus:p-4 focus:ring-2 focus:ring-brand-primary">{{ __('wizard.skip') }}</a>
     <header class="border-b border-slate-200">
         <div class="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-4 sm:px-8">

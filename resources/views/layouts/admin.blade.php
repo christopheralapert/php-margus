@@ -8,6 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-brand-soft font-sans text-brand-ink antialiased selection:bg-brand-primary selection:text-white">
+    <x-demo-banner />
     <a href="#main" class="sr-only focus:not-sr-only focus:inline-block focus:p-4">{{ __('admin.skip') }}</a>
     <header class="border-b border-slate-200 bg-white">
         <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-8">

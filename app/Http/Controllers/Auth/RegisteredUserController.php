@@ -38,6 +38,11 @@ class RegisteredUserController extends Controller
                 'password' => Hash::make($request->validated('password')),
                 'locale' => app()->getLocale(),
             ]);
+            // Demo mail is not delivered; verification remains required elsewhere.
+            if (config('app.demo_mode')) {
+                $user->markEmailAsVerified();
+            }
+
             $user->consents()->create([
                 'purpose' => ConsentPurpose::Account,
                 'text_version' => config('leaflet.consent_version'),

@@ -41,6 +41,9 @@ return [
 
     'debug' => (bool) env('APP_DEBUG', false),
 
+    // Demo registrations skip email verification because demo mail is logged only.
+    'demo_mode' => (bool) env('DEMO_MODE', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application URL
