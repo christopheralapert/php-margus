@@ -1,0 +1,18 @@
+# Merge as filter rules so the include keeps .env.example deployable.
+# Excluded paths are protected from --delete; never use --delete-excluded.
++ .env.example
+- .env
+- .env.*
+- *.sqlite
+- *.sqlite-*
+- /storage/
+- /.git/
+- /.github/
+- /node_modules/
+- /tests/
+- /.codex-runs/
+- /docs/
+- phpunit.xml
+- /bootstrap/cache/*.php
+- /public/storage
+- /public/hot

@@ -1,0 +1,134 @@
+@page cover { odd-footer-name: _blank; even-footer-name: _blank; }
+.cover { page: cover; }
+body { font-family: sourcesans3; font-size: 10.5pt; line-height: 15pt; color: #1F2937; }
+p { margin: 0 0 3mm; }
+.cover-title { font-family: nunito; font-size: 30pt; line-height: 34pt; font-weight: bold; }
+.cover-sub { font-family: sourcesans3; font-size: 13pt; line-height: 17pt; color: #6B7280; }
+h1 { font-family: nunito; font-size: 20pt; line-height: 24pt; font-weight: bold; margin: 0; }
+h2 { font-family: nunito; font-size: 16pt; line-height: 20pt; font-weight: normal; margin: 0 0 3mm; }
+.strong { font-family: sourcesans3sb; font-weight: normal; font-size: 10.5pt; line-height: 15pt; }
+.label { font-family: sourcesans3; font-size: 9pt; line-height: 11pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3pt; }
+.phone-xl { font-family: nunito; font-size: 22pt; line-height: 26pt; font-weight: bold; color: #B42323; }
+.emergency-xxl { font-family: nunito; font-size: 32pt; line-height: 34pt; font-weight: bold; color: #FFFFFF; background-color: #D93B3B; }
+.footer { font-family: sourcesans3; font-size: 7.5pt; line-height: 10pt; color: #6B7280; border-top: 0.2mm solid #DCE3EE; padding-top: 2mm; }
+.footer p { margin: 0; }
+.footer-details { border-collapse: collapse; font-family: sourcesans3; font-size: 7.5pt; line-height: 10pt; color: #6B7280; }
+.footer-details td { padding: 0; }
+.section-band { padding: 4mm; border-radius: 4mm; }
+.procedure-header { border-collapse: collapse; }
+.procedure-header td { padding: 0; vertical-align: middle; height: 20mm; }
+.timeline-ruler { line-height: 0; margin-bottom: 2mm; }
+.timeline-markers { border-collapse: collapse; }
+.timeline-markers td { padding: 0 1mm; text-align: center; vertical-align: top; }
+.timeline-step { border-collapse: collapse; page-break-inside: avoid; font-size: 10.5pt; line-height: 15pt; }
+.timeline-step td { vertical-align: top; }
+.timeline-step .timeline-phase { padding: 0 2mm 2mm 0; }
+.timeline-number { line-height: 0; margin-bottom: 1.25mm; }
+.timeline-step .timeline-copy .strong { padding-top: 0.35mm; }
+.timeline-step .timeline-copy { padding: 0 0 2mm 4mm; }
+.draft-notice { padding: 3mm; color: #8A5A00; background-color: #FFF6E5; }
+.keep { page-break-inside: avoid; }
+ul { margin: 0; padding-left: 5mm; }
+li { margin-bottom: 2mm; }
+.text-do { color: #1E7A43; }
+.text-dont { color: #B42323; }
+.text-warn { color: #8A5A00; }
+.text-muted { color: #6B7280; }
+.bg-do { background-color: #EAF6EF; }
+.bg-dont { background-color: #FDECEC; }
+.bg-warn { background-color: #FFF6E5; }
+.mt-s1 { margin-top: 1mm; }
+.mt-s2 { margin-top: 2mm; }
+.mt-s3 { margin-top: 3mm; }
+.mt-s4 { margin-top: 4mm; }
+.mt-s6 { margin-top: 6mm; }
+.mt-s8 { margin-top: 8mm; }
+.mt-s12 { margin-top: 12mm; }
+.mb-s1 { margin-bottom: 1mm; }
+.mb-s2 { margin-bottom: 2mm; }
+.mb-s3 { margin-bottom: 3mm; }
+.mb-s4 { margin-bottom: 4mm; }
+.mb-s6 { margin-bottom: 6mm; }
+.mb-s8 { margin-bottom: 8mm; }
+.mb-s12 { margin-bottom: 12mm; }
+.p-s1 { padding: 1mm; }
+.p-s2 { padding: 2mm; }
+.p-s3 { padding: 3mm; }
+.p-s4 { padding: 4mm; }
+.p-s6 { padding: 6mm; }
+.p-s8 { padding: 8mm; }
+.p-s12 { padding: 12mm; }
+
+.cover-logo { position: absolute; height: 9mm; }
+.cover-copy { position: absolute; width: 120mm; }
+.cover-copy .cover-sub { margin-bottom: 0; }
+.cover-art { position: absolute; width: 120mm; text-align: center; }
+.cover-illustrations { border-collapse: collapse; }
+.cover-illustrations td { padding: 0; vertical-align: middle; }
+.cover-procedures { border-collapse: collapse; font-family: nunito; font-size: 16pt; line-height: 20pt; }
+.cover-procedures td { padding: 0 0 2mm; vertical-align: middle; }
+.draft-notice { padding: 2mm 3mm; border-radius: 3mm; font-size: 9pt; line-height: 11pt; }
+.cover-band { position: absolute; color: #FFFFFF; }
+.cover-band table { border-collapse: collapse; font-family: nunito; font-size: 11pt; line-height: 14pt; color: #FFFFFF; }
+.cover-band td { padding: 3.5mm 0 0; color: #FFFFFF; font-family: nunito; font-size: 11pt; }
+.icon-sheet { border-collapse: collapse; }
+.icon-sheet td { padding: 1mm 3mm; vertical-align: middle; border-bottom: 0.2mm solid #DCE3EE; }
+.advice-card { border-radius: 3mm; padding: 4mm; }
+.box-heading { border-collapse: collapse; }
+.box-heading td { padding: 0; vertical-align: middle; }
+.box-heading h2 { margin: 0; }
+.card-row { border-collapse: collapse; page-break-inside: avoid; font-size: 10.5pt; line-height: 15pt; }
+.card-row td { vertical-align: top; padding: 0 0 2mm; }
+.card-row .item-icon { padding-top: 0.5mm; }
+.card-last td { padding-bottom: 0; }
+.card-columns-2 .item-copy { padding-right: 3mm; }
+.topic-row { border-collapse: collapse; page-break-inside: avoid; font-size: 10.5pt; line-height: 15pt; }
+.topic-row .topic-cell { padding: 0 3mm; vertical-align: top; }
+.topic-row .topic-left { padding-left: 0; }
+.topic-row .topic-right { padding-right: 0; }
+.topic-row .topic-full { padding: 0; }
+.topic-panel { border-collapse: collapse; font-size: 10.5pt; line-height: 15pt; }
+.topic-panel .topic-cap { padding: 0; font-size: 0; line-height: 0; }
+.topic-panel .topic-body { padding: 1mm 4mm; background-color: #F3F7FC; vertical-align: top; }
+.topic-body .box-heading td { vertical-align: top; }
+.topic-body .box-heading .heading-icon { padding-top: 0.5mm; }
+.topic-copy { margin: 0 0 2mm; }
+.notes-line { height: 8mm; border-bottom: 0.2mm solid #DCE3EE; }
+.general-section .mb-s6 { margin-bottom: 1mm; }
+.general-chip { margin: 0; }
+.general-topics { border-radius: 3mm; background-color: #F3F7FC; padding: 4mm; }
+.general-topic-row { border-collapse: collapse; page-break-inside: avoid; font-size: 10.5pt; line-height: 15pt; }
+.general-topic-row td { vertical-align: top; border-top: 0.2mm solid #DCE3EE; padding: 2mm 0; }
+.general-topic-first td { border-top: 0; padding-top: 0; }
+.general-topic-row .general-topic-icon { padding-top: 2.5mm; }
+.general-topic-first .general-topic-icon { padding-top: 0.5mm; }
+.followup-box { border-radius: 3mm; padding: 4mm; }
+.followup-box p { margin: 0 0 2mm; }
+.followup-box .box-last { margin-bottom: 0; }
+.redflag-box { border: 0.8mm solid #D93B3B; border-radius: 4mm; background-color: #FDECEC; page-break-inside: avoid; }
+.redflag-band { background-color: #D93B3B; border-radius: 3mm 3mm 0 0; padding: 3mm; }
+.redflag-body { padding: 4mm; }
+.redflag-item { border-collapse: collapse; font-size: 10.5pt; line-height: 15pt; }
+.redflag-item td { padding: 0 0 2mm; vertical-align: top; }
+.redflag-item .redflag-dot { font-size: 0; line-height: 0; padding-top: 1.6mm; padding-left: 1mm; }
+.redflag-item .redflag-group { font-family: sourcesans3sb; font-size: 10pt; line-height: 15pt; padding-top: 3mm; padding-bottom: 1mm; }
+.redflag-contacts { border-collapse: collapse; font-size: 10.5pt; line-height: 15pt; }
+.redflag-contacts td { padding: 0; vertical-align: middle; }
+.redflag-contacts .redflag-clinic { padding-right: 3mm; }
+.redflag-clinic-lines { border-collapse: collapse; font-size: 10.5pt; line-height: 15pt; }
+.redflag-clinic-lines .contact-gap { padding-bottom: 1.5mm; }
+.emergency-pill { border-collapse: collapse; text-align: center; color: #FFFFFF; }
+.emergency-pill .emergency-cap { padding: 0; font-size: 0; line-height: 0; }
+.emergency-pill .emergency-body { background-color: #D93B3B; padding: 1mm 2mm; color: #FFFFFF; }
+.emergency-pill .label { color: #FFFFFF; }
+.back-logo { line-height: 0; }
+.back-name { color: #1F2937; }
+.back-contacts { border-collapse: collapse; font-size: 10.5pt; line-height: 15pt; }
+.back-contacts td { padding: 0 0 3mm; vertical-align: middle; }
+.back-qr { border-collapse: collapse; page-break-inside: avoid; font-size: 10.5pt; line-height: 15pt; }
+.back-qr td { padding: 0; vertical-align: middle; }
+.back-qr .back-qr-caption { padding-left: 6mm; }
+.back-small { font-size: 7.5pt; line-height: 10pt; color: #6B7280; }
+.back-emergency { width: 76mm; padding: 3mm 4mm; border-radius: 4mm; background-color: #D93B3B; color: #FFFFFF; }
+.back-emergency b { font-family: nunito; font-weight: bold; }
+.back-disclaimer { padding: 4mm; border-radius: 3mm; background-color: #F3F7FC; }

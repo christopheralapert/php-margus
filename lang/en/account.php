@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'title' => 'My leaflets',
+    'first_name' => 'First name (optional)',
+    'name_invalid' => 'Enter only your first name, up to 40 letters, with a hyphen or apostrophe if needed.',
+    'consent' => 'I agree that my email and saved leaflets are stored for my account, see the',
+    'privacy_notice' => 'privacy notice',
+    'consent_required' => 'Please agree to the storage of your account details to register.',
+    'save' => 'Save to my account',
+    'login_to_save' => 'Log in to save this leaflet',
+    'verify_to_save' => 'Verify your email to save this leaflet',
+    'saved' => 'Your leaflet has been saved.',
+    'deleted' => 'Your leaflet has been deleted.',
+    'empty' => 'You have no saved leaflets yet.',
+    'start' => 'Start a new leaflet',
+    'removed' => 'Removed procedure',
+    'locale' => 'Leaflet language',
+    'languages' => ['et' => 'Estonian', 'en' => 'English'],
+    'created' => 'Saved',
+    'last_downloaded' => 'Last downloaded',
+    'never' => 'Not downloaded yet',
+    'download' => 'Download PDF',
+    'delete' => 'Delete leaflet',
+    'confirm' => 'I confirm that I want to delete this leaflet.',
+    'confirm_required' => 'Tick the confirmation checkbox to delete the leaflet.',
+    'unavailable' => 'The procedures in this leaflet are no longer available. You can delete it or start a new leaflet.',
+];
