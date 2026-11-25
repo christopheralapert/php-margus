@@ -203,4 +203,4 @@ Every P3 task: run `php artisan leaflet:render-samples && scripts/render-pdfs.sh
 
 ## Release
 
-### [ ] R1 Release PR `develop` → `main` after P0–P6 (the owner merges)
+### [x] R1 Release PR `develop` → `main` after P0–P6 (the owner merges)
