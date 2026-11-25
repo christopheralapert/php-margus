@@ -11,7 +11,7 @@
         @endphp
         <a href="{{ $href }}" hreflang="{{ $locale }}" lang="{{ $locale }}"
             @if (app()->getLocale() === $locale) aria-current="true" @endif
-            class="rounded underline focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            class="inline-flex min-h-11 min-w-11 items-center justify-center rounded underline focus:outline-none focus:ring-2 focus:ring-indigo-500">
             {{ __('app.languages.'.$locale) }}
         </a>
     @endforeach

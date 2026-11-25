@@ -12,7 +12,7 @@ use Mpdf\Mpdf;
 use Mpdf\Output\Destination;
 use Mpdf\WatermarkText;
 
-final class PdfRenderer
+final class PdfRenderer implements RendersPdf
 {
     public const DEFAULT_FONT = 'sourcesans3';
 

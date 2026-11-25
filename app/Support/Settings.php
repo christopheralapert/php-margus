@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Schema;
  */
 final class Settings
 {
+    private bool $tableAvailable = false;
+
     public function __construct(private readonly Repository $cache) {}
 
     public function get(string $key, mixed $default = null): mixed
@@ -19,7 +21,7 @@ final class Settings
         $fallback = config('clinic.'.$key, $default);
 
         // Before migrations, even the default database cache table may not exist.
-        if (! Schema::hasTable('settings')) {
+        if (! $this->tableAvailable && ! ($this->tableAvailable = Schema::hasTable('settings'))) {
             return $fallback;
         }
 

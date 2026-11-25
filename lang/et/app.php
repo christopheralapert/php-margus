@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'account_navigation' => 'Ava konto menüü',
     'language' => 'Keel',
     'languages' => [
         'et' => 'Eesti',

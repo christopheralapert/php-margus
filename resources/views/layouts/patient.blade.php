@@ -10,7 +10,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="flex min-h-screen flex-col bg-white font-sans text-brand-ink antialiased selection:bg-brand-primary selection:text-white">
-    <a href="#main" class="sr-only focus:not-sr-only focus:p-4 focus:ring-2 focus:ring-brand-primary">{{ __('wizard.skip') }}</a>
+    <a href="#main" class="skip-link">{{ __('wizard.skip') }}</a>
     <header class="border-b border-slate-200">
         <div class="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-4 sm:px-8">
             <a href="{{ route('home') }}" class="flex min-h-11 min-w-0 items-center rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-primary">
@@ -24,7 +24,7 @@
             </div>
         </div>
     </header>
-    <main id="main" class="mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:px-8 sm:py-16">
+    <main id="main" tabindex="-1" class="mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:px-8 sm:py-16">
         @if (session('status'))
             <p role="status" class="mb-6 rounded-xl bg-brand-soft p-4">{{ session('status') }}</p>
         @endif
