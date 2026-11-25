@@ -8,7 +8,6 @@
     @yield('meta')
     <title>@yield('title', __('app.title')) · {{ $settings->localized('clinic.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>[x-cloak] { display: none !important; }</style>
 </head>
 <body class="flex min-h-screen flex-col bg-white font-sans text-brand-ink antialiased selection:bg-brand-primary selection:text-white">
     <a href="#main" class="sr-only focus:not-sr-only focus:p-4 focus:ring-2 focus:ring-brand-primary">{{ __('wizard.skip') }}</a>
