@@ -10,7 +10,7 @@
         @endforeach
     </ul>
     <form method="POST" action="{{ route('wizard.details.store') }}" class="mt-8 max-w-xl space-y-6"
-          x-data="{ firstName: {{ Js::from(old('first_name', session('wizard.first_name', ''))) }}, date: {{ Js::from(old('date', session('wizard.date', ''))) }} }">
+          x-data="{ firstName: {{ Js::from(old('first_name', session('wizard.first_name', ''))) }}, date: {{ Js::from(old('date', \App\Support\DateFormat::input($doc->date, $doc->locale) ?? '')) }} }">
         @csrf
         <div>
             <label for="first_name" class="block font-semibold">{{ __('wizard.first_name') }}</label>
@@ -21,10 +21,11 @@
         </div>
         <div>
             <label for="date" class="block font-semibold">{{ __('wizard.date') }}</label>
-            <input id="date" name="date" type="date" x-model="date" value="{{ old('date', session('wizard.date')) }}"
-                   min="{{ today()->subYear()->format('Y-m-d') }}" max="{{ today()->addDay()->format('Y-m-d') }}"
-                   aria-describedby="date-error" @error('date') aria-invalid="true" @enderror
+            <input id="date" name="date" type="text" inputmode="numeric" autocomplete="off" maxlength="10" x-model="date"
+                   value="{{ old('date', \App\Support\DateFormat::input($doc->date, $doc->locale)) }}" placeholder="{{ __('wizard.date_placeholder') }}"
+                   aria-describedby="date-hint date-error" @error('date') aria-invalid="true" @enderror
                    class="mt-2 min-h-12 w-full rounded-xl border-slate-400 focus:border-brand-primary focus:ring-brand-primary">
+            <p id="date-hint" class="mt-2 text-sm text-slate-600">{{ __('wizard.date_hint') }}</p>
             <p id="date-error" class="mt-2 text-sm text-red-700" role="alert">@error('date'){{ $message }}@enderror</p>
         </div>
         <div x-show="firstName || date" class="rounded-xl bg-brand-soft p-5">

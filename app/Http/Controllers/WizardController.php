@@ -58,7 +58,7 @@ class WizardController extends Controller
         }
 
         $firstName = $request->validated('first_name');
-        $date = $request->validated('date');
+        $date = $request->procedureDate()?->format('Y-m-d');
         $personal = $firstName !== null || $date !== null;
 
         if ($personal) {

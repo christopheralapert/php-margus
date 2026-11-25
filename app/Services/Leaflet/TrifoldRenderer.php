@@ -26,7 +26,7 @@ final class TrifoldRenderer
         $mpdf->SetAuthor($this->settings->localized('clinic.name', $doc->locale) ?? '');
         $mpdf->SetCreator(config('app.name'));
         $mpdf->default_lang = $doc->locale;
-        if (config('leaflet.draft_watermark') && $doc->hasDraft()) {
+        if ((config('leaflet.draft_watermark') || $doc->forceDraftMarks) && $doc->showDraftMarks()) {
             $mpdf->SetWatermarkText(new WatermarkText(__('pdf.watermark', [], $doc->locale), color: config('leaflet.colors.muted'), alpha: 0.06, font: 'nunito'));
             $mpdf->showWatermarkText = true;
         }

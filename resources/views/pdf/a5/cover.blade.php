@@ -14,7 +14,7 @@
     $pt = 25.4 / 72;
     $textHeight = 34 * $pt + 4 + count($doc->sections) * (20 * $pt + 2)
         + (($doc->firstName || $doc->date) ? 6 + 17 * $pt : 0)
-        + ($doc->hasDraft() ? 6 + 11 * $pt + 4 : 0);
+        + ($doc->showDraftMarks() ? 6 + 11 * $pt + 4 : 0);
     $artHeight = 70;
     $artGap = 8;
     $artTop = round((23 + 198 - $artHeight - $artGap - $textHeight) / 2, 2);
@@ -74,7 +74,7 @@
             @endif
         </p>
     @endif
-    @if ($doc->hasDraft())
+    @if ($doc->showDraftMarks())
         <div class="draft-notice mt-s6">{{ __('pdf.draft_notice', [], $doc->locale) }}</div>
     @endif
 </div>
