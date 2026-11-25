@@ -260,6 +260,15 @@ class ProcedureTest extends TestCase
         $this->assertFileExists(public_path(Procedure::sole()->illustration_path));
     }
 
+    public function test_text_disguised_as_png_is_rejected(): void
+    {
+        $data = $this->data();
+        $data['illustration'] = UploadedFile::fake()->createWithContent('art.png', 'This is plain text.');
+        $this->actingAs($this->admin())->post('/en/admin/procedures', $data)
+            ->assertSessionHasErrors(['illustration' => __('admin.procedure.png_invalid', [], 'en')]);
+        $this->assertDatabaseCount('procedures', 0);
+    }
+
     public function test_invalid_replacement_keeps_old_file_and_large_uploads_are_rejected(): void
     {
         $data = $this->data();

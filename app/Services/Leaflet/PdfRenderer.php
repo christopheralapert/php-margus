@@ -6,6 +6,7 @@ use App\Support\Settings;
 use Illuminate\Contracts\View\Factory;
 use Mpdf\Config\ConfigVariables;
 use Mpdf\Config\FontVariables;
+use Mpdf\Container\SimpleContainer;
 use Mpdf\HTMLParserMode;
 use Mpdf\Mpdf;
 use Mpdf\Output\Destination;
@@ -95,6 +96,8 @@ final class PdfRenderer
     private function createMpdf(bool $printMode = false): Mpdf
     {
         $options = config('leaflet.pdf');
+        $options['curlAllowUnsafeSslRequests'] = false;
+        $options['showImageErrors'] = ! app()->environment('production');
         $options['fontDir'] = [...(new ConfigVariables)->getDefaults()['fontDir'], config('leaflet.font_directory')];
         $options['fontdata'] = array_merge((new FontVariables)->getDefaults()['fontdata'], config('leaflet.fonts'));
 
@@ -108,6 +111,6 @@ final class PdfRenderer
             $options['margin_right'] = config('leaflet.print.margin_outer');
         }
 
-        return new Mpdf($options);
+        return new Mpdf($options, new SimpleContainer(['httpClient' => new OfflinePdfHttpClient]));
     }
 }

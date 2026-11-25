@@ -46,6 +46,14 @@ class SvgSanitizerTest extends TestCase
             'namespace reset' => ['<path xmlns="" id="bad"/>', 'id="bad"'],
             'xml base' => ['<g xml:base="https://evil.test/"/>', 'xml:base'],
             'animation' => ['<animate attributeName="href" values="javascript:alert(1)"/>', '<animate'],
+            'link' => ['<a href="javascript:alert(1)"><path/></a>', '<a '],
+            'xlink whitespace and entity' => ['<linearGradient xlink:href=" &#x6a;ava&#x09;script:alert(1)"/>', 'xlink:href='],
+            'set href' => ['<set attributeName="href" to="javascript:alert(1)"/>', '<set'],
+            'animate transform' => ['<animateTransform attributeName="transform"/>', '<animateTransform'],
+            'animate motion' => ['<animateMotion path="M0 0h4"/>', '<animateMotion'],
+            'uppercase tag' => ['<SCRIPT>alert(1)</SCRIPT>', 'SCRIPT'],
+            'uppercase attribute' => ['<path HREF="javascript:alert(1)" ONLOAD="alert(1)"/>', 'alert(1)'],
+            'style CDATA' => ['<style><![CDATA[path {fill:url(https://evil.test/a)}]]></style>', '<style'],
             'processing instruction' => ['<?xml-stylesheet href="https://evil.test/a"?>', '<?xml-stylesheet'],
         ];
     }
@@ -64,6 +72,7 @@ class SvgSanitizerTest extends TestCase
             ['<!DOCTYPE svg [<!ENTITY x "boom">]><svg>&x;</svg>'],
             ['<!ENTITY x "boom"><svg/>'],
             ['<html/>'],
+            ['<SVG/>'],
             ['<svg xmlns="http://www.w3.org/1999/xhtml"/>'],
             ['<svg><path></svg>'],
             ['<svg><unknown:path/></svg>'],
