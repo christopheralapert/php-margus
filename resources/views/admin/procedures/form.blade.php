@@ -102,7 +102,7 @@
                     <input aria-describedby="procedure-errors" aria-invalid="{{ $errors->has('reviewed_by') ? 'true' : 'false' }}" name="reviewed_by" value="{{ old('reviewed_by', $procedure->reviewed_by) }}" maxlength="255" class="mt-2 w-full rounded-md border-slate-300 focus:ring-brand-primary">
                 </label>
             </div>
-            @if ($procedure->reviewed_at)<p class="text-sm text-slate-600">{{ __('admin.procedure.reviewed_at') }}: {{ $procedure->reviewed_at->format('Y-m-d H:i') }}</p>@endif
+            @if ($procedure->reviewed_at)<p class="text-sm text-slate-600">{{ __('admin.procedure.reviewed_at') }}: {{ \App\Support\DateFormat::dateTime($procedure->reviewed_at) }}</p>@endif
             @include('admin.procedures._translation', ['field' => 'review_note', 'label' => __('admin.procedure.review_note'), 'translations' => $procedure->getTranslations('review_note')])
         </fieldset>
         <div class="flex items-center gap-6 pb-8">

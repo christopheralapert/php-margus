@@ -32,6 +32,8 @@ return [
     'details_intro' => 'Voldik töötab ka ilma isikuandmeteta. Kui soovid, lisa eesnimi ja protseduuri kuupäev.',
     'first_name' => 'Eesnimi (valikuline)',
     'date' => 'Protseduuri kuupäev (valikuline)',
+    'date_placeholder' => 'pp.kk.aaaa',
+    'date_hint' => 'pp.kk.aaaa, näiteks 24.11.2026',
     'consent_help' => 'Eesnime ja kuupäeva kasutame ainult selle voldiku isikupärastamiseks. Pärast allalaadimist neid ei säilitata, kui sa ei salvesta voldikut oma kontole. Nõusolek on vabatahtlik: saad voldiku koostada ka ilma nende andmeteta. Kui sisestad eesnime või kuupäeva, märgi nõusoleku ruut.',
     'consent' => 'Nõustun oma eesnime ja kuupäeva kasutamisega selle voldiku isikupärastamiseks.',
     'show_preview' => 'Vaata eelvaadet',
@@ -51,7 +53,7 @@ return [
     'validation' => [
         'name' => 'Kasuta eesnimes ainult tähti, tühikuid, sidekriipsu ja ülakoma.',
         'name_max' => 'Eesnimi võib olla kuni 40 tähemärki pikk.',
-        'date' => 'Sisesta kehtiv kuupäev kujul AAAA-KK-PP.',
+        'date' => 'Sisesta kuupäev kujul pp.kk.aaaa, näiteks 24.11.2026.',
         'date_range' => 'Vali kuupäev viimase aasta algusest kuni homseni.',
         'consent' => 'Eesnime või kuupäeva lisamiseks anna nõusolek. Võid ka need väljad tühjaks jätta.',
         'required' => 'Vali vähemalt üks protseduur.',

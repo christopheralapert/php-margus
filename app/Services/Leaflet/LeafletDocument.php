@@ -6,6 +6,7 @@ use App\Enums\AdviceSection;
 use App\Enums\ProcedureStatus;
 use App\Models\AdviceItem;
 use App\Models\Procedure;
+use App\Support\DateFormat;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 
@@ -63,6 +64,6 @@ final readonly class LeafletDocument
 
     public function formattedDate(): ?string
     {
-        return $this->date?->locale($this->locale)->isoFormat($this->locale === 'et' ? 'DD.MM.YYYY' : 'D MMM YYYY');
+        return DateFormat::date($this->date, $this->locale);
     }
 }

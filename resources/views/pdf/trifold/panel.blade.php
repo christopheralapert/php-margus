@@ -48,7 +48,7 @@
     <p class="url block"><a href="{{ $url }}">{!! $displayUrl !!}</a></p>
     <div class="back-emergency">{!! str_replace('112', '<b>112</b>', e($t('pdf.back_emergency'))) !!}</div>
     <div class="disclaimer">{{ $settings->localized('leaflet.disclaimer', $doc->locale) }} {{ $t('pdf.back_contact') }}</div>
-    <p class="small">{{ $t('pdf.created', ['date' => now()->format($doc->locale === 'et' ? 'd.m.Y' : 'j M Y'), 'version' => config('leaflet.content_version', 'v1')]) }}</p>
+    <p class="small">{{ $t('pdf.created', ['date' => \App\Support\DateFormat::date(now(), $doc->locale), 'version' => config('leaflet.content_version', 'v1')]) }}</p>
 @elseif ($kind === 'redflags')
     <div class="redflag">
         <div class="danger"><table width="100%" autosize="1"><tr>
