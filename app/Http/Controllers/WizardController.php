@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ConsentPurpose;
+use App\Http\Requests\LeafletFormatRequest;
 use App\Http\Requests\LeafletRequest;
 use App\Http\Requests\StoreWizardProceduresRequest;
 use App\Models\Category;
@@ -15,7 +16,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
-use Throwable;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class WizardController extends Controller
 {
@@ -82,7 +83,7 @@ class WizardController extends Controller
         return $doc->sections ? view('wizard.preview', compact('doc')) : $this->expired();
     }
 
-    public function pdf(Request $request, RendersPdf $renderer): Response|RedirectResponse
+    public function pdf(LeafletFormatRequest $request, RendersPdf $renderer): Response|RedirectResponse|StreamedResponse
     {
         $doc = $this->document($request);
 
@@ -90,18 +91,12 @@ class WizardController extends Controller
             return $this->expired();
         }
 
-        try {
-            $bytes = $renderer->render($doc);
-        } catch (Throwable $exception) {
-            return $this->pdfFailure->render($exception);
+        $response = $this->pdfFailure->download($renderer, $doc, $request->selectedFormat(), $request->selectedFormat()->filename($doc->locale), $request->query('print') === '1');
+        if ($response->isSuccessful()) {
+            $request->session()->forget('wizard');
         }
-        $request->session()->forget('wizard');
 
-        return response($bytes, 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="'.__('wizard.pdf_filename').'"',
-            'Cache-Control' => 'no-store, private',
-        ]);
+        return $response;
     }
 
     private function document(Request $request): LeafletDocument

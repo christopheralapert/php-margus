@@ -6,6 +6,7 @@ use App\Models\Procedure;
 use App\Services\Leaflet\LeafletBuilder;
 use App\Services\Leaflet\OfflinePdfHttpClient;
 use App\Services\Leaflet\PdfRenderer;
+use App\Services\Leaflet\TrifoldRenderer;
 use App\Support\Settings;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mpdf\PsrHttpMessageShim\Request;
@@ -35,5 +36,18 @@ class PdfSecurityTest extends TestCase
         $html = view('pdf.a5.document', ['doc' => $doc, 'settings' => app(Settings::class), 'printMode' => false, 'categoryProof' => false, 'notesPages' => 0])->render();
         $this->assertStringNotContainsString($name, $html);
         $this->assertStringContainsString(e($name), $html);
+    }
+
+    public function test_trifold_sheets_and_panels_share_the_hardened_mpdf_factory(): void
+    {
+        $this->app->instance('env', 'production');
+        $sheet = new ReflectionMethod(TrifoldRenderer::class, 'sheet');
+        foreach ([[[], false], [[], true], [['format' => [80, 210]], false]] as [$overrides, $printMode]) {
+            $mpdf = $sheet->invoke(app(TrifoldRenderer::class), $overrides, $printMode);
+            $this->assertFalse($mpdf->curlAllowUnsafeSslRequests);
+            $this->assertFalse($mpdf->showImageErrors);
+            $fetcher = (new \ReflectionProperty($mpdf, 'assetFetcher'))->getValue($mpdf);
+            $this->assertSame('', $fetcher->fetchRemoteContent('https://example.invalid/image.png'));
+        }
     }
 }

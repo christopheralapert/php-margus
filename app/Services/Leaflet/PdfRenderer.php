@@ -2,6 +2,7 @@
 
 namespace App\Services\Leaflet;
 
+use App\Enums\LeafletFormat;
 use App\Support\Settings;
 use Illuminate\Contracts\View\Factory;
 use Mpdf\Config\ConfigVariables;
@@ -18,8 +19,11 @@ final class PdfRenderer implements RendersPdf
 
     public function __construct(private readonly Factory $views, private readonly Settings $settings) {}
 
-    public function render(LeafletDocument $doc, bool $printMode = false, bool $categoryProof = false): string
+    public function render(LeafletDocument $doc, bool $printMode = false, bool $categoryProof = false, LeafletFormat $format = LeafletFormat::A5): string
     {
+        if ($format === LeafletFormat::Trifold) {
+            return app(TrifoldRenderer::class)->render($doc, $printMode);
+        }
         $mpdf = $this->layout($doc, $printMode, $categoryProof);
         // Count real layout pages before serializing. Only print booklets needing
         // padding incur a second layout; the final back page stays last.
@@ -93,7 +97,7 @@ final class PdfRenderer implements RendersPdf
         return $mpdf->page > 1;
     }
 
-    private function createMpdf(bool $printMode = false): Mpdf
+    public function createMpdf(bool $printMode = false, array $overrides = []): Mpdf
     {
         $options = config('leaflet.pdf');
         $options['curlAllowUnsafeSslRequests'] = false;
@@ -111,6 +115,6 @@ final class PdfRenderer implements RendersPdf
             $options['margin_right'] = config('leaflet.print.margin_outer');
         }
 
-        return new Mpdf($options, new SimpleContainer(['httpClient' => new OfflinePdfHttpClient]));
+        return new Mpdf(array_replace($options, $overrides), new SimpleContainer(['httpClient' => new OfflinePdfHttpClient]));
     }
 }
