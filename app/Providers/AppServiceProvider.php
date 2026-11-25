@@ -7,6 +7,9 @@ use App\Services\Chat\AnthropicLlmClient;
 use App\Services\Chat\ChatUnavailable;
 use App\Services\Chat\FakeLlmClient;
 use App\Services\Chat\LlmClient;
+use App\Services\Leaflet\PdfIcons;
+use App\Services\Leaflet\PdfRenderer;
+use App\Services\Leaflet\RendersPdf;
 use App\Support\Settings;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -22,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(Settings::class);
+        $this->app->bind(RendersPdf::class, PdfRenderer::class);
+        $this->app->scoped(PdfIcons::class);
         $this->app->bind(LlmClient::class, fn () => match (config('chat.provider')) {
             'fake' => new FakeLlmClient,
             'anthropic' => new AnthropicLlmClient,

@@ -1,4 +1,5 @@
 <x-guest-layout>
+    <h1 class="mb-6 text-2xl font-semibold">{{ __('app.log_in') }}</h1>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -8,8 +9,8 @@
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('app.email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" aria-describedby="email-error" :aria-invalid="$errors->has('email') ? 'true' : 'false'" />
+            <x-input-error id="email-error" :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
@@ -19,9 +20,9 @@
             <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
                             name="password"
-                            required autocomplete="current-password" />
+                            required autocomplete="current-password" aria-describedby="password-error" :aria-invalid="$errors->has('password') ? 'true' : 'false'" />
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            <x-input-error id="password-error" :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Remember Me -->

@@ -39,7 +39,7 @@
     </div>
     <div class="sm:col-span-2">
         <label for="is_active" class="inline-flex min-h-11 items-center gap-3 text-sm font-semibold">
-            <input type="checkbox" id="is_active" name="is_active" value="1" @checked(old('is_active', $category->is_active)) aria-describedby="is_active_error" class="rounded border-slate-300 text-brand-primary focus:ring-brand-primary">
+            <input type="checkbox" id="is_active" name="is_active" value="1" @checked(old('is_active', $category->is_active)) aria-describedby="is_active_error" aria-invalid="{{ $errors->has('is_active') ? 'true' : 'false' }}" class="rounded border-slate-300 text-brand-primary focus:ring-brand-primary">
             {{ __('admin.fields.is_active') }}
         </label>
         <div id="is_active_error"><x-input-error :messages="$errors->get('is_active')" class="mt-2" /></div>

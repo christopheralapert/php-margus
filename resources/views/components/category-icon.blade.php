@@ -5,6 +5,6 @@
 @endphp
 @if ($path && is_file($path))
     <span aria-hidden="true" class="block h-8 w-8 shrink-0 [&_svg]:h-full [&_svg]:w-full" style="color: {{ (new \App\Services\Leaflet\ThemeColor($color))->dark() }}">
-        {!! file_get_contents($path) !!}
+        {!! app(\App\Services\Admin\SvgSanitizer::class)->sanitize(file_get_contents($path)) !!}
     </span>
 @endif

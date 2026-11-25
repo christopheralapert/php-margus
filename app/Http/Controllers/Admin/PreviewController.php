@@ -6,14 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LeafletFormatRequest;
 use App\Models\Procedure;
 use App\Services\Leaflet\LeafletBuilder;
-use App\Services\Leaflet\PdfRenderer;
+use App\Services\Leaflet\PdfFailureResponse;
+use App\Services\Leaflet\RendersPdf;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PreviewController extends Controller
 {
-    public function __construct(private readonly LeafletBuilder $builder, private readonly PdfRenderer $renderer) {}
+    public function __construct(private readonly LeafletBuilder $builder, private readonly RendersPdf $renderer, private readonly PdfFailureResponse $pdfFailure) {}
 
-    public function __invoke(LeafletFormatRequest $request, Procedure $procedure): Response
+    public function __invoke(LeafletFormatRequest $request, Procedure $procedure): Response|StreamedResponse
     {
         $locale = $request->query('lang');
         $locale = in_array($locale, ['et', 'en'], true) ? $locale : app()->getLocale();
@@ -22,10 +24,10 @@ class PreviewController extends Controller
             now()->toDateString(), includeInactive: true,
         );
 
-        return response($this->renderer->render($doc, $request->query('print') === '1', format: $request->selectedFormat()), 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="'.$request->selectedFormat()->filename($locale, 'preview-'.$procedure->slug.'-'.$locale).'"',
-            'Cache-Control' => 'no-store, private',
-        ]);
+        return $this->pdfFailure->download(
+            $this->renderer, $doc, $request->selectedFormat(),
+            $request->selectedFormat()->filename($locale, 'preview-'.$procedure->slug.'-'.$locale),
+            $request->query('print') === '1', inline: true,
+        );
     }
 }

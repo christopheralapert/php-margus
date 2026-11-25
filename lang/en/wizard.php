@@ -5,6 +5,7 @@ return [
     'save_trifold' => 'Save A4 tri-fold',
     'trifold_filename' => 'aftercare-guide-trifold.pdf',
     'trifold_suffix' => 'trifold',
+    'session_expired' => 'Your selection has expired. Please choose your procedures again.',
     'headline' => 'Feel confident about your recovery',
     'intro' => 'Create a personal aftercare leaflet with clear guidance for your procedure. Download the PDF and keep it close when you need it.',
     'start' => 'Start',

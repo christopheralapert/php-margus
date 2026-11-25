@@ -5,6 +5,7 @@ return [
     'save_trifold' => 'Salvesta A4 kolmikvoldik',
     'trifold_filename' => 'ravijargne-juhend-kolmikvoldik.pdf',
     'trifold_suffix' => 'kolmikvoldik',
+    'session_expired' => 'Sinu valik on aegunud. Palun vali protseduurid uuesti.',
     'headline' => 'Taastu rahulikult ja kindlalt',
     'intro' => 'Koosta endale isiklik järelravi voldik, kust leiad selged juhised pärast protseduuri. Laadi PDF alla ja hoia vajalik nõuanne käepärast.',
     'start' => 'Alusta',

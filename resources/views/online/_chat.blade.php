@@ -31,12 +31,12 @@
         </template>
     </ol>
     <p x-show="loading" role="status" class="mt-4 text-sm text-slate-600">{{ __('chat.loading') }}</p>
-    <p x-show="error" x-text="error" role="alert" class="mt-4 rounded-xl border border-red-300 bg-red-50 p-4 text-red-900"></p>
+    <p id="chat-error" x-show="error" x-text="error" role="alert" class="mt-4 rounded-xl border border-red-300 bg-red-50 p-4 text-red-900"></p>
 
     <form @submit.prevent="send" class="mt-6" :aria-busy="loading">
         <p id="chat-disclaimer" class="mb-5 max-w-prose rounded-xl bg-brand-soft p-5 leading-relaxed">{{ __('chat.disclaimer', ['phone' => $settings->get('clinic.phone'), 'emergency' => $emergency]) }}</p>
         <label for="chat-message" class="mb-2 block font-semibold">{{ __('chat.message') }}</label>
-        <textarea id="chat-message" x-ref="input" x-model="message" :readonly="loading" maxlength="{{ config('chat.max_chars') }}" rows="3" required aria-describedby="chat-disclaimer chat-count" autocomplete="off" class="w-full rounded-xl border-slate-400 focus:border-brand-primary focus:ring-brand-primary"></textarea>
+        <textarea id="chat-message" x-ref="input" x-model="message" :readonly="loading" maxlength="{{ config('chat.max_chars') }}" rows="3" required aria-describedby="chat-disclaimer chat-count chat-error" :aria-invalid="error ? 'true' : 'false'" autocomplete="off" class="w-full rounded-xl border-slate-400 focus:border-brand-primary focus:ring-brand-primary"></textarea>
         <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
             <p id="chat-count" class="text-sm tabular-nums text-slate-600" x-text="{{ Js::from(__('chat.character_count', ['max' => config('chat.max_chars')])) }}.replace(':count', characterCount)"></p>
             <button type="submit" :disabled="loading || !message.trim() || characterCount > {{ (int) config('chat.max_chars') }}" class="min-h-12 rounded-xl bg-brand-primary px-7 py-3 font-semibold text-white hover:bg-blue-800 focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-600">{{ __('chat.send') }}</button>

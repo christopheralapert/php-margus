@@ -1,10 +1,11 @@
 <x-guest-layout>
+    <h1 class="mb-6 text-2xl font-semibold">{{ __('app.resend_verification') }}</h1>
     <div class="mb-4 text-sm text-gray-600">
         {{ __('app.verify_intro') }}
     </div>
 
     @if (session('status') == 'verification-link-sent')
-        <div class="mb-4 font-medium text-sm text-green-600">
+        <div class="mb-4 font-medium text-sm text-green-700">
             {{ __('app.verification_sent_registration') }}
         </div>
     @endif

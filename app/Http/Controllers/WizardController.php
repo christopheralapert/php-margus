@@ -10,15 +10,17 @@ use App\Models\Category;
 use App\Models\Consent;
 use App\Services\Leaflet\LeafletBuilder;
 use App\Services\Leaflet\LeafletDocument;
-use App\Services\Leaflet\PdfRenderer;
+use App\Services\Leaflet\PdfFailureResponse;
+use App\Services\Leaflet\RendersPdf;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class WizardController extends Controller
 {
-    public function __construct(private readonly LeafletBuilder $builder) {}
+    public function __construct(private readonly LeafletBuilder $builder, private readonly PdfFailureResponse $pdfFailure) {}
 
     public function home(): View
     {
@@ -78,25 +80,23 @@ class WizardController extends Controller
     {
         $doc = $this->document($request);
 
-        return $doc->sections ? view('wizard.preview', compact('doc')) : redirect()->route('wizard.procedures');
+        return $doc->sections ? view('wizard.preview', compact('doc')) : $this->expired();
     }
 
-    public function pdf(LeafletFormatRequest $request, PdfRenderer $renderer): Response|RedirectResponse
+    public function pdf(LeafletFormatRequest $request, RendersPdf $renderer): Response|RedirectResponse|StreamedResponse
     {
         $doc = $this->document($request);
 
         if (! $doc->sections) {
-            return redirect()->route('wizard.procedures');
+            return $this->expired();
         }
 
-        $bytes = $renderer->render($doc, format: $request->selectedFormat());
-        $request->session()->forget('wizard');
+        $response = $this->pdfFailure->download($renderer, $doc, $request->selectedFormat(), $request->selectedFormat()->filename($doc->locale), $request->query('print') === '1');
+        if ($response->isSuccessful()) {
+            $request->session()->forget('wizard');
+        }
 
-        return response($bytes, 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="'.$request->selectedFormat()->filename($doc->locale).'"',
-            'Cache-Control' => 'no-store, private',
-        ]);
+        return $response;
     }
 
     private function document(Request $request): LeafletDocument
@@ -107,5 +107,10 @@ class WizardController extends Controller
             $request->session()->get('wizard.first_name'),
             $request->session()->get('wizard.date'),
         );
+    }
+
+    private function expired(): RedirectResponse
+    {
+        return redirect()->route('wizard.procedures')->with('status', __('wizard.session_expired'));
     }
 }

@@ -1,3 +1,48 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    html { scroll-padding-block: 6rem; }
+
+    [x-cloak] { display: none !important; }
+
+    :focus-visible {
+        outline: 2px solid #1F2937 !important;
+        outline-offset: 3px !important;
+    }
+
+    input::placeholder, textarea::placeholder { color: #64748B; opacity: 1; }
+
+    body input:not([type="hidden"]), body textarea, body select { border-color: #64748B; }
+
+    button, select, input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]) {
+        min-height: 44px;
+    }
+
+    button { min-width: 44px; }
+
+    a, label:has(input[type="checkbox"]), label:has(input[type="radio"]) {
+        min-height: 44px;
+    }
+
+    @media (pointer: coarse) {
+        a { display: inline-flex; align-items: center; min-width: 44px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        /* Preserve opacity feedback; omit spatial movement and animated scrolling. */
+        *, *::before, *::after {
+            scroll-behavior: auto !important;
+            transition-property: opacity, color, background-color, border-color !important;
+            transform: none !important;
+            animation: none !important;
+        }
+    }
+}
+
+@layer components {
+    .skip-link {
+        @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded focus:bg-white focus:p-4 focus:text-brand-ink;
+    }
+}
